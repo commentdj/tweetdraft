@@ -1,0 +1,8 @@
+{
+  "name": "tweetdraft",
+  "version": "2.0.0",
+  "description": "Daily tweet generator with scheduling — runs via GitHub Actions",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
