@@ -2,14 +2,14 @@ name: TweetDraft — Generate Daily Drafts
 
 on:
   schedule:
-    - cron: "0 8 * * *"   # 8am UTC = 9am BST
-  workflow_dispatch:        # manual trigger for testing
+    - cron: "0 1 * * *"   # 1am UTC — gives you time to approve before first slot at 2am
+  workflow_dispatch:
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write       # needed to commit queue.json
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
