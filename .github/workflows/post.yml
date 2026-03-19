@@ -2,14 +2,14 @@ name: TweetDraft — Post Scheduled Tweets
 
 on:
   schedule:
-    - cron: "0 9,12,15,18 * * *"  # runs at 9am, 12pm, 3pm, 6pm UTC — matches the 4 default time slots
-  workflow_dispatch:                # manual trigger for testing
+    - cron: "0 * * * *"   # runs every hour on the hour, 24/7
+  workflow_dispatch:        # manual trigger for testing
 
 jobs:
   post:
     runs-on: ubuntu-latest
     permissions:
-      contents: write               # needed to update queue.json after posting
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
