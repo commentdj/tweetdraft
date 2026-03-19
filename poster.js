@@ -1,8 +1,8 @@
-// TweetDraft — poster.js
-// Runs every hour via GitHub Actions
-// Reads queue.json, posts any approved tweets whose scheduledTime has passed
+// TweetDraft — poster.js v3
+// Runs hourly. Posts approved tweets, appends to posted-log.json.
 
 const https = require("https");
+const crypto = require("crypto");
 
 function request(options, body) {
   return new Promise((resolve, reject) => {
@@ -17,12 +17,10 @@ function request(options, body) {
   });
 }
 
-// ── Twitter OAuth 1.0a ────────────────────────────────────────────────────────
-const crypto = require("crypto");
-
-function oauthHeader(method, url, params = {}) {
+// ── OAuth 1.0a ────────────────────────────────────────────────────────────────
+function oauthHeader(method, url) {
   const enc = (s) => encodeURIComponent(String(s));
-  const oauthParams = {
+  const p = {
     oauth_consumer_key: process.env.TWITTER_API_KEY,
     oauth_nonce: crypto.randomBytes(16).toString("hex"),
     oauth_signature_method: "HMAC-SHA1",
@@ -30,27 +28,11 @@ function oauthHeader(method, url, params = {}) {
     oauth_token: process.env.TWITTER_ACCESS_TOKEN,
     oauth_version: "1.0",
   };
-
-  const allParams = { ...oauthParams, ...params };
-  const paramStr = Object.keys(allParams)
-    .sort()
-    .map((k) => `${enc(k)}=${enc(allParams[k])}`)
-    .join("&");
-
+  const paramStr = Object.keys(p).sort().map((k) => `${enc(k)}=${enc(p[k])}`).join("&");
   const base = [method.toUpperCase(), enc(url), enc(paramStr)].join("&");
   const sigKey = `${enc(process.env.TWITTER_API_SECRET)}&${enc(process.env.TWITTER_ACCESS_TOKEN_SECRET)}`;
-  oauthParams.oauth_signature = crypto
-    .createHmac("sha1", sigKey)
-    .update(base)
-    .digest("base64");
-
-  return (
-    "OAuth " +
-    Object.keys(oauthParams)
-      .sort()
-      .map((k) => `${enc(k)}="${enc(oauthParams[k])}"`)
-      .join(", ")
-  );
+  p.oauth_signature = crypto.createHmac("sha1", sigKey).update(base).digest("base64");
+  return "OAuth " + Object.keys(p).sort().map((k) => `${enc(k)}="${enc(p[k])}"`).join(", ");
 }
 
 async function postTweet(text) {
@@ -69,53 +51,45 @@ async function postTweet(text) {
     },
     body
   );
-
   if (res.status !== 201 && res.status !== 200) {
-    const err = JSON.parse(res.body);
-    throw new Error(err.detail || err.title || `HTTP ${res.status}`);
+    const e = JSON.parse(res.body);
+    throw new Error(e.detail || e.title || `HTTP ${res.status}`);
   }
   return JSON.parse(res.body);
 }
 
-// ── GitHub API — read/write queue.json ───────────────────────────────────────
-async function getQueue() {
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+// ── GitHub helpers ────────────────────────────────────────────────────────────
+const [OWNER, REPO] = (process.env.GITHUB_REPOSITORY || "/").split("/");
+const TOKEN = process.env.GITHUB_TOKEN;
+
+async function ghGet(path) {
   const res = await request(
     {
       hostname: "api.github.com",
-      path: `/repos/${owner}/${repo}/contents/queue.json`,
+      path: `/repos/${OWNER}/${REPO}/contents/${path}`,
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`,
         "User-Agent": "TweetDraft",
         Accept: "application/vnd.github+json",
       },
     },
     null
   );
-
   if (res.status === 404) return null;
-  const file = JSON.parse(res.body);
-  const content = Buffer.from(file.content, "base64").toString("utf8");
-  return { queue: JSON.parse(content), sha: file.sha };
+  return JSON.parse(res.body);
 }
 
-async function saveQueue(queue, sha) {
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-  const content = Buffer.from(JSON.stringify(queue, null, 2)).toString("base64");
-  const body = JSON.stringify({
-    message: `TweetDraft: posted tweet at ${new Date().toISOString()}`,
-    content,
-    sha,
-  });
-
+async function ghPut(path, content, sha, message) {
+  const encoded = Buffer.from(content).toString("base64");
+  const body = JSON.stringify({ message, content: encoded, ...(sha ? { sha } : {}) });
   const res = await request(
     {
       hostname: "api.github.com",
-      path: `/repos/${owner}/${repo}/contents/queue.json`,
+      path: `/repos/${OWNER}/${REPO}/contents/${path}`,
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`,
         "User-Agent": "TweetDraft",
         "Content-Type": "application/json",
         Accept: "application/vnd.github+json",
@@ -124,74 +98,124 @@ async function saveQueue(queue, sha) {
     },
     body
   );
-
   if (res.status !== 200 && res.status !== 201) {
-    throw new Error(`Failed to save queue: ${res.status}`);
+    throw new Error(`GitHub write failed ${res.status}: ${res.body}`);
   }
+  return JSON.parse(res.body);
+}
+
+async function readJSON(path) {
+  const file = await ghGet(path);
+  if (!file) return { data: null, sha: null };
+  const content = Buffer.from(file.content, "base64").toString("utf8");
+  return { data: JSON.parse(content), sha: file.sha };
+}
+
+// ── Posted log ────────────────────────────────────────────────────────────────
+async function appendToLog(entries) {
+  const { data, sha } = await readJSON("posted-log.json");
+
+  const log = data || { posts: [] };
+  log.posts.push(...entries);
+
+  // Keep last 500 entries to stop the file growing forever
+  if (log.posts.length > 500) {
+    log.posts = log.posts.slice(-500);
+  }
+
+  await ghPut(
+    "posted-log.json",
+    JSON.stringify(log, null, 2),
+    sha,
+    `TweetDraft: logged ${entries.length} post(s) at ${new Date().toISOString()}`
+  );
+  console.log(`Appended ${entries.length} entry/entries to posted-log.json`);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   const now = new Date();
-  console.log(`Running poster at ${now.toISOString()}`);
+  console.log(`Poster running at ${now.toISOString()}`);
 
-  const result = await getQueue();
-  if (!result) {
-    console.log("No queue.json found — nothing to post.");
+  const { data: queue, sha: queueSha } = await readJSON("queue.json");
+  if (!queue) {
+    console.log("No queue.json — nothing to do.");
     return;
   }
 
-  const { queue, sha } = result;
   let posted = 0;
   let changed = false;
+  const newLogEntries = [];
 
   for (const slot of queue.slots) {
     if (slot.status !== "approved") {
-      console.log(`Slot ${slot.id} [${slot.type}]: ${slot.status} — skipping`);
+      console.log(`[${slot.type}] ${slot.status} — skip`);
       continue;
     }
 
     const scheduledAt = new Date(slot.scheduledTime);
-
-    // Post if we're within the scheduled hour window (scheduled time has passed but less than 65 mins ago)
-    const minsLate = (now - scheduledAt) / 60000;
-    if (minsLate < 0) {
-      console.log(`Slot ${slot.id}: scheduled for ${slot.scheduledTime} — not yet`);
-      continue;
-    }
-    if (minsLate > 65) {
-      console.log(`Slot ${slot.id}: missed window (${Math.round(minsLate)} mins late) — skipping`);
+    if (now < scheduledAt) {
+      const mins = Math.round((scheduledAt - now) / 60000);
+      console.log(`[${slot.type}] in ${mins} mins — not yet`);
       continue;
     }
 
     try {
-      console.log(`Posting slot ${slot.id} [${slot.type}]...`);
-      await postTweet(slot.text);
+      console.log(`Posting [${slot.type}]: "${slot.text.substring(0, 60)}..."`);
+      const result = await postTweet(slot.text);
+
       slot.status = "posted";
       slot.postedAt = now.toISOString();
+      if (result.data?.id) slot.tweetId = result.data.id;
+
+      newLogEntries.push({
+        id: slot.id,
+        tweetId: result.data?.id || null,
+        type: slot.type,
+        text: slot.text,
+        scheduledTime: slot.scheduledTime,
+        postedAt: now.toISOString(),
+      });
+
       posted++;
       changed = true;
-      console.log(`✓ Posted: "${slot.text.substring(0, 60)}..."`);
+      console.log(`✓ Posted (tweet id: ${result.data?.id})`);
 
-      // Small delay between tweets if posting multiple in same run
-      if (posted > 1) await new Promise((r) => setTimeout(r, 2000));
+      if (posted > 1) await new Promise((r) => setTimeout(r, 3000));
     } catch (e) {
-      console.error(`✗ Failed to post slot ${slot.id}: ${e.message}`);
-      slot.status = "failed";
-      slot.error = e.message;
+      console.error(`✗ Failed: ${e.message}`);
+      if (e.message.includes("duplicate")) {
+        slot.status = "posted";
+        slot.note = "duplicate — skipped";
+      } else {
+        slot.status = "failed";
+        slot.error = e.message;
+      }
       changed = true;
     }
   }
 
+  // Save updated queue
   if (changed) {
-    await saveQueue(queue, sha);
+    await ghPut(
+      "queue.json",
+      JSON.stringify(queue, null, 2),
+      queueSha,
+      `TweetDraft: posted ${posted} tweet(s) at ${now.toISOString()}`
+    );
     console.log(`Queue updated. Posted: ${posted}`);
   } else {
     console.log("Nothing to post this run.");
   }
+
+  // Append to log (separate commit so queue save doesn't conflict)
+  if (newLogEntries.length > 0) {
+    await appendToLog(newLogEntries);
+  }
 }
 
 main().catch((err) => {
-  console.error("Fatal error:", err.message);
+  console.error("Fatal:", err.message);
   process.exit(1);
 });
+
