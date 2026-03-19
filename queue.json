@@ -1,0 +1,33 @@
+{
+  "date": "2026-03-19",
+  "slots": [
+    {
+      "id": "2026-03-19-0",
+      "type": "NUMBERED LIST",
+      "text": "3 ways AI validation tools actually hurt your startup:\n\n1. They optimize for patterns in existing successful companies, not breakthrough ideas\n2. False confidence from automated feedback delays real customer conversations\n3. You end up building what the model thinks will work, not what you discovered people need",
+      "scheduledTime": "2026-03-19T09:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-19-1",
+      "type": "SHORT TAKE",
+      "text": "Most founders worry AI will make their work feel inauthentic. The real risk is using it as a substitute for the messy, uncomfortable work of talking to customers.",
+      "scheduledTime": "2026-03-19T12:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-19-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "Been wrestling with this: automation removes friction, but friction often reveals what people actually value. Every time I streamline a workflow, I wonder if I'm losing signal about where the real problems live. The smoothest user experience might hide the insights you need most.",
+      "scheduledTime": "2026-03-19T15:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-19-3",
+      "type": "OBSERVATION",
+      "text": "Noticed founders who heavily automate their validation process tend to launch faster but pivot more. The ones doing manual outreach take twice as long to ship but rarely change direction after launch.",
+      "scheduledTime": "2026-03-19T18:00:00Z",
+      "status": "pending"
+    }
+  ]
+}
