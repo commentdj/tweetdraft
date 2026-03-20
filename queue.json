@@ -6,7 +6,8 @@
       "type": "NUMBERED LIST",
       "text": "3 ways AI validation tools actually hurt your startup:\n\n1. They optimise for patterns in existing successful companies, not breakthrough ideas\n2. False confidence from automated feedback delays real customer conversations\n3. You end up building what the model thinks will work, not what you discovered people need",
       "scheduledTime": "2026-03-20T09:00:00.000Z",
-      "status": "approved"
+      "status": "failed",
+      "error": "Your client app is not configured with the appropriate oauth1 app permissions for this endpoint."
     },
     {
       "id": "2026-03-19-1",
