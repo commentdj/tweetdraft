@@ -1,13 +1,13 @@
-// TweetDraft — generate.js v3
-// Reads posted-log.json to avoid repeating topics/angles.
-// Generates 6 tweets spread across 24 hours, commits queue.json, emails digest.
+// TweetDraft — generate.js v5
+// Reads context.json (scraped from Claude by bookmarklet)
+// Reads posted-log.json to avoid repeating topics
+// Generates 6 tweets, commits queue.json, emails digest
 
 const https = require("https");
 
-// 6 slots evenly across 24 hours (UTC)
 const TIME_SLOTS = ["02:00", "06:00", "10:00", "14:00", "18:00", "22:00"];
 
-function post(options, body) {
+function httpRequest(options, body) {
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = "";
@@ -20,147 +20,156 @@ function post(options, body) {
   });
 }
 
-// ── GitHub helpers ────────────────────────────────────────────────────────────
 const TOKEN = process.env.GITHUB_TOKEN;
 const [OWNER, REPO] = (process.env.GITHUB_REPOSITORY || "/").split("/");
 
 async function ghGet(path) {
-  const res = await post(
-    {
-      hostname: "api.github.com",
-      path: `/repos/${OWNER}/${REPO}/contents/${path}`,
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "User-Agent": "TweetDraft",
-        Accept: "application/vnd.github+json",
-      },
+  const res = await httpRequest({
+    hostname: "api.github.com",
+    path: `/repos/${OWNER}/${REPO}/contents/${path}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "User-Agent": "TweetDraft",
+      Accept: "application/vnd.github+json",
     },
-    null
-  );
+  }, null);
   if (res.status === 404) return null;
+  if (res.status !== 200) throw new Error(`ghGet ${path} failed: ${res.status}`);
   return JSON.parse(res.body);
 }
 
 async function ghPut(path, content, sha, message) {
   const encoded = Buffer.from(content).toString("base64");
-  const body = JSON.stringify({ message, content: encoded, ...(sha ? { sha } : {}) });
-  const res = await post(
-    {
-      hostname: "api.github.com",
-      path: `/repos/${OWNER}/${REPO}/contents/${path}`,
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "User-Agent": "TweetDraft",
-        "Content-Type": "application/json",
-        Accept: "application/vnd.github+json",
-        "Content-Length": Buffer.byteLength(body),
-      },
+  const payload = { message, content: encoded };
+  if (sha) payload.sha = sha;
+  const body = JSON.stringify(payload);
+  const res = await httpRequest({
+    hostname: "api.github.com",
+    path: `/repos/${OWNER}/${REPO}/contents/${path}`,
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "User-Agent": "TweetDraft",
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github+json",
+      "Content-Length": Buffer.byteLength(body),
     },
-    body
-  );
+  }, body);
   if (res.status !== 200 && res.status !== 201) {
-    throw new Error(`GitHub write failed ${res.status}`);
+    throw new Error(`ghPut ${path} failed: ${res.status} — ${res.body}`);
   }
   return JSON.parse(res.body);
+}
+
+function decodeFile(file) {
+  return Buffer.from(file.content.replace(/\n/g, ""), "base64").toString("utf8");
+}
+
+// ── Read Claude context from bookmarklet ──────────────────────────────────────
+async function getClaudeContext() {
+  const file = await ghGet("context.json");
+  if (!file) {
+    console.log("No context.json found — using fallback");
+    return {
+      text: "No specific Claude session context available today. Write about general startup founder topics: idea validation, talking to users, building with AI, removing friction.",
+      date: "unknown",
+    };
+  }
+  const data = JSON.parse(decodeFile(file));
+  const text = data.context || "";
+  console.log(`Context from ${data.date} (${text.length} chars)`);
+  return { text, date: data.date || "unknown" };
 }
 
 // ── Read posted log ───────────────────────────────────────────────────────────
 async function getRecentPostsContext() {
   const file = await ghGet("posted-log.json");
   if (!file) return "No previous tweets posted yet.";
-
-  const raw = Buffer.from(file.content, "base64").toString("utf8");
-  const log = JSON.parse(raw);
-  const posts = log.posts || [];
-
+  const log = JSON.parse(decodeFile(file));
+  const posts = (log.posts || []).slice(-30).reverse();
   if (posts.length === 0) return "No previous tweets posted yet.";
-
-  // Last 30 posts (most recent first) — enough context without blowing token budget
-  const recent = posts.slice(-30).reverse();
-  const lines = recent.map((p, i) =>
-    `${i + 1}. [${p.type}] (${p.postedAt ? p.postedAt.slice(0, 10) : "unknown date"})\n${p.text}`
+  const lines = posts.map((p, i) =>
+    `${i + 1}. [${p.type}] (${(p.postedAt || "").slice(0, 10)})\n${p.text}`
   );
-
-  return `Last ${recent.length} posted tweets (most recent first):\n\n` + lines.join("\n\n");
+  return `Last ${posts.length} posted tweets:\n\n` + lines.join("\n\n");
 }
 
-// ── Generate tweets ───────────────────────────────────────────────────────────
-async function callAnthropic(recentContext) {
-  const persona = `You are ghostwriting daily tweets for a startup founder who validates business ideas. Voice: direct, grounded, founder-native — not corporate, not hustle-bro.
+// ── Generate ──────────────────────────────────────────────────────────────────
+async function callAnthropic(claudeContext, recentPosts) {
+  const prompt = `You are ghostwriting daily tweets for a startup founder who validates business ideas. Voice: direct, grounded, founder-native — not corporate, not hustle-bro.
 
-Generate exactly 6 tweets across these formats (mix them — don't do all the same):
-- NUMBERED LIST: tight numbered list (3-5 items)
-- SHORT TAKE: one punchy insight, 1-3 sentences, opinionated, no hedging
-- PROBLEM DEEP-DIVE: honest about what's hard, thinking out loud
-- OBSERVATION: dry, specific pattern from market or founder life
+TODAY'S RAW MATERIAL — scraped directly from this founder's Claude conversation today:
+---
+${claudeContext}
+---
+
+Read through that and extract the most interesting insights, problems, observations, and ideas. Use it as the raw material for tweets. The tweets should feel like genuine reflections on real work done today — not generic startup advice.
+
+Generate exactly 6 tweets across these formats (mix them — don't repeat formats back to back):
+- NUMBERED LIST: tight numbered list (3-5 items) based on something from today's session
+- SHORT TAKE: one punchy insight pulled directly from the context, 1-3 sentences, opinionated
+- PROBLEM DEEP-DIVE: an honest take on a real problem touched on in the context
+- OBSERVATION: a dry, specific pattern noticed through the work described
 
 Rules:
 - No emojis
 - Never start with "I just"
 - No motivational fluff
-- Sound like a real person, not performing for an audience
 - Each tweet under 280 characters
+- Sound like a real person reflecting on real work, not performing
 
-IMPORTANT — avoid repeating yourself:
-${recentContext}
+AVOID REPEATING — these have already been posted:
+${recentPosts}
 
-Do not repeat topics, angles, or phrasing from the above. Find fresh angles, new observations, different problems. The audience sees every tweet — repetition kills credibility.
-
-Today's broad context: building with AI tools, validating startup ideas, removing friction from daily workflows.
+Do not repeat topics, angles, or phrasing from the already-posted tweets above.
 
 Return ONLY valid JSON, no preamble, no markdown:
 {
   "tweets": [
-    {"type": "...", "text": "..."},
-    {"type": "...", "text": "..."},
-    {"type": "...", "text": "..."},
-    {"type": "...", "text": "..."},
-    {"type": "...", "text": "..."},
-    {"type": "...", "text": "..."}
+    {"type": "SHORT TAKE", "text": "..."},
+    {"type": "NUMBERED LIST", "text": "..."},
+    {"type": "OBSERVATION", "text": "..."},
+    {"type": "PROBLEM DEEP-DIVE", "text": "..."},
+    {"type": "SHORT TAKE", "text": "..."},
+    {"type": "NUMBERED LIST", "text": "..."}
   ]
 }`;
 
   const reqBody = JSON.stringify({
     model: "claude-sonnet-4-20250514",
     max_tokens: 1800,
-    messages: [{ role: "user", content: persona }],
+    messages: [{ role: "user", content: prompt }],
   });
 
-  const res = await post(
-    {
-      hostname: "api.anthropic.com",
-      path: "/v1/messages",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "Content-Length": Buffer.byteLength(reqBody),
-      },
+  const res = await httpRequest({
+    hostname: "api.anthropic.com",
+    path: "/v1/messages",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+      "Content-Length": Buffer.byteLength(reqBody),
     },
-    reqBody
-  );
+  }, reqBody);
+
+  if (res.status !== 200) throw new Error(`Anthropic error: ${res.status} — ${res.body}`);
 
   const parsed = JSON.parse(res.body);
   const text = parsed.content?.[0]?.text || "";
   const clean = text.replace(/```json|```/g, "").trim();
   const start = clean.indexOf("{");
   const end = clean.lastIndexOf("}");
+  if (start === -1 || end === -1) throw new Error("No JSON in Claude response");
   return JSON.parse(clean.slice(start, end + 1));
 }
 
 // ── Commit queue ──────────────────────────────────────────────────────────────
 async function commitQueue(queue) {
-  const existing = await ghGet("queue.json");
+  const existing = await ghGet("queue.json").catch(() => null);
   const sha = existing ? existing.sha : undefined;
-  await ghPut(
-    "queue.json",
-    JSON.stringify(queue, null, 2),
-    sha,
-    `TweetDraft: queue for ${queue.date}`
-  );
+  await ghPut("queue.json", JSON.stringify(queue, null, 2), sha, `TweetDraft: queue for ${queue.date}`);
   console.log("queue.json committed");
 }
 
@@ -176,18 +185,21 @@ async function sendEmail(subject, text) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log("Reading posted log...");
-  const recentContext = await getRecentPostsContext();
-  console.log("Generating tweets (with dedup context)...");
+  console.log("Reading Claude context...");
+  const { text: claudeContext, date: contextDate } = await getClaudeContext();
 
-  const result = await callAnthropic(recentContext);
+  console.log("Reading posted log...");
+  const recentPosts = await getRecentPostsContext();
+
+  console.log("Generating tweets...");
+  const result = await callAnthropic(claudeContext, recentPosts);
   const tweets = result.tweets || [];
   console.log(`Got ${tweets.length} tweets`);
 
   const today = new Date().toISOString().slice(0, 10);
-
   const queue = {
     date: today,
+    contextDate,
     slots: tweets.map((t, i) => ({
       id: `${today}-${i}`,
       type: t.type,
@@ -199,10 +211,7 @@ async function main() {
 
   await commitQueue(queue);
 
-  // Format email — include BST times
-  const date = new Date().toLocaleDateString("en-GB", {
-    weekday: "short", day: "numeric", month: "short",
-  });
+  const date = new Date().toLocaleDateString("en-GB", { weekday:"short", day:"numeric", month:"short" });
   const lines = queue.slots.map((s, i) => {
     const utc = s.scheduledTime.substring(11, 16);
     const bstH = (parseInt(utc.split(":")[0]) + 1) % 24;
@@ -212,7 +221,7 @@ async function main() {
 
   await sendEmail(
     `${tweets.length} tweet drafts — ${date}`,
-    `Fresh drafts for ${date}. Open tweetdraft-approve.html to approve.\n\n` +
+    `Based on your Claude session from ${contextDate}.\nOpen tweetdraft-approve.html to approve.\n\n` +
     "─".repeat(40) + "\n\n" +
     lines.join("\n\n" + "─".repeat(40) + "\n\n")
   );
