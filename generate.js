@@ -154,7 +154,7 @@ Return ONLY valid JSON, no preamble, no markdown:
 // ── Commit queue ──────────────────────────────────────────────────────────────
 async function commitQueue(queue) {
   const existing = await ghGet("queue.json");
-  const sha = existing ? JSON.parse(existing.content ? existing.content : "{}") && existing.sha : undefined;
+  const sha = existing ? existing.sha : undefined;
   await ghPut(
     "queue.json",
     JSON.stringify(queue, null, 2),
