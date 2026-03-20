@@ -1,9 +1,9 @@
-name: TweetDraft — Generate Daily Drafts
+name: TweetDraft — Generate Weekly Batch
 
 on:
   schedule:
-    - cron: "0 1 * * *"   # 1am UTC — gives you time to approve before first slot at 2am
-  workflow_dispatch:
+    - cron: "0 1 * * 1"   # 1am UTC every Monday — generates the full week ahead
+  workflow_dispatch:        # run manually any time
 
 jobs:
   generate:
@@ -20,12 +20,14 @@ jobs:
 
       - run: npm install
 
-      - name: Generate tweets and write queue
+      - name: Generate weekly tweet batch from Notion
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: node generate.js
+
