@@ -1,302 +1,302 @@
 {
-  "startDate": "2026-03-20",
-  "endDate": "2026-03-26",
-  "generatedAt": "2026-03-20T11:13:51.108Z",
+  "startDate": "2026-03-23",
+  "endDate": "2026-03-29",
+  "generatedAt": "2026-03-23T03:48:12.982Z",
   "notionPageCount": 1,
   "totalSlots": 42,
   "slots": [
     {
-      "id": "2026-03-20-0",
-      "type": "SHORT TAKE",
-      "text": "Building an AI video app means choosing between speed and quality at every decision. Most users think they want both. They're wrong - they want one thing done exceptionally well.",
-      "scheduledTime": "2026-03-20T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-20-1",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about AI video isn't the AI part. It's figuring out what people actually want to make videos about. Everyone says 'everything' but their behavior tells a different story.",
-      "scheduledTime": "2026-03-20T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-20-2",
-      "type": "OBSERVATION",
-      "text": "Users describe wanting 'cinematic' videos but consistently choose the fastest generation option over the highest quality one. The gap between stated and revealed preferences is massive.",
-      "scheduledTime": "2026-03-20T10:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-20-3",
-      "type": "NUMBERED LIST",
-      "text": "Three things killing AI video startups:\n1. Assuming people want Hollywood-level output\n2. Building for creators instead of casual users\n3. Optimizing for demo wow instead of daily utility",
-      "scheduledTime": "2026-03-20T14:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-20-4",
-      "type": "SHORT TAKE",
-      "text": "The best validation for a video app isn't people saying it's cool. It's people actually finishing their videos instead of abandoning them halfway through.",
-      "scheduledTime": "2026-03-20T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-20-5",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Video apps have a completion problem. Users start excited, hit the first friction point, and bounce. The solution isn't better AI - it's ruthlessly reducing steps between idea and shareable result.",
-      "scheduledTime": "2026-03-20T22:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-0",
-      "type": "SHORT TAKE",
-      "text": "Every AI video app demo looks identical. Same slick interface, same voice cloning, same 'generate anything' promise. The differentiation is happening at the infrastructure level, not the UI.",
-      "scheduledTime": "2026-03-21T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-1",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The uncanny valley problem in AI video is worse than people admit. Users generate one clip, get excited, then try to make something longer and hit the consistency wall. 30 seconds of decent footage, then it falls apart.",
-      "scheduledTime": "2026-03-21T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-2",
-      "type": "OBSERVATION",
-      "text": "Video generation tools are being pitched as creative platforms but used as content farms. The gap between marketing positioning and actual use cases is massive.",
-      "scheduledTime": "2026-03-21T10:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-3",
-      "type": "NUMBERED LIST",
-      "text": "Three things killing AI video adoption:\n1. Render times still too slow for iteration\n2. No good workflow for editing generated clips\n3. Everyone solving generation, nobody solving distribution",
-      "scheduledTime": "2026-03-21T14:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-4",
-      "type": "SHORT TAKE",
-      "text": "The compute costs for video generation make freemium impossible at scale. Every startup in this space will eventually hit the same pricing wall.",
-      "scheduledTime": "2026-03-21T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-21-5",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Building an AI video app means competing with OpenAI, Google, and Meta on the model side while trying to build a sustainable business on razor-thin margins. The moat has to be somewhere else entirely.",
-      "scheduledTime": "2026-03-21T22:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-0",
-      "type": "SHORT TAKE",
-      "text": "AI video apps are surprisingly hard to validate. Everyone says they want one until you ask them to describe their actual use case. Then it gets fuzzy fast.",
-      "scheduledTime": "2026-03-22T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-1",
-      "type": "NUMBERED LIST",
-      "text": "Three things killing AI video startups:\n1. Processing costs eat margins alive\n2. Users expect Hollywood quality from beta software\n3. Storage requirements scale brutally with user growth",
-      "scheduledTime": "2026-03-22T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-2",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The real problem with AI video isn't the AI part—it's that video creation has always been painful. Adding AI on top of a fundamentally broken workflow just makes it faster to create garbage.",
-      "scheduledTime": "2026-03-22T10:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-3",
-      "type": "OBSERVATION",
-      "text": "Noticed something weird: people demo AI video apps by showing the coolest possible output, but actual users immediately try to recreate their phone videos. Massive expectation mismatch.",
-      "scheduledTime": "2026-03-22T14:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-4",
-      "type": "SHORT TAKE",
-      "text": "Every AI video pitch sounds the same: \"democratize content creation.\" But most people don't want to create content. They want to look good without effort.",
-      "scheduledTime": "2026-03-22T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-22-5",
-      "type": "NUMBERED LIST",
-      "text": "AI video validation questions that actually matter:\n1. Will they pay before seeing results?\n2. How often will they actually use it?\n3. What happens when the novelty wears off?\n4. Can you afford their compute costs?",
-      "scheduledTime": "2026-03-22T22:00:00Z",
-      "status": "pending"
-    },
-    {
       "id": "2026-03-23-0",
       "type": "SHORT TAKE",
-      "text": "Building an AI video app and realizing most people still think of video editing as something you do at a desk. The real opportunity is making it feel as natural as taking a photo.",
+      "text": "AI video tools are everywhere now but they're solving the wrong problem. Nobody needs another way to make generic content. People need help making videos that actually matter to their audience.",
       "scheduledTime": "2026-03-23T02:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-23-1",
       "type": "NUMBERED LIST",
-      "text": "Three things killing AI video apps right now:\n1. Export times that make users question their life choices\n2. Results that look obviously AI-generated\n3. Interfaces designed by people who never edit video",
+      "text": "Things that break when you try to validate an AI video app:\n\n1. Users say they want it but never use demos\n2. Everyone compares you to whatever launched yesterday\n3. The tech moves faster than user feedback\n4. Hard to know if excitement is real or just AI hype",
       "scheduledTime": "2026-03-23T06:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-23-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The AI video space has a weird problem: everyone's building for creators, but creators already have workflows they like. The real users might be people who never considered themselves video people at all.",
+      "text": "The hardest part about building AI video isn't the AI part. It's figuring out what people actually want to create vs what they think they want. Everyone says they want professional videos but most just need something that doesn't look like garbage.",
       "scheduledTime": "2026-03-23T10:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-23-3",
       "type": "OBSERVATION",
-      "text": "Noticed something odd: users will wait 3 minutes for an AI video to generate but get frustrated if the app takes 2 seconds to load. Expectations around AI processing time are completely different.",
+      "text": "Interesting pattern: when you show people AI video demos, they immediately start thinking about content they've never made before instead of improving content they already make. Says something about creative constraints.",
       "scheduledTime": "2026-03-23T14:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-23-4",
       "type": "SHORT TAKE",
-      "text": "Every AI video demo looks incredible until you try to make something specific. The gap between 'wow this is magic' and 'this actually solves my problem' is still massive.",
+      "text": "Most AI video apps feel like solutions in search of problems. Starting with user interviews instead of cool tech demos probably saves months of building the wrong thing.",
       "scheduledTime": "2026-03-23T18:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-23-5",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Wrestling with whether to focus on speed or quality for AI video generation. Users say they want both, but their behavior suggests they'll take slower if the output doesn't look like a fever dream.",
+      "type": "NUMBERED LIST",
+      "text": "Early signals that an AI video idea might work:\n\n1. People describe specific use cases without prompting\n2. They ask about pricing before you mention it\n3. They want to know when they can start using it\n4. They share examples of current painful workarounds",
       "scheduledTime": "2026-03-23T22:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-0",
       "type": "SHORT TAKE",
-      "text": "The hardest part of building an AI video app isn't the AI. It's figuring out what people actually want to make videos about that they can't do already.",
+      "text": "AI video tools are everywhere but most solve problems nobody has. The real challenge isn't making AI generate video — it's figuring out what people actually want to create and why.",
       "scheduledTime": "2026-03-24T02:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-1",
-      "type": "NUMBERED LIST",
-      "text": "Three things killing AI video apps:\n1. Output quality still feels like a tech demo\n2. People have no idea what to prompt for\n3. The 10-second generations don't tell a story",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "Testing an AI video app and hitting the classic validation wall: early users say they love it, but usage drops off a cliff after day 3. Either the novelty wears off or we're missing the actual workflow people need.",
       "scheduledTime": "2026-03-24T06:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-2",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Everyone's building AI video tools but nobody's solving the creative block problem. Staring at a blank prompt box is just as paralyzing as staring at a blank canvas.",
+      "type": "OBSERVATION",
+      "text": "People ask for AI video features they think they want, then use completely different ones when you actually build them. The gap between stated and revealed preferences is massive in creative tools.",
       "scheduledTime": "2026-03-24T10:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-3",
-      "type": "OBSERVATION",
-      "text": "Users spend 3x longer crafting prompts than they do editing the actual output. The prompt is becoming the product.",
+      "type": "NUMBERED LIST",
+      "text": "What kills AI video apps:\n1. Processing times that break creative flow\n2. Output quality that's almost good enough\n3. No clear use case beyond \"this is cool\"\n4. Pricing that assumes enterprise budgets",
       "scheduledTime": "2026-03-24T14:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-4",
       "type": "SHORT TAKE",
-      "text": "The winning AI video app won't be the one with the best models. It'll be the one that makes non-creators feel like creators.",
+      "text": "The AI video space feels like mobile apps in 2009. Everyone knows something big is happening, but most attempts are just desktop software crammed into a new format.",
       "scheduledTime": "2026-03-24T18:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-24-5",
-      "type": "NUMBERED LIST",
-      "text": "What actually matters for AI video validation:\n1. Do people remake the same video 5+ times\n2. Do they share it anywhere\n3. Do they come back tomorrow\n4. Do they pay when free runs out",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "Watching people test the video app: they spend 10 minutes exploring features, get excited, then can't think of what to actually make. The tool works fine. The 'why would I use this' question doesn't have a clear answer yet.",
       "scheduledTime": "2026-03-24T22:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-0",
-      "type": "SHORT TAKE",
-      "text": "Building an AI video app and realizing the hardest part isn't the AI - it's figuring out what people actually want to create versus what they say they want to create.",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The biggest problem with AI video apps isn't the tech anymore. It's that everyone thinks they need Netflix-level production value when most people just want their weird idea to not look like garbage. The bar is way lower than founders think.",
       "scheduledTime": "2026-03-25T02:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-1",
-      "type": "NUMBERED LIST",
-      "text": "Things nobody tells you about AI video apps:\n1. Rendering costs eat your margins alive\n2. Users expect Hollywood quality from a mobile upload\n3. The coolest features get used once then forgotten\n4. Storage bills compound faster than user growth",
+      "type": "SHORT TAKE",
+      "text": "Video generation is getting commoditized fast. The real moat is in the editing interface and understanding what people actually want to create.",
       "scheduledTime": "2026-03-25T06:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-2",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The AI video space feels like everyone's building the same product with different branding. Either we're all missing something obvious or there's not actually that much differentiation possible. Starting to think distribution matters more than features here.",
+      "type": "NUMBERED LIST",
+      "text": "Things nobody tells you about AI video apps:\n\n1. Rendering times still suck\n2. Users expect instant everything\n3. Storage costs eat your margins\n4. Most generated clips are 3 seconds of mediocrity",
       "scheduledTime": "2026-03-25T10:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-3",
       "type": "OBSERVATION",
-      "text": "Video apps have this weird usage pattern - people download them with big creative plans, make one thing, share it, then never open the app again. The retention cliff is brutal.",
+      "text": "Interesting pattern: people describe what they want in video using completely different language than how AI models are trained. There's a translation layer missing that nobody's solving properly.",
       "scheduledTime": "2026-03-25T14:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-4",
-      "type": "SHORT TAKE",
-      "text": "Spent three days optimizing video compression algorithms. Then talked to users and learned they're mostly sharing on platforms that compress it again anyway. Sometimes optimization is just expensive procrastination.",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The feedback loop on video is brutal. You wait 2 minutes for a render, hate it, tweak one thing, wait again. Compare that to text where you see changes instantly. This fundamental UX problem is why most AI video tools feel clunky.",
       "scheduledTime": "2026-03-25T18:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-25-5",
-      "type": "NUMBERED LIST",
-      "text": "What I'm learning about AI video validation:\n1. Demo videos get huge engagement but don't predict usage\n2. People want to edit the AI output more than you'd expect\n3. Quality threshold is higher than other AI tools\n4. Mobile-first changes everything",
+      "type": "SHORT TAKE",
+      "text": "Everyone's building the video creation tool. Almost nobody's thinking about the video management problem that comes after.",
       "scheduledTime": "2026-03-25T22:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-0",
       "type": "SHORT TAKE",
-      "text": "AI video tools are everywhere but most solve the wrong problem. Users don't want 'professional quality' — they want something that doesn't look embarrassingly bad.",
+      "text": "The hardest part about building an AI video app isn't the AI. It's figuring out what people actually want to make videos about. Most founders skip this step and wonder why nobody uses their tool.",
       "scheduledTime": "2026-03-26T02:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-1",
       "type": "NUMBERED LIST",
-      "text": "Three things killing AI video adoption:\n\n1. Takes 20 minutes to generate 30 seconds\n2. Can't iterate without starting over\n3. Results are wildly unpredictable\n\nSpeed and control beat perfect output.",
+      "text": "What I learned this week testing video AI features:\n\n1. People care more about speed than perfection\n2. Audio quality matters way more than I thought\n3. Export formats break deals faster than bugs do\n4. Everyone assumes it should be free",
       "scheduledTime": "2026-03-26T06:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about building AI video isn't the AI — it's the infrastructure. Users expect Netflix-level streaming but you're serving files that take 15 minutes to render. Every demo becomes a loading screen.",
+      "text": "The video generation models are getting scary good, but they're also becoming commoditized fast. If your moat is just 'we use the best model,' you don't have a moat. The real value is in the workflow around the generation.",
       "scheduledTime": "2026-03-26T10:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-3",
       "type": "OBSERVATION",
-      "text": "People testing AI video apps immediately try to break them with edge cases. First prompt is always something like 'make a video of a purple elephant riding a motorcycle through Times Square.'",
+      "text": "Noticed something weird: users will wait 3 minutes for a video to generate but abandon after 10 seconds if the preview doesn't load. Patience is contextual.",
       "scheduledTime": "2026-03-26T14:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-4",
       "type": "SHORT TAKE",
-      "text": "Most AI video startups are building for creators who already know how to edit. The real market is people who've never opened Premiere and never will.",
+      "text": "Building with AI feels like building on quicksand sometimes. The capabilities change so fast that your product assumptions can be wrong within weeks.",
       "scheduledTime": "2026-03-26T18:00:00Z",
       "status": "pending"
     },
     {
       "id": "2026-03-26-5",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Storage costs for AI video are brutal. One user can burn through $50 in compute generating videos they'll never use. Need to nail the business model before the tech gets too good.",
+      "type": "NUMBERED LIST",
+      "text": "Three things that kill AI video apps:\n\n1. Thinking generation quality is the only metric that matters\n2. Making the UI as complex as professional video software\n3. Not having a clear answer to 'why not just use ChatGPT?'",
       "scheduledTime": "2026-03-26T22:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-0",
+      "type": "SHORT TAKE",
+      "text": "AI video apps are having their 2010 photo filter moment. Everyone thinks the tech is the product. The tech is table stakes.",
+      "scheduledTime": "2026-03-27T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-1",
+      "type": "NUMBERED LIST",
+      "text": "Things nobody warns you about with AI video:\n1. Render times still suck at scale\n2. Users expect Netflix quality from beta models\n3. Storage costs eat your margins\n4. Every demo breaks in front of investors",
+      "scheduledTime": "2026-03-27T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The core problem with AI video isn't the AI part. It's that most people don't actually need custom video content. They need better distribution for the videos they already have.",
+      "scheduledTime": "2026-03-27T10:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-3",
+      "type": "OBSERVATION",
+      "text": "Noticed something weird: users who create the most AI videos share the fewest. The ones who share the most barely use the AI features. There's a signal here.",
+      "scheduledTime": "2026-03-27T14:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-4",
+      "type": "SHORT TAKE",
+      "text": "Building an AI video app feels like opening a restaurant because you found a good tomato supplier. The tomato matters, but can you actually cook?",
+      "scheduledTime": "2026-03-27T18:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-27-5",
+      "type": "NUMBERED LIST",
+      "text": "What actually matters for AI video adoption:\n1. Export time under 30 seconds\n2. One-click sharing to platforms\n3. Templates that don't look like templates\n4. Undo that actually works",
+      "scheduledTime": "2026-03-27T22:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-0",
+      "type": "SHORT TAKE",
+      "text": "The AI video space feels like everyone's building the same product with different UI colors. Most founders are copying features instead of solving actual user problems.",
+      "scheduledTime": "2026-03-28T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-1",
+      "type": "NUMBERED LIST",
+      "text": "Things nobody tells you about AI video apps:\n1. Processing costs eat your margins alive\n2. Users expect Hollywood quality from day one\n3. Storage becomes your biggest headache\n4. Rendering times kill user retention",
+      "scheduledTime": "2026-03-28T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The real challenge isn't making AI generate decent videos. It's making users care enough to wait 3 minutes for processing when TikTok gives instant gratification. Patience is the scarcest resource in 2026.",
+      "scheduledTime": "2026-03-28T10:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-3",
+      "type": "OBSERVATION",
+      "text": "Noticed something: users who create their first AI video on mobile never switch to desktop. But users who start on desktop often want mobile editing later. Platform choice in the first 60 seconds predicts everything.",
+      "scheduledTime": "2026-03-28T14:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-4",
+      "type": "NUMBERED LIST",
+      "text": "What kills AI video startups:\n1. Underestimating compute costs\n2. Overestimating how much users will pay\n3. Building features before finding product-market fit\n4. Assuming viral content creates sticky users",
+      "scheduledTime": "2026-03-28T18:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-28-5",
+      "type": "SHORT TAKE",
+      "text": "Most AI video apps are solutions looking for problems. The winning approach isn't better AI - it's figuring out which specific use case people will actually pay for consistently.",
+      "scheduledTime": "2026-03-28T22:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-0",
+      "type": "SHORT TAKE",
+      "text": "Building an AI video app is teaching me that most people overestimate how much AI they actually want in their tools. They want the output, not the experience of wrestling with prompts.",
+      "scheduledTime": "2026-03-29T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-1",
+      "type": "NUMBERED LIST",
+      "text": "What nobody tells you about AI video apps:\n\n1. Rendering infrastructure costs eat your margins alive\n2. Users expect Hollywood quality from iPhone-quality inputs\n3. The AI part is table stakes, distribution is everything\n4. Legal questions around training data keep lawyers busy",
+      "scheduledTime": "2026-03-29T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The cold start problem with AI video is brutal. You need users to train the model, but the model sucks without users. Chicken and egg, except the chicken costs $50k/month in compute and the egg might never hatch.",
+      "scheduledTime": "2026-03-29T10:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-3",
+      "type": "OBSERVATION",
+      "text": "Interesting pattern: when people describe what they want from AI video tools, they always reference existing content. They want to remake something, not create something new. The creative leap still happens in human brains.",
+      "scheduledTime": "2026-03-29T14:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-4",
+      "type": "SHORT TAKE",
+      "text": "The hardest part of validating an AI video app isn't technical feasibility. It's figuring out if people will pay premium prices for something that feels like magic but costs like enterprise software.",
+      "scheduledTime": "2026-03-29T18:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-29-5",
+      "type": "NUMBERED LIST",
+      "text": "AI video app reality check:\n\n1. Demo videos get 100k views\n2. Signups convert at 2%\n3. Paying customers convert at 0.1%\n4. Math is unforgiving\n5. Back to the drawing board",
+      "scheduledTime": "2026-03-29T22:00:00Z",
       "status": "pending"
     }
   ]
