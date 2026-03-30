@@ -1,302 +1,302 @@
 {
-  "startDate": "2026-03-23",
-  "endDate": "2026-03-29",
-  "generatedAt": "2026-03-23T03:48:12.982Z",
-  "notionPageCount": 1,
+  "startDate": "2026-03-30",
+  "endDate": "2026-04-05",
+  "generatedAt": "2026-03-30T04:12:17.493Z",
+  "notionPageCount": 0,
   "totalSlots": 42,
   "slots": [
     {
-      "id": "2026-03-23-0",
+      "id": "2026-03-30-0",
       "type": "SHORT TAKE",
-      "text": "AI video tools are everywhere now but they're solving the wrong problem. Nobody needs another way to make generic content. People need help making videos that actually matter to their audience.",
-      "scheduledTime": "2026-03-23T02:00:00Z",
+      "text": "Most founders validate ideas by asking 'would you use this?' Wrong question. Ask 'how do you solve this problem today?' Then watch them describe their current painful workaround.",
+      "scheduledTime": "2026-03-30T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-23-1",
+      "id": "2026-03-30-1",
       "type": "NUMBERED LIST",
-      "text": "Things that break when you try to validate an AI video app:\n\n1. Users say they want it but never use demos\n2. Everyone compares you to whatever launched yesterday\n3. The tech moves faster than user feedback\n4. Hard to know if excitement is real or just AI hype",
-      "scheduledTime": "2026-03-23T06:00:00Z",
+      "text": "3 things that kill user interviews:\n1. Leading questions that beg for yes\n2. Talking about your solution too early\n3. Not asking for the story of their last bad experience",
+      "scheduledTime": "2026-03-30T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-23-2",
+      "id": "2026-03-30-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about building AI video isn't the AI part. It's figuring out what people actually want to create vs what they think they want. Everyone says they want professional videos but most just need something that doesn't look like garbage.",
-      "scheduledTime": "2026-03-23T10:00:00Z",
+      "text": "Building with AI feels like having a really smart intern who never asks clarifying questions. You get exactly what you asked for, not what you actually needed. The gap between those two things is where most AI projects die.",
+      "scheduledTime": "2026-03-30T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-23-3",
+      "id": "2026-03-30-3",
       "type": "OBSERVATION",
-      "text": "Interesting pattern: when you show people AI video demos, they immediately start thinking about content they've never made before instead of improving content they already make. Says something about creative constraints.",
-      "scheduledTime": "2026-03-23T14:00:00Z",
+      "text": "Founders who ship fast usually have one thing in common: they cut scope ruthlessly before they start building, not after they realize they're behind schedule.",
+      "scheduledTime": "2026-03-30T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-23-4",
+      "id": "2026-03-30-4",
       "type": "SHORT TAKE",
-      "text": "Most AI video apps feel like solutions in search of problems. Starting with user interviews instead of cool tech demos probably saves months of building the wrong thing.",
-      "scheduledTime": "2026-03-23T18:00:00Z",
+      "text": "Every workflow friction point you ignore becomes a user drop-off point. There's no such thing as 'just one more click' when people have alternatives.",
+      "scheduledTime": "2026-03-30T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-23-5",
+      "id": "2026-03-30-5",
       "type": "NUMBERED LIST",
-      "text": "Early signals that an AI video idea might work:\n\n1. People describe specific use cases without prompting\n2. They ask about pricing before you mention it\n3. They want to know when they can start using it\n4. They share examples of current painful workarounds",
-      "scheduledTime": "2026-03-23T22:00:00Z",
+      "text": "4 signs you're validating wrong:\n1. Everyone says yes but no one signs up\n2. You're explaining more than listening\n3. Friends are your primary data source\n4. You haven't heard a clear no yet",
+      "scheduledTime": "2026-03-30T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-24-0",
+      "id": "2026-03-31-0",
       "type": "SHORT TAKE",
-      "text": "AI video tools are everywhere but most solve problems nobody has. The real challenge isn't making AI generate video — it's figuring out what people actually want to create and why.",
-      "scheduledTime": "2026-03-24T02:00:00Z",
+      "text": "Most idea validation feels like checking boxes instead of actually listening. You're not looking for people to say yes to your idea. You're looking for people who already have the problem badly enough to pay for a terrible solution.",
+      "scheduledTime": "2026-03-31T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-24-1",
+      "id": "2026-03-31-1",
+      "type": "NUMBERED LIST",
+      "text": "What actually kills user interviews:\n\n1. Leading questions that fish for validation\n2. Talking to people who are too polite to be honest\n3. Asking hypotheticals instead of past behavior\n4. Taking notes instead of recording\n5. Skipping the follow-up",
+      "scheduledTime": "2026-03-31T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-03-31-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "Testing an AI video app and hitting the classic validation wall: early users say they love it, but usage drops off a cliff after day 3. Either the novelty wears off or we're missing the actual workflow people need.",
-      "scheduledTime": "2026-03-24T06:00:00Z",
+      "text": "The hardest part about building with AI isn't the technical stuff. It's that everyone expects it to be magic, but you still need to understand the actual workflow you're trying to improve. AI that automates bad processes just makes bad processes faster.",
+      "scheduledTime": "2026-03-31T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-24-2",
+      "id": "2026-03-31-3",
       "type": "OBSERVATION",
-      "text": "People ask for AI video features they think they want, then use completely different ones when you actually build them. The gap between stated and revealed preferences is massive in creative tools.",
-      "scheduledTime": "2026-03-24T10:00:00Z",
+      "text": "Founders who talk to 50 users and pivot are more successful than founders who talk to 5 users and stay the course. But most founders would rather build for 6 months than have 20 awkward conversations.",
+      "scheduledTime": "2026-03-31T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-24-3",
-      "type": "NUMBERED LIST",
-      "text": "What kills AI video apps:\n1. Processing times that break creative flow\n2. Output quality that's almost good enough\n3. No clear use case beyond \"this is cool\"\n4. Pricing that assumes enterprise budgets",
-      "scheduledTime": "2026-03-24T14:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-24-4",
+      "id": "2026-03-31-4",
       "type": "SHORT TAKE",
-      "text": "The AI video space feels like mobile apps in 2009. Everyone knows something big is happening, but most attempts are just desktop software crammed into a new format.",
-      "scheduledTime": "2026-03-24T18:00:00Z",
+      "text": "Friction isn't always bad. Sometimes friction is the only thing preventing your users from making expensive mistakes. The goal isn't to remove all friction—it's to remove the right friction.",
+      "scheduledTime": "2026-03-31T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-24-5",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "Watching people test the video app: they spend 10 minutes exploring features, get excited, then can't think of what to actually make. The tool works fine. The 'why would I use this' question doesn't have a clear answer yet.",
-      "scheduledTime": "2026-03-24T22:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-25-0",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The biggest problem with AI video apps isn't the tech anymore. It's that everyone thinks they need Netflix-level production value when most people just want their weird idea to not look like garbage. The bar is way lower than founders think.",
-      "scheduledTime": "2026-03-25T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-25-1",
-      "type": "SHORT TAKE",
-      "text": "Video generation is getting commoditized fast. The real moat is in the editing interface and understanding what people actually want to create.",
-      "scheduledTime": "2026-03-25T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-25-2",
+      "id": "2026-03-31-5",
       "type": "NUMBERED LIST",
-      "text": "Things nobody tells you about AI video apps:\n\n1. Rendering times still suck\n2. Users expect instant everything\n3. Storage costs eat your margins\n4. Most generated clips are 3 seconds of mediocrity",
-      "scheduledTime": "2026-03-25T10:00:00Z",
+      "text": "Signs you're solving a real problem:\n\n1. People complain about it without prompting\n2. They've already tried 3+ solutions that suck\n3. They've built internal workarounds\n4. They can tell you exactly how much it costs them\n5. They ask when they can start using yours",
+      "scheduledTime": "2026-03-31T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-25-3",
+      "id": "2026-04-01-0",
+      "type": "SHORT TAKE",
+      "text": "Most founders skip the boring parts of user research. The boring parts are where you find out your product actually sucks.",
+      "scheduledTime": "2026-04-01T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-01-1",
+      "type": "NUMBERED LIST",
+      "text": "Three signs you're validating wrong:\n\n1. Everyone says \"great idea\" but won't pay\n2. You're asking hypotheticals instead of studying behavior\n3. Your feedback comes from people who look exactly like you",
+      "scheduledTime": "2026-04-01T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-01-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "The AI tools that actually stick in my workflow are the ones that remove steps, not add capabilities. But most AI features feel like someone bolted a chatbot onto existing software and called it innovation.",
+      "scheduledTime": "2026-04-01T10:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-01-3",
       "type": "OBSERVATION",
-      "text": "Interesting pattern: people describe what they want in video using completely different language than how AI models are trained. There's a translation layer missing that nobody's solving properly.",
-      "scheduledTime": "2026-03-25T14:00:00Z",
+      "text": "Founders who talk to 5 users think they need more features. Founders who talk to 50 users realize they need fewer.",
+      "scheduledTime": "2026-04-01T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-25-4",
-      "type": "PROBLEM DEEP-DIVE",
-      "text": "The feedback loop on video is brutal. You wait 2 minutes for a render, hate it, tweak one thing, wait again. Compare that to text where you see changes instantly. This fundamental UX problem is why most AI video tools feel clunky.",
-      "scheduledTime": "2026-03-25T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-25-5",
+      "id": "2026-04-01-4",
       "type": "SHORT TAKE",
-      "text": "Everyone's building the video creation tool. Almost nobody's thinking about the video management problem that comes after.",
-      "scheduledTime": "2026-03-25T22:00:00Z",
+      "text": "Your workflow has friction you don't notice because you built muscle memory around broken things. Fresh eyes see what you've gone blind to.",
+      "scheduledTime": "2026-04-01T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-26-0",
-      "type": "SHORT TAKE",
-      "text": "The hardest part about building an AI video app isn't the AI. It's figuring out what people actually want to make videos about. Most founders skip this step and wonder why nobody uses their tool.",
-      "scheduledTime": "2026-03-26T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-26-1",
+      "id": "2026-04-01-5",
       "type": "NUMBERED LIST",
-      "text": "What I learned this week testing video AI features:\n\n1. People care more about speed than perfection\n2. Audio quality matters way more than I thought\n3. Export formats break deals faster than bugs do\n4. Everyone assumes it should be free",
-      "scheduledTime": "2026-03-26T06:00:00Z",
+      "text": "What kills good ideas:\n\n1. Building for imaginary users\n2. Optimizing for edge cases first\n3. Adding complexity to feel productive\n4. Mistaking activity for progress",
+      "scheduledTime": "2026-04-01T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-26-2",
+      "id": "2026-04-02-0",
+      "type": "SHORT TAKE",
+      "text": "Most founders confuse user feedback with user requests. Feedback tells you what's broken. Requests tell you what they think would fix it. Listen to the first, be skeptical of the second.",
+      "scheduledTime": "2026-04-02T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-02-1",
+      "type": "NUMBERED LIST",
+      "text": "3 validation red flags that took me too long to learn:\n\n1. Users say \"interesting\" instead of asking when they can use it\n2. They ask about features before understanding the core problem\n3. They want to \"think about it\" after seeing the demo",
+      "scheduledTime": "2026-04-02T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-02-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The video generation models are getting scary good, but they're also becoming commoditized fast. If your moat is just 'we use the best model,' you don't have a moat. The real value is in the workflow around the generation.",
-      "scheduledTime": "2026-03-26T10:00:00Z",
+      "text": "The hardest part of AI integration isn't the technical implementation. It's figuring out which decisions you want humans to make vs which ones you want to automate. Most founders automate the wrong things first.",
+      "scheduledTime": "2026-04-02T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-26-3",
+      "id": "2026-04-02-3",
       "type": "OBSERVATION",
-      "text": "Noticed something weird: users will wait 3 minutes for a video to generate but abandon after 10 seconds if the preview doesn't load. Patience is contextual.",
-      "scheduledTime": "2026-03-26T14:00:00Z",
+      "text": "Workflow friction usually lives in the handoffs between tools, not within the tools themselves. Users adapt to clunky interfaces faster than they adapt to switching contexts.",
+      "scheduledTime": "2026-04-02T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-26-4",
+      "id": "2026-04-02-4",
       "type": "SHORT TAKE",
-      "text": "Building with AI feels like building on quicksand sometimes. The capabilities change so fast that your product assumptions can be wrong within weeks.",
-      "scheduledTime": "2026-03-26T18:00:00Z",
+      "text": "Talking to users feels awkward because you're trying to extract insights instead of having conversations. Stop mining for gold and start actually listening.",
+      "scheduledTime": "2026-04-02T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-26-5",
+      "id": "2026-04-02-5",
       "type": "NUMBERED LIST",
-      "text": "Three things that kill AI video apps:\n\n1. Thinking generation quality is the only metric that matters\n2. Making the UI as complex as professional video software\n3. Not having a clear answer to 'why not just use ChatGPT?'",
-      "scheduledTime": "2026-03-26T22:00:00Z",
+      "text": "Signs you're building the right thing:\n\n1. Users describe the problem without you asking\n2. They've already tried to solve it themselves\n3. They ask about pricing before you mention it\n4. They introduce you to others with the same problem",
+      "scheduledTime": "2026-04-02T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-0",
+      "id": "2026-04-03-0",
       "type": "SHORT TAKE",
-      "text": "AI video apps are having their 2010 photo filter moment. Everyone thinks the tech is the product. The tech is table stakes.",
-      "scheduledTime": "2026-03-27T02:00:00Z",
+      "text": "Most founders think user interviews are about asking what people want. Wrong. They're about watching what people actually do when they think nobody's judging them.",
+      "scheduledTime": "2026-04-03T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-1",
+      "id": "2026-04-03-1",
       "type": "NUMBERED LIST",
-      "text": "Things nobody warns you about with AI video:\n1. Render times still suck at scale\n2. Users expect Netflix quality from beta models\n3. Storage costs eat your margins\n4. Every demo breaks in front of investors",
-      "scheduledTime": "2026-03-27T06:00:00Z",
+      "text": "Three things that kill idea validation:\n\n1. Leading questions that telegraph the answer you want\n2. Talking to friends who will lie to be nice\n3. Confusing polite interest with actual demand",
+      "scheduledTime": "2026-04-03T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-2",
+      "id": "2026-04-03-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The core problem with AI video isn't the AI part. It's that most people don't actually need custom video content. They need better distribution for the videos they already have.",
-      "scheduledTime": "2026-03-27T10:00:00Z",
+      "text": "The hardest part about building with AI isn't the technical integration. It's figuring out which human decisions you should automate vs which ones you should augment. Get this wrong and users feel replaced instead of empowered.",
+      "scheduledTime": "2026-04-03T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-3",
+      "id": "2026-04-03-3",
       "type": "OBSERVATION",
-      "text": "Noticed something weird: users who create the most AI videos share the fewest. The ones who share the most barely use the AI features. There's a signal here.",
-      "scheduledTime": "2026-03-27T14:00:00Z",
+      "text": "People will endure incredible friction if the outcome matters enough to them. But they'll abandon a product over tiny inconveniences if they're just browsing. Context determines tolerance.",
+      "scheduledTime": "2026-04-03T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-4",
+      "id": "2026-04-03-4",
       "type": "SHORT TAKE",
-      "text": "Building an AI video app feels like opening a restaurant because you found a good tomato supplier. The tomato matters, but can you actually cook?",
-      "scheduledTime": "2026-03-27T18:00:00Z",
+      "text": "Your workflow has too many steps if you find yourself making mental notes to 'clean this up later.' Users won't forgive what you've already gotten used to ignoring.",
+      "scheduledTime": "2026-04-03T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-27-5",
+      "id": "2026-04-03-5",
       "type": "NUMBERED LIST",
-      "text": "What actually matters for AI video adoption:\n1. Export time under 30 seconds\n2. One-click sharing to platforms\n3. Templates that don't look like templates\n4. Undo that actually works",
-      "scheduledTime": "2026-03-27T22:00:00Z",
+      "text": "Signs you're talking to the wrong users:\n\n1. They keep suggesting features for 'other people'\n2. Their problems sound theoretical, not urgent\n3. They have time for hour-long calls about your idea",
+      "scheduledTime": "2026-04-03T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-28-0",
+      "id": "2026-04-04-0",
       "type": "SHORT TAKE",
-      "text": "The AI video space feels like everyone's building the same product with different UI colors. Most founders are copying features instead of solving actual user problems.",
-      "scheduledTime": "2026-03-28T02:00:00Z",
+      "text": "Most founders think user interviews are about asking \"would you buy this?\" Wrong question. Ask \"walk me through the last time you dealt with [problem].\" The story tells you everything the hypothetical won't.",
+      "scheduledTime": "2026-04-04T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-28-1",
+      "id": "2026-04-04-1",
       "type": "NUMBERED LIST",
-      "text": "Things nobody tells you about AI video apps:\n1. Processing costs eat your margins alive\n2. Users expect Hollywood quality from day one\n3. Storage becomes your biggest headache\n4. Rendering times kill user retention",
-      "scheduledTime": "2026-03-28T06:00:00Z",
+      "text": "Signs your idea validation is actually just confirmation bias:\n\n1. You're only talking to people who already agree with you\n2. Leading questions that telegraph the \"right\" answer\n3. Interpreting polite interest as demand\n4. Skipping the \"how do you solve this today\" question",
+      "scheduledTime": "2026-04-04T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-28-2",
+      "id": "2026-04-04-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The real challenge isn't making AI generate decent videos. It's making users care enough to wait 3 minutes for processing when TikTok gives instant gratification. Patience is the scarcest resource in 2026.",
-      "scheduledTime": "2026-03-28T10:00:00Z",
+      "text": "The hardest part about building with AI isn't the technical integration. It's figuring out which manual processes actually need automation vs which ones people want to keep doing themselves. Users say they want everything automated but their behavior says otherwise.",
+      "scheduledTime": "2026-04-04T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-28-3",
+      "id": "2026-04-04-3",
       "type": "OBSERVATION",
-      "text": "Noticed something: users who create their first AI video on mobile never switch to desktop. But users who start on desktop often want mobile editing later. Platform choice in the first 60 seconds predicts everything.",
-      "scheduledTime": "2026-03-28T14:00:00Z",
+      "text": "Friction in workflows is often intentional, not accidental. That approval step that seems redundant? It's probably catching edge cases or forcing someone to actually think. Remove the wrong friction and you create bigger problems.",
+      "scheduledTime": "2026-04-04T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-28-4",
-      "type": "NUMBERED LIST",
-      "text": "What kills AI video startups:\n1. Underestimating compute costs\n2. Overestimating how much users will pay\n3. Building features before finding product-market fit\n4. Assuming viral content creates sticky users",
-      "scheduledTime": "2026-03-28T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-28-5",
+      "id": "2026-04-04-4",
       "type": "SHORT TAKE",
-      "text": "Most AI video apps are solutions looking for problems. The winning approach isn't better AI - it's figuring out which specific use case people will actually pay for consistently.",
-      "scheduledTime": "2026-03-28T22:00:00Z",
+      "text": "When someone says \"this is exactly what we need\" in a user interview, dig deeper. What they usually mean is \"this sounds good in theory.\" The real test is whether they'll change their current workflow to use it.",
+      "scheduledTime": "2026-04-04T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-29-0",
-      "type": "SHORT TAKE",
-      "text": "Building an AI video app is teaching me that most people overestimate how much AI they actually want in their tools. They want the output, not the experience of wrestling with prompts.",
-      "scheduledTime": "2026-03-29T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-29-1",
+      "id": "2026-04-04-5",
       "type": "NUMBERED LIST",
-      "text": "What nobody tells you about AI video apps:\n\n1. Rendering infrastructure costs eat your margins alive\n2. Users expect Hollywood quality from iPhone-quality inputs\n3. The AI part is table stakes, distribution is everything\n4. Legal questions around training data keep lawyers busy",
-      "scheduledTime": "2026-03-29T06:00:00Z",
+      "text": "What actually happens when you ship an MVP:\n\n1. Half your assumptions were wrong\n2. Users find workarounds you never considered\n3. The feature you thought was nice-to-have becomes essential\n4. The core value prop needs rewording, not rebuilding",
+      "scheduledTime": "2026-04-04T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-29-2",
+      "id": "2026-04-05-0",
+      "type": "SHORT TAKE",
+      "text": "Most founders skip validation because they think it means asking \"would you buy this?\" That question is useless. Better question: \"walk me through the last time this problem cost you time or money.\"",
+      "scheduledTime": "2026-04-05T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-05-1",
+      "type": "NUMBERED LIST",
+      "text": "Why user interviews fail:\n1. You lead them to your solution\n2. You ask hypotheticals instead of past behavior\n3. You talk to people who are polite, not desperate\n4. You stop after 5 conversations",
+      "scheduledTime": "2026-04-05T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-05-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The cold start problem with AI video is brutal. You need users to train the model, but the model sucks without users. Chicken and egg, except the chicken costs $50k/month in compute and the egg might never hatch.",
-      "scheduledTime": "2026-03-29T10:00:00Z",
+      "text": "AI tools are making it easier to build the wrong thing faster. You can spin up an MVP in hours now, but validation still takes weeks of actual conversations. The bottleneck shifted from building to understanding.",
+      "scheduledTime": "2026-04-05T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-29-3",
+      "id": "2026-04-05-3",
       "type": "OBSERVATION",
-      "text": "Interesting pattern: when people describe what they want from AI video tools, they always reference existing content. They want to remake something, not create something new. The creative leap still happens in human brains.",
-      "scheduledTime": "2026-03-29T14:00:00Z",
+      "text": "Founders who say \"users don't know what they want\" usually mean \"users don't want what I built.\" The ones who consistently nail product-market fit spend more time listening than explaining.",
+      "scheduledTime": "2026-04-05T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-29-4",
+      "id": "2026-04-05-4",
       "type": "SHORT TAKE",
-      "text": "The hardest part of validating an AI video app isn't technical feasibility. It's figuring out if people will pay premium prices for something that feels like magic but costs like enterprise software.",
-      "scheduledTime": "2026-03-29T18:00:00Z",
+      "text": "Friction isn't always bad. Sometimes it's the only thing preventing your users from making expensive mistakes. Remove the right friction, keep the guardrails.",
+      "scheduledTime": "2026-04-05T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-29-5",
+      "id": "2026-04-05-5",
       "type": "NUMBERED LIST",
-      "text": "AI video app reality check:\n\n1. Demo videos get 100k views\n2. Signups convert at 2%\n3. Paying customers convert at 0.1%\n4. Math is unforgiving\n5. Back to the drawing board",
-      "scheduledTime": "2026-03-29T22:00:00Z",
+      "text": "Signs you're building a vitamin, not a painkiller:\n1. Users say \"that's cool\" instead of \"when can I get this\"\n2. They forget to follow up after demos\n3. You're explaining the problem more than the solution",
+      "scheduledTime": "2026-04-05T22:00:00Z",
       "status": "pending"
     }
   ]
