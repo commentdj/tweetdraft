@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#080b0f">
+<title>TikTok Queue</title>
+<style>
+:root{--bg:#080b0f;--surface:#0e1318;--border:#1e2a35;--text:#d4dde6;--dim:#5e7a8a;--accent:#00d4ff;--adim:rgba(0,212,255,.15);--green:#00e09a;--gdim:rgba(0,224,154,.15);--red:#ff4d6a;--rdim:rgba(255,77,106,.12);--amber:#ffb347;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom);}
+.header{padding:20px 20px 0;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);padding-bottom:16px;}
+.logo{width:36px;height:36px;background:var(--adim);border:1px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.header h1{font-size:18px;font-weight:700;color:#fff;}
+.header p{font-size:12px;color:var(--dim);margin-top:1px;}
+.body{padding:20px;}
+.setup-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;}
+.setup-card h2{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.setup-card p{font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.6;}
+label{display:block;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-size:15px;outline:none;margin-bottom:12px;-webkit-appearance:none;}
+input:focus{border-color:var(--accent);}
+input[type=password]{letter-spacing:.1em;}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:10px;font-size:16px;font-weight:700;border:none;cursor:pointer;transition:all .15s;margin-bottom:10px;}
+.btn-p{background:var(--accent);color:#000;}
+.btn-p:active{background:#22dfff;}
+.btn-s{background:var(--surface);color:var(--text);border:1px solid var(--border);}
+.btn-s:active{background:var(--border);}
+.btn-d{background:var(--rdim);color:var(--red);border:1px solid rgba(255,77,106,.25);}
+
+/* URL input area */
+.url-input-wrap{position:relative;margin-bottom:12px;}
+.url-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-size:14px;min-height:100px;resize:none;outline:none;font-family:inherit;line-height:1.5;}
+.url-input:focus{border-color:var(--accent);}
+.url-input::placeholder{color:var(--dim);}
+
+/* Queue list */
+.queue-list{margin-top:4px;}
+.queue-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;}
+.qi-url{flex:1;font-size:12px;color:var(--dim);word-break:break-all;line-height:1.4;}
+.qi-del{background:none;border:none;color:var(--red);font-size:20px;cursor:pointer;padding:4px;flex-shrink:0;}
+
+/* Status */
+.status-bar{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;display:flex;gap:8px;align-items:center;line-height:1.5;}
+.status-ok{background:var(--gdim);border:1px solid rgba(0,224,154,.3);color:var(--green);}
+.status-err{background:var(--rdim);border:1px solid rgba(255,77,106,.3);color:var(--red);}
+.status-info{background:var(--adim);border:1px solid rgba(0,212,255,.25);color:var(--accent);}
+.status-warn{background:rgba(255,179,71,.1);border:1px solid rgba(255,179,71,.25);color:var(--amber);}
+
+/* Count badge */
+.count-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#000;font-size:12px;font-weight:700;min-width:24px;height:24px;border-radius:12px;padding:0 6px;}
+
+/* Setup toggle */
+.toggle-setup{font-size:12px;color:var(--dim);text-decoration:underline;cursor:pointer;margin-bottom:16px;display:block;}
+.setup-fields{display:none;}
+.setup-fields.vis{display:block;}
+
+/* Share tip */
+.share-tip{background:rgba(255,179,71,.08);border:1px solid rgba(255,179,71,.2);border-radius:10px;padding:14px;font-size:13px;color:var(--amber);line-height:1.7;margin-bottom:16px;}
+.share-tip strong{color:#fff;}
+
+/* Safe area */
+.safe-area-pad{height:env(safe-area-inset-bottom,20px);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">&#127911;</div>
+  <div>
+    <h1>TikTok Queue</h1>
+    <p>Add links &rarr; syncs to ScriptBuilder</p>
+  </div>
+</div>
+
+<div class="body">
+
+  <div id="statusMsg" style="display:none"></div>
+
+  <!-- Share tip -->
+  <div class="share-tip">
+    <strong>How to use:</strong> Find a TikTok you like &rarr; tap Share &rarr; Copy Link &rarr; paste it here &rarr; tap Add. Links sync to your desktop ScriptBuilder automatically.
+  </div>
+
+  <!-- Setup (collapsed after first use) -->
+  <span class="toggle-setup" onclick="toggleSetup()">&#9881; GitHub settings</span>
+  <div class="setup-fields" id="setupFields">
+    <div class="setup-card">
+      <h2>GitHub Connection</h2>
+      <p>Enter once — saved on this device. Your desktop ScriptBuilder reads from the same repo.</p>
+      <label>Personal Access Token</label>
+      <input type="password" id="ghToken" placeholder="github_pat_xxx" autocomplete="off">
+      <label>Repo (username/reponame)</label>
+      <input type="text" id="ghRepo" placeholder="yourname/tweetdraft" autocomplete="off">
+      <button class="btn btn-s" onclick="saveGH()">Save</button>
+    </div>
+  </div>
+
+  <!-- Add URLs -->
+  <div class="setup-card">
+    <h2>Paste TikTok Links</h2>
+    <p>One per line, or paste multiple at once.</p>
+    <textarea class="url-input" id="urlInput" placeholder="https://www.tiktok.com/@user/video/...&#10;https://www.tiktok.com/@user/video/..." rows="4"></textarea>
+    <button class="btn btn-p" onclick="addUrls()">+ Add to Queue</button>
+  </div>
+
+  <!-- Queue -->
+  <div id="queueSection" style="display:none">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="font-size:16px;font-weight:700;color:#fff">Queue</div>
+      <div class="count-badge" id="queueCount">0</div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button class="btn btn-p" style="width:auto;padding:10px 18px;font-size:14px;margin-bottom:0" onclick="syncToGitHub()">&#9650; Sync to GitHub</button>
+      </div>
+    </div>
+    <div class="queue-list" id="queueList"></div>
+    <button class="btn btn-d" onclick="clearQueue()">Clear all</button>
+  </div>
+
+  <div class="safe-area-pad"></div>
+</div>
+
+<script>
+var queue = [];
+var GH = {token:'', repo:''};
+
+function loadLocal(){
+  try{
+    var q=localStorage.getItem('tt_queue');if(q)queue=JSON.parse(q);
+    var g=localStorage.getItem('tt_gh');if(g)GH=JSON.parse(g);
+  }catch(e){}
+}
+function saveLocal(){
+  try{localStorage.setItem('tt_queue',JSON.stringify(queue));localStorage.setItem('tt_gh',JSON.stringify(GH));}catch(e){}
+}
+
+function showStatus(type, msg, dur){
+  var el=document.getElementById('statusMsg');
+  el.className='status-bar status-'+type;
+  el.innerHTML='<span>'+msg+'</span>';
+  el.style.display='flex';
+  if(dur){setTimeout(function(){el.style.display='none';},dur);}
+}
+
+function toggleSetup(){
+  var el=document.getElementById('setupFields');
+  el.classList.toggle('vis');
+  if(el.classList.contains('vis')){
+    document.getElementById('ghToken').value=GH.token||'';
+    document.getElementById('ghRepo').value=GH.repo||'';
+  }
+}
+
+function saveGH(){
+  var tok=document.getElementById('ghToken').value.trim().replace(/[^\x00-\x7F]/g,'');
+  var repo=document.getElementById('ghRepo').value.trim();
+  if(!tok||!repo){showStatus('err','Fill in both fields.',3000);return;}
+  GH={token:tok,repo:repo};
+  saveLocal();
+  document.getElementById('setupFields').classList.remove('vis');
+  showStatus('ok','&#10003; GitHub settings saved.',2500);
+}
+
+function addUrls(){
+  var raw=document.getElementById('urlInput').value||'';
+  var urls=raw.split('\n').map(function(u){return u.trim();}).filter(function(u){return u.indexOf('tiktok.com')>-1;});
+  if(urls.length===0){showStatus('warn','No TikTok URLs found. Make sure links contain tiktok.com',3000);return;}
+  var added=0;
+  urls.forEach(function(url){
+    if(!queue.some(function(q){return q.url===url;})){queue.push({url:url,addedAt:new Date().toISOString()});added++;}
+  });
+  document.getElementById('urlInput').value='';
+  saveLocal();renderQueue();
+  showStatus('ok','&#10003; Added '+added+' link'+(added!==1?'s':'')+'. Tap Sync to GitHub when ready.',3000);
+}
+
+function removeUrl(i){queue.splice(i,1);saveLocal();renderQueue();}
+function clearQueue(){if(confirm('Clear all queued links?')){queue=[];saveLocal();renderQueue();}}
+
+function renderQueue(){
+  var sec=document.getElementById('queueSection');
+  var list=document.getElementById('queueList');
+  var cnt=document.getElementById('queueCount');
+  if(queue.length===0){sec.style.display='none';return;}
+  sec.style.display='block';
+  cnt.textContent=queue.length;
+  list.innerHTML=queue.map(function(q,i){
+    return '<div class="queue-item">'+
+      '<div class="qi-url">'+q.url+'</div>'+
+      '<button class="qi-del" onclick="removeUrl('+i+')">&#10005;</button>'+
+      '</div>';
+  }).join('');
+}
+
+async function syncToGitHub(){
+  if(!GH.token||!GH.repo){
+    showStatus('err','Set up your GitHub token and repo first (tap ⚙ GitHub settings above).');return;
+  }
+  showStatus('info','&#9650; Syncing to GitHub...');
+  try{
+    var data={urls:queue.map(function(q){return q.url;}),updatedAt:new Date().toISOString(),count:queue.length};
+    var content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    // Get existing SHA
+    var getRes=await fetch('https://api.github.com/repos/'+GH.repo+'/contents/tiktok-queue.json',{
+      headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','User-Agent':'TikTokQueue-Mobile'}
+    });
+    var sha=null;
+    if(getRes.status===200){var existing=await getRes.json();sha=existing.sha;}
+    // Write
+    var payload={message:'TikTok queue update '+new Date().toISOString().slice(0,10),content:content};
+    if(sha)payload.sha=sha;
+    var putRes=await fetch('https://api.github.com/repos/'+GH.repo+'/contents/tiktok-queue.json',{
+      method:'PUT',
+      headers:{Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','Content-Type':'application/json','User-Agent':'TikTokQueue-Mobile'},
+      body:JSON.stringify(payload)
+    });
+    if(putRes.ok){showStatus('ok','&#10003; '+queue.length+' link'+(queue.length!==1?'s':'')+' synced to GitHub. Open ScriptBuilder &rarr; TikTok &rarr; Load from GitHub.');}
+    else{var e=await putRes.json().catch(function(){return{};});showStatus('err','GitHub error: '+(e.message||putRes.status));}
+  }catch(e){showStatus('err','Failed: '+e.message);}
+}
+
+// Boot
+loadLocal();
+renderQueue();
+// If creds missing, show setup
+if(!GH.token||!GH.repo){
+  document.getElementById('setupFields').classList.add('vis');
+}
+</script>
+</body>
+</html>
