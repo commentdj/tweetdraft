@@ -1,302 +1,302 @@
 {
-  "startDate": "2026-03-30",
-  "endDate": "2026-04-05",
-  "generatedAt": "2026-03-30T04:12:17.493Z",
+  "startDate": "2026-04-06",
+  "endDate": "2026-04-12",
+  "generatedAt": "2026-04-06T04:11:42.378Z",
   "notionPageCount": 0,
   "totalSlots": 42,
   "slots": [
     {
-      "id": "2026-03-30-0",
+      "id": "2026-04-06-0",
       "type": "SHORT TAKE",
-      "text": "Most founders validate ideas by asking 'would you use this?' Wrong question. Ask 'how do you solve this problem today?' Then watch them describe their current painful workaround.",
-      "scheduledTime": "2026-03-30T02:00:00Z",
+      "text": "Most founders treat user interviews like interrogations. You're not trying to extract confession of need. You're trying to understand their Tuesday afternoon.",
+      "scheduledTime": "2026-04-06T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-30-1",
+      "id": "2026-04-06-1",
       "type": "NUMBERED LIST",
-      "text": "3 things that kill user interviews:\n1. Leading questions that beg for yes\n2. Talking about your solution too early\n3. Not asking for the story of their last bad experience",
-      "scheduledTime": "2026-03-30T06:00:00Z",
+      "text": "Signs your idea validation is actually just confirmation bias:\n\n1. You only talk to people who already agree with you\n2. You're asking leading questions\n3. You ignore every 'no' as 'they don't get it'\n4. You haven't talked to 20+ strangers yet",
+      "scheduledTime": "2026-04-06T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-30-2",
+      "id": "2026-04-06-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "Building with AI feels like having a really smart intern who never asks clarifying questions. You get exactly what you asked for, not what you actually needed. The gap between those two things is where most AI projects die.",
-      "scheduledTime": "2026-03-30T10:00:00Z",
+      "text": "The AI tooling paradox: everyone wants to automate their workflows, but most workflows are broken to begin with. You end up with really efficient terrible processes. Fix the process first, then automate.",
+      "scheduledTime": "2026-04-06T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-30-3",
+      "id": "2026-04-06-3",
       "type": "OBSERVATION",
-      "text": "Founders who ship fast usually have one thing in common: they cut scope ruthlessly before they start building, not after they realize they're behind schedule.",
-      "scheduledTime": "2026-03-30T14:00:00Z",
+      "text": "Founders who build in public get better feedback than founders who build in stealth. Not because the audience is smarter, but because explaining forces clarity.",
+      "scheduledTime": "2026-04-06T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-30-4",
+      "id": "2026-04-06-4",
       "type": "SHORT TAKE",
-      "text": "Every workflow friction point you ignore becomes a user drop-off point. There's no such thing as 'just one more click' when people have alternatives.",
-      "scheduledTime": "2026-03-30T18:00:00Z",
+      "text": "Removing friction sounds simple until you realize most friction exists for a reason. The art is knowing which friction protects you and which friction kills you.",
+      "scheduledTime": "2026-04-06T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-30-5",
-      "type": "NUMBERED LIST",
-      "text": "4 signs you're validating wrong:\n1. Everyone says yes but no one signs up\n2. You're explaining more than listening\n3. Friends are your primary data source\n4. You haven't heard a clear no yet",
-      "scheduledTime": "2026-03-30T22:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-31-0",
-      "type": "SHORT TAKE",
-      "text": "Most idea validation feels like checking boxes instead of actually listening. You're not looking for people to say yes to your idea. You're looking for people who already have the problem badly enough to pay for a terrible solution.",
-      "scheduledTime": "2026-03-31T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-31-1",
-      "type": "NUMBERED LIST",
-      "text": "What actually kills user interviews:\n\n1. Leading questions that fish for validation\n2. Talking to people who are too polite to be honest\n3. Asking hypotheticals instead of past behavior\n4. Taking notes instead of recording\n5. Skipping the follow-up",
-      "scheduledTime": "2026-03-31T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-31-2",
+      "id": "2026-04-06-5",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about building with AI isn't the technical stuff. It's that everyone expects it to be magic, but you still need to understand the actual workflow you're trying to improve. AI that automates bad processes just makes bad processes faster.",
-      "scheduledTime": "2026-03-31T10:00:00Z",
+      "text": "The hardest part of talking to users isn't finding them or getting them to talk. It's sitting with the silence after you ask a question and not filling it with your own answer.",
+      "scheduledTime": "2026-04-06T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-31-3",
+      "id": "2026-04-07-0",
+      "type": "SHORT TAKE",
+      "text": "Most founders ask users what they want instead of watching what they actually do. The gap between those two things is where most products die.",
+      "scheduledTime": "2026-04-07T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-07-1",
+      "type": "NUMBERED LIST",
+      "text": "Three things that kill idea validation:\n\n1. Only talking to people who already like you\n2. Asking hypothetical questions instead of real behavior\n3. Confusing politeness for product-market fit",
+      "scheduledTime": "2026-04-07T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-07-2",
       "type": "OBSERVATION",
-      "text": "Founders who talk to 50 users and pivot are more successful than founders who talk to 5 users and stay the course. But most founders would rather build for 6 months than have 20 awkward conversations.",
-      "scheduledTime": "2026-03-31T14:00:00Z",
+      "text": "The founders who validate ideas fastest are the ones who get comfortable with users saying no. They treat rejection as data, not failure.",
+      "scheduledTime": "2026-04-07T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-03-31-4",
-      "type": "SHORT TAKE",
-      "text": "Friction isn't always bad. Sometimes friction is the only thing preventing your users from making expensive mistakes. The goal isn't to remove all friction—it's to remove the right friction.",
-      "scheduledTime": "2026-03-31T18:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-03-31-5",
-      "type": "NUMBERED LIST",
-      "text": "Signs you're solving a real problem:\n\n1. People complain about it without prompting\n2. They've already tried 3+ solutions that suck\n3. They've built internal workarounds\n4. They can tell you exactly how much it costs them\n5. They ask when they can start using yours",
-      "scheduledTime": "2026-03-31T22:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-04-01-0",
-      "type": "SHORT TAKE",
-      "text": "Most founders skip the boring parts of user research. The boring parts are where you find out your product actually sucks.",
-      "scheduledTime": "2026-04-01T02:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-04-01-1",
-      "type": "NUMBERED LIST",
-      "text": "Three signs you're validating wrong:\n\n1. Everyone says \"great idea\" but won't pay\n2. You're asking hypotheticals instead of studying behavior\n3. Your feedback comes from people who look exactly like you",
-      "scheduledTime": "2026-04-01T06:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-04-01-2",
+      "id": "2026-04-07-3",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The AI tools that actually stick in my workflow are the ones that remove steps, not add capabilities. But most AI features feel like someone bolted a chatbot onto existing software and called it innovation.",
-      "scheduledTime": "2026-04-01T10:00:00Z",
+      "text": "Building with AI feels like having a really smart intern who confidently makes stuff up. You can move fast but you're constantly fact-checking. The productivity gains are real but so is the paranoia.",
+      "scheduledTime": "2026-04-07T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-01-3",
-      "type": "OBSERVATION",
-      "text": "Founders who talk to 5 users think they need more features. Founders who talk to 50 users realize they need fewer.",
-      "scheduledTime": "2026-04-01T14:00:00Z",
-      "status": "pending"
-    },
-    {
-      "id": "2026-04-01-4",
+      "id": "2026-04-07-4",
       "type": "SHORT TAKE",
-      "text": "Your workflow has friction you don't notice because you built muscle memory around broken things. Fresh eyes see what you've gone blind to.",
-      "scheduledTime": "2026-04-01T18:00:00Z",
+      "text": "Friction in workflows compounds worse than interest. One extra click becomes ten extra minutes becomes avoiding the tool entirely.",
+      "scheduledTime": "2026-04-07T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-01-5",
+      "id": "2026-04-07-5",
       "type": "NUMBERED LIST",
-      "text": "What kills good ideas:\n\n1. Building for imaginary users\n2. Optimizing for edge cases first\n3. Adding complexity to feel productive\n4. Mistaking activity for progress",
-      "scheduledTime": "2026-04-01T22:00:00Z",
+      "text": "Signs your workflow has too much friction:\n\n1. You procrastinate using your own tools\n2. You create workarounds for workarounds\n3. You find excuses to do things manually\n4. Your team stops logging data",
+      "scheduledTime": "2026-04-07T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-0",
+      "id": "2026-04-08-0",
       "type": "SHORT TAKE",
-      "text": "Most founders confuse user feedback with user requests. Feedback tells you what's broken. Requests tell you what they think would fix it. Listen to the first, be skeptical of the second.",
-      "scheduledTime": "2026-04-02T02:00:00Z",
+      "text": "Most founders think idea validation means asking \"would you use this?\" Wrong question. Ask \"how do you solve this problem today?\" then listen for the workarounds and frustration in their voice.",
+      "scheduledTime": "2026-04-08T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-1",
+      "id": "2026-04-08-1",
       "type": "NUMBERED LIST",
-      "text": "3 validation red flags that took me too long to learn:\n\n1. Users say \"interesting\" instead of asking when they can use it\n2. They ask about features before understanding the core problem\n3. They want to \"think about it\" after seeing the demo",
-      "scheduledTime": "2026-04-02T06:00:00Z",
+      "text": "Signs you're talking to the wrong users:\n1. They love everything you show them\n2. They ask when it'll be \"totally free\"\n3. They suggest 47 new features\n4. They've never paid for software before\n5. They say \"this would be nice to have\"",
+      "scheduledTime": "2026-04-08T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-2",
+      "id": "2026-04-08-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part of AI integration isn't the technical implementation. It's figuring out which decisions you want humans to make vs which ones you want to automate. Most founders automate the wrong things first.",
-      "scheduledTime": "2026-04-02T10:00:00Z",
+      "text": "Building with AI tools is weird. You can prototype faster than ever but you also ship half-baked ideas faster than ever. The bottleneck isn't coding anymore—it's knowing what actually matters to users.",
+      "scheduledTime": "2026-04-08T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-3",
+      "id": "2026-04-08-3",
       "type": "OBSERVATION",
-      "text": "Workflow friction usually lives in the handoffs between tools, not within the tools themselves. Users adapt to clunky interfaces faster than they adapt to switching contexts.",
-      "scheduledTime": "2026-04-02T14:00:00Z",
+      "text": "Founders who obsess over removing friction from their own workflows but ignore friction in their user research process. You'll spend 3 hours automating a 5-minute task but won't schedule proper user interviews.",
+      "scheduledTime": "2026-04-08T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-4",
+      "id": "2026-04-08-4",
       "type": "SHORT TAKE",
-      "text": "Talking to users feels awkward because you're trying to extract insights instead of having conversations. Stop mining for gold and start actually listening.",
-      "scheduledTime": "2026-04-02T18:00:00Z",
+      "text": "The best user feedback comes from people who are already solving your problem with duct tape and spreadsheets. Find the duct tape users.",
+      "scheduledTime": "2026-04-08T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-02-5",
+      "id": "2026-04-08-5",
       "type": "NUMBERED LIST",
-      "text": "Signs you're building the right thing:\n\n1. Users describe the problem without you asking\n2. They've already tried to solve it themselves\n3. They ask about pricing before you mention it\n4. They introduce you to others with the same problem",
-      "scheduledTime": "2026-04-02T22:00:00Z",
+      "text": "What actually happens when you remove workflow friction:\n1. People do more of that thing\n2. They notice other friction points\n3. They expect everything else to be frictionless too\n4. You created a new standard to meet",
+      "scheduledTime": "2026-04-08T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-0",
+      "id": "2026-04-09-0",
       "type": "SHORT TAKE",
-      "text": "Most founders think user interviews are about asking what people want. Wrong. They're about watching what people actually do when they think nobody's judging them.",
-      "scheduledTime": "2026-04-03T02:00:00Z",
+      "text": "Most founders think validation means asking \"would you buy this?\" Wrong question. Ask \"what's the last time you tried to solve this problem?\" and watch their energy change completely.",
+      "scheduledTime": "2026-04-09T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-1",
+      "id": "2026-04-09-1",
       "type": "NUMBERED LIST",
-      "text": "Three things that kill idea validation:\n\n1. Leading questions that telegraph the answer you want\n2. Talking to friends who will lie to be nice\n3. Confusing polite interest with actual demand",
-      "scheduledTime": "2026-04-03T06:00:00Z",
+      "text": "Three signs you're talking to the wrong users:\n\n1. They love everything you show them\n2. They ask when it'll be ready but won't commit to testing\n3. They keep suggesting features for \"other people like them\"",
+      "scheduledTime": "2026-04-09T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-2",
+      "id": "2026-04-09-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about building with AI isn't the technical integration. It's figuring out which human decisions you should automate vs which ones you should augment. Get this wrong and users feel replaced instead of empowered.",
-      "scheduledTime": "2026-04-03T10:00:00Z",
+      "text": "The hardest part about building with AI isn't the tech stack. It's that users expect magic but can't articulate what magic looks like. You end up building impressive demos that solve yesterday's problems.",
+      "scheduledTime": "2026-04-09T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-3",
+      "id": "2026-04-09-3",
       "type": "OBSERVATION",
-      "text": "People will endure incredible friction if the outcome matters enough to them. But they'll abandon a product over tiny inconveniences if they're just browsing. Context determines tolerance.",
-      "scheduledTime": "2026-04-03T14:00:00Z",
+      "text": "Founders who obsess over removing friction from their own workflows ship faster than founders who outsource everything. Strange how building tools for yourself creates better intuition for building tools for others.",
+      "scheduledTime": "2026-04-09T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-4",
+      "id": "2026-04-09-4",
       "type": "SHORT TAKE",
-      "text": "Your workflow has too many steps if you find yourself making mental notes to 'clean this up later.' Users won't forgive what you've already gotten used to ignoring.",
-      "scheduledTime": "2026-04-03T18:00:00Z",
+      "text": "User interviews where people describe their current workarounds are worth 10x more than interviews where they describe their dream solution. Workarounds reveal actual behavior.",
+      "scheduledTime": "2026-04-09T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-03-5",
+      "id": "2026-04-09-5",
       "type": "NUMBERED LIST",
-      "text": "Signs you're talking to the wrong users:\n\n1. They keep suggesting features for 'other people'\n2. Their problems sound theoretical, not urgent\n3. They have time for hour-long calls about your idea",
-      "scheduledTime": "2026-04-03T22:00:00Z",
+      "text": "Workflow friction usually hides in these places:\n\n1. The handoff between tools\n2. The 3rd step of a 5-step process\n3. The thing people do \"just to be safe\"\n4. Whatever happens when the happy path breaks",
+      "scheduledTime": "2026-04-09T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-0",
+      "id": "2026-04-10-0",
       "type": "SHORT TAKE",
-      "text": "Most founders think user interviews are about asking \"would you buy this?\" Wrong question. Ask \"walk me through the last time you dealt with [problem].\" The story tells you everything the hypothetical won't.",
-      "scheduledTime": "2026-04-04T02:00:00Z",
+      "text": "Most founders treat user interviews like surveys with voices. They ask what features people want instead of understanding what jobs they're trying to get done.",
+      "scheduledTime": "2026-04-10T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-1",
+      "id": "2026-04-10-1",
       "type": "NUMBERED LIST",
-      "text": "Signs your idea validation is actually just confirmation bias:\n\n1. You're only talking to people who already agree with you\n2. Leading questions that telegraph the \"right\" answer\n3. Interpreting polite interest as demand\n4. Skipping the \"how do you solve this today\" question",
-      "scheduledTime": "2026-04-04T06:00:00Z",
+      "text": "Three things that kill idea validation:\n\n1. Asking hypothetical questions\n2. Talking to friends who lie to be nice\n3. Building before you understand the problem\n\nAll avoidable. Most people do all three.",
+      "scheduledTime": "2026-04-10T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-2",
+      "id": "2026-04-10-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "The hardest part about building with AI isn't the technical integration. It's figuring out which manual processes actually need automation vs which ones people want to keep doing themselves. Users say they want everything automated but their behavior says otherwise.",
-      "scheduledTime": "2026-04-04T10:00:00Z",
+      "text": "The hardest part about building with AI isn't the tech. It's that everything feels possible, so you build features users don't actually need. The constraints that used to guide product decisions are gone.",
+      "scheduledTime": "2026-04-10T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-3",
+      "id": "2026-04-10-3",
       "type": "OBSERVATION",
-      "text": "Friction in workflows is often intentional, not accidental. That approval step that seems redundant? It's probably catching edge cases or forcing someone to actually think. Remove the wrong friction and you create bigger problems.",
-      "scheduledTime": "2026-04-04T14:00:00Z",
+      "text": "Founders who remove one click from their signup flow see it as a win. Founders who remove one entire step from their user's day build companies.",
+      "scheduledTime": "2026-04-10T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-4",
+      "id": "2026-04-10-4",
       "type": "SHORT TAKE",
-      "text": "When someone says \"this is exactly what we need\" in a user interview, dig deeper. What they usually mean is \"this sounds good in theory.\" The real test is whether they'll change their current workflow to use it.",
-      "scheduledTime": "2026-04-04T18:00:00Z",
+      "text": "User interviews should make you uncomfortable. If someone agrees with everything you say, you're talking to the wrong person or asking the wrong questions.",
+      "scheduledTime": "2026-04-10T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-04-5",
+      "id": "2026-04-10-5",
       "type": "NUMBERED LIST",
-      "text": "What actually happens when you ship an MVP:\n\n1. Half your assumptions were wrong\n2. Users find workarounds you never considered\n3. The feature you thought was nice-to-have becomes essential\n4. The core value prop needs rewording, not rebuilding",
-      "scheduledTime": "2026-04-04T22:00:00Z",
+      "text": "Signs you're automating the wrong workflow:\n\n1. You spent more time building it than it saves\n2. Users work around your automation\n3. It breaks more than it helps\n4. Nobody asked for it",
+      "scheduledTime": "2026-04-10T22:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-0",
+      "id": "2026-04-11-0",
       "type": "SHORT TAKE",
-      "text": "Most founders skip validation because they think it means asking \"would you buy this?\" That question is useless. Better question: \"walk me through the last time this problem cost you time or money.\"",
-      "scheduledTime": "2026-04-05T02:00:00Z",
+      "text": "Most founders skip validation because they're scared of hearing 'no.' But getting a clear 'no' is infinitely more valuable than a polite 'maybe' that wastes six months of your life.",
+      "scheduledTime": "2026-04-11T02:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-1",
+      "id": "2026-04-11-1",
       "type": "NUMBERED LIST",
-      "text": "Why user interviews fail:\n1. You lead them to your solution\n2. You ask hypotheticals instead of past behavior\n3. You talk to people who are polite, not desperate\n4. You stop after 5 conversations",
-      "scheduledTime": "2026-04-05T06:00:00Z",
+      "text": "Signs you're talking to the wrong users:\n1. They love everything you show them\n2. They ask zero follow-up questions\n3. They won't commit to trying it\n4. They suggest features for 'other people'\n5. They change the subject quickly",
+      "scheduledTime": "2026-04-11T06:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-2",
+      "id": "2026-04-11-2",
       "type": "PROBLEM DEEP-DIVE",
-      "text": "AI tools are making it easier to build the wrong thing faster. You can spin up an MVP in hours now, but validation still takes weeks of actual conversations. The bottleneck shifted from building to understanding.",
-      "scheduledTime": "2026-04-05T10:00:00Z",
+      "text": "The hardest part about building with AI isn't the tech. It's that everyone expects magic, but most valuable use cases are boring workflow improvements. You're selling efficiency to people who want to be impressed.",
+      "scheduledTime": "2026-04-11T10:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-3",
+      "id": "2026-04-11-3",
       "type": "OBSERVATION",
-      "text": "Founders who say \"users don't know what they want\" usually mean \"users don't want what I built.\" The ones who consistently nail product-market fit spend more time listening than explaining.",
-      "scheduledTime": "2026-04-05T14:00:00Z",
+      "text": "Founders who obsess over removing friction from their product often add massive friction to their sales process. Your landing page has 47 steps but your checkout flow is seamless.",
+      "scheduledTime": "2026-04-11T14:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-4",
+      "id": "2026-04-11-4",
       "type": "SHORT TAKE",
-      "text": "Friction isn't always bad. Sometimes it's the only thing preventing your users from making expensive mistakes. Remove the right friction, keep the guardrails.",
-      "scheduledTime": "2026-04-05T18:00:00Z",
+      "text": "User interviews are not market research. Stop asking what they want. Start asking what they actually do when the problem hits them right now.",
+      "scheduledTime": "2026-04-11T18:00:00Z",
       "status": "pending"
     },
     {
-      "id": "2026-04-05-5",
+      "id": "2026-04-11-5",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "Every workflow tool promises to save time, but most create new work. The real question isn't 'will this make things faster' but 'will people actually change their habits for this.'",
+      "scheduledTime": "2026-04-11T22:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-0",
+      "type": "SHORT TAKE",
+      "text": "Most founders skip user interviews because they're afraid their idea sucks. The ones who don't skip them are afraid their idea sucks too. The difference is one group finds out early.",
+      "scheduledTime": "2026-04-12T02:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-1",
       "type": "NUMBERED LIST",
-      "text": "Signs you're building a vitamin, not a painkiller:\n1. Users say \"that's cool\" instead of \"when can I get this\"\n2. They forget to follow up after demos\n3. You're explaining the problem more than the solution",
-      "scheduledTime": "2026-04-05T22:00:00Z",
+      "text": "3 things that kill validation interviews:\n\n1. Leading questions (\"Would you use X?\" vs \"How do you handle Y now?\")\n2. Talking to friends who want to be nice\n3. Asking about future behavior instead of past pain",
+      "scheduledTime": "2026-04-12T06:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-2",
+      "type": "PROBLEM DEEP-DIVE",
+      "text": "AI tools promise to automate everything but most founders use them to automate the wrong things. We're building chatbots before we know what conversations matter. Classic solution-first thinking with better tech.",
+      "scheduledTime": "2026-04-12T10:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-3",
+      "type": "OBSERVATION",
+      "text": "Founders who say \"we're removing friction\" usually mean \"we're adding another app to someone's workflow.\" Real friction removal means doing less, not doing it differently.",
+      "scheduledTime": "2026-04-12T14:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-4",
+      "type": "SHORT TAKE",
+      "text": "The best validation question isn't \"Would you pay for this?\" It's \"What's the worst part of how you handle this today?\" Pain drives behavior. Convenience suggestions don't.",
+      "scheduledTime": "2026-04-12T18:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": "2026-04-12-5",
+      "type": "NUMBERED LIST",
+      "text": "Signs you're validating an idea vs validating your assumptions:\n\n1. You change your questions based on what you learn\n2. You talk to people who might hate your solution\n3. You can explain why 5 people said no",
+      "scheduledTime": "2026-04-12T22:00:00Z",
       "status": "pending"
     }
   ]
