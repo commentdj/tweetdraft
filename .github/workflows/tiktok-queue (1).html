@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>⚡ TikTok Queue</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --dim: #666;
+    --dimmer: #333;
+    --red: #ff2d55;
+    --red-dim: rgba(255,45,85,.15);
+    --green: #30d158;
+    --green-dim: rgba(48,209,88,.12);
+    --amber: #ffd60a;
+    --amber-dim: rgba(255,214,10,.1);
+    --mono: 'DM Sans', sans-serif;
+    --disp: 'Bebas Neue', sans-serif;
+    --safe-bottom: env(safe-area-inset-bottom, 20px);
+    --safe-top: env(safe-area-inset-top, 0px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: var(--mono);
+    background: var(--black);
+    color: var(--text);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    padding-top: var(--safe-top);
+  }
+
+  /* Background grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: .4;
+  }
+
+  .app {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  /* Header */
+  .header {
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wordmark {
+    font-family: var(--disp);
+    font-size: 32px;
+    color: var(--text);
+    letter-spacing: .02em;
+    line-height: 1;
+  }
+
+  .wordmark span { color: var(--red); }
+
+  .queue-pill {
+    background: var(--red);
+    color: #fff;
+    font-family: var(--disp);
+    font-size: 18px;
+    letter-spacing: .05em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: none;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .queue-pill.vis { display: flex; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    padding: 16px 20px 0;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-top: 16px;
+  }
+
+  .tab {
+    font-family: var(--disp);
+    font-size: 18px;
+    letter-spacing: .05em;
+    color: var(--dimmer);
+    padding: 10px 20px 12px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    user-select: none;
+  }
+
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--red);
+  }
+
+  /* Content */
+  .content {
+    flex: 1;
+    padding: 24px 20px;
+    overflow-y: auto;
+  }
+
+  .panel { display: none; animation: slideUp .25s ease; }
+  .panel.active { display: block; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Paste area — the hero element */
+  .paste-zone {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: 16px;
+    transition: border-color .2s;
+  }
+
+  .paste-zone:focus-within {
+    border-color: var(--red);
+  }
+
+  .paste-label {
+    font-family: var(--disp);
+    font-size: 13px;
+    letter-spacing: .12em;
+    color: var(--dim);
+    padding: 14px 16px 0;
+  }
+
+  .paste-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 10px 16px 16px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    min-height: 120px;
+    caret-color: var(--red);
+  }
+
+  .paste-input::placeholder { color: var(--dimmer); }
+
+  /* Add button — massive, tappable */
+  .add-btn {
+    width: 100%;
+    background: var(--red);
+    border: none;
+    border-radius: 14px;
+    padding: 18px;
+    font-family: var(--disp);
+    font-size: 24px;
+    letter-spacing: .08em;
+    color: #fff;
+    cursor: pointer;
+    transition: all .15s;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .add-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.1);
+    opacity: 0;
+    transition: opacity .15s;
+  }
+
+  .add-btn:active::after { opacity: 1; }
+  .add-btn:active { transform: scale(.98); }
+  .add-btn:disabled { background: var(--dimmer); }
+
+  /* Sync button */
+  .sync-btn {
+    width: 100%;
+    background: var(--surface);
+    border: 2px solid var(--green);
+    border-radius: 14px;
+    padding: 16px;
+    font-family: var(--disp);
+    font-size: 22px;
+    letter-spacing: .08em;
+    color: var(--green);
+    cursor: pointer;
+    transition: all .15s;
+    margin-bottom: 24px;
+  }
+
+  .sync-btn:active { background: var(--green-dim); transform: scale(.98); }
+  .sync-btn:disabled { border-color: var(--dimmer); color: var(--dimmer); }
+
+  /* Queue list */
+  .queue-section-label {
+    font-family: var(--disp);
+    font-size: 14px;
+    letter-spacing: .12em;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .url-item {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 14px 14px 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid var(--border);
+    animation: slideUp .2s ease;
+  }
+
+  .url-item.synced { border-left-color: var(--green); }
+
+  .url-text {
+    flex: 1;
+    font-size: 12px;
+    color: var(--dim);
+    word-break: break-all;
+    line-height: 1.4;
+  }
+
+  .url-del {
+    background: none;
+    border: none;
+    color: var(--dimmer);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color .15s;
+  }
+
+  .url-del:active { color: var(--red); }
+
+  /* Status toast */
+  .toast {
+    position: fixed;
+    bottom: calc(var(--safe-bottom) + 20px);
+    left: 20px;
+    right: 20px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast-ok { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); }
+  .toast-err { background: var(--red-dim); border: 1px solid var(--red); color: var(--red); }
+  .toast-info { background: rgba(255,255,255,.06); border: 1px solid var(--border); color: var(--text); }
+
+  /* Settings panel */
+  .settings-section {
+    margin-bottom: 24px;
+  }
+
+  .settings-label {
+    font-family: var(--disp);
+    font-size: 13px;
+    letter-spacing: .12em;
+    color: var(--dim);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .settings-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 0;
+    transition: border-color .2s;
+    -webkit-appearance: none;
+  }
+
+  .settings-input:focus { border-color: var(--red); }
+  .settings-input[type=password] { letter-spacing: .12em; }
+
+  .save-settings-btn {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    font-family: var(--disp);
+    font-size: 20px;
+    letter-spacing: .06em;
+    color: var(--text);
+    cursor: pointer;
+    transition: all .15s;
+    margin-top: 12px;
+  }
+
+  .save-settings-btn:active { background: var(--border); transform: scale(.98); }
+
+  .connected-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .how-it-works {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .how-it-works-title {
+    font-family: var(--disp);
+    font-size: 16px;
+    letter-spacing: .08em;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .step-row:last-child { margin-bottom: 0; }
+
+  .step-n {
+    width: 24px;
+    height: 24px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--disp);
+    font-size: 14px;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-text {
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* Safe area spacer */
+  .safe-bottom { height: calc(var(--safe-bottom) + 20px); }
+
+  /* Syncing animation */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+
+  .syncing { animation: pulse .8s ease-in-out infinite; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="wordmark">TIKTOK<span>⚡</span>QUEUE</div>
+    <div class="queue-pill" id="queuePill">
+      <span id="queueCount">0</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" id="tab-add" onclick="switchTab('add')">ADD</div>
+    <div class="tab" id="tab-queue" onclick="switchTab('queue')">QUEUE</div>
+    <div class="tab" id="tab-settings" onclick="switchTab('settings')">SETTINGS</div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- ADD PANEL -->
+    <div class="panel active" id="panel-add">
+      <div class="paste-zone">
+        <div class="paste-label">PASTE LINKS</div>
+        <textarea
+          class="paste-input"
+          id="urlInput"
+          placeholder="https://vm.tiktok.com/...&#10;&#10;One link per line"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <button class="add-btn" onclick="addUrls()">ADD TO QUEUE</button>
+
+      <button class="sync-btn" onclick="syncToGitHub()" id="syncBtn">
+        &#9650; SYNC TO SCRIPTBUILDER
+      </button>
+
+      <div class="how-it-works">
+        <div class="how-it-works-title">HOW IT WORKS</div>
+        <div class="step-row">
+          <div class="step-n">1</div>
+          <div class="step-text">Find a TikTok → Share → Copy Link → paste it above</div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">2</div>
+          <div class="step-text">Tap Add to Queue — add as many as you want</div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">3</div>
+          <div class="step-text">Tap Sync to ScriptBuilder — pushes to GitHub</div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">4</div>
+          <div class="step-text">Open ScriptBuilder on your computer → TikTok tab → Load from Phone → Transcribe & Rewrite</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUEUE PANEL -->
+    <div class="panel" id="panel-queue">
+      <div id="queueEmpty" style="text-align:center;padding:40px 0;color:var(--dimmer);font-size:15px">
+        No links yet.<br>Go to Add tab and paste some TikTok URLs.
+      </div>
+      <div id="queueList"></div>
+      <div id="queueActions" style="display:none">
+        <button class="sync-btn" onclick="syncToGitHub()">&#9650; SYNC TO SCRIPTBUILDER</button>
+        <button style="width:100%;background:none;border:none;color:var(--dimmer);font-size:13px;padding:10px;cursor:pointer;font-family:var(--mono)" onclick="clearSynced()">Clear synced links</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="panel" id="panel-settings">
+      <div id="connectedBadge" style="display:none" class="connected-badge">
+        <span>&#10003;</span> <span>GitHub connected</span>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">GITHUB PERSONAL ACCESS TOKEN</span>
+        <input type="password" class="settings-input" id="ghToken" placeholder="github_pat_xxxxxxxxxxxx" autocomplete="off" autocorrect="off" autocapitalize="off">
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">GITHUB REPO</span>
+        <input type="text" class="settings-input" id="ghRepo" placeholder="commentdj/tweetdraft" autocomplete="off" autocorrect="off" autocapitalize="off">
+      </div>
+
+      <button class="save-settings-btn" onclick="saveSettings()">SAVE SETTINGS</button>
+    </div>
+
+  </div>
+
+  <div class="safe-bottom"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+var Q = { urls: [], ghToken: '', ghRepo: '' };
+
+// ── Persist ───────────────────────────────────────────────────────────────────
+function save() {
+  try { localStorage.setItem('ttq_v2', JSON.stringify(Q)); } catch(e) {}
+}
+
+function load() {
+  try {
+    var r = localStorage.getItem('ttq_v2');
+    if (r) Q = JSON.parse(r);
+  } catch(e) {}
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+var toastTimer;
+function showToast(type, msg) {
+  var el = document.getElementById('toast');
+  el.className = 'toast toast-' + type;
+  el.innerHTML = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove('show'); }, 3000);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+  if (tab === 'queue') renderQueue();
+  if (tab === 'settings') renderSettings();
+}
+
+// ── Add URLs ──────────────────────────────────────────────────────────────────
+function addUrls() {
+  var raw = document.getElementById('urlInput').value || '';
+  var lines = raw.split('\n').map(function(u) { return u.trim(); }).filter(function(u) {
+    return u.startsWith('http') && (u.includes('tiktok') || u.includes('instagram') || u.includes('youtube'));
+  });
+
+  if (lines.length === 0) {
+    showToast('err', '&#9888; No valid links found');
+    return;
+  }
+
+  var added = 0;
+  lines.forEach(function(url) {
+    if (!Q.urls.some(function(q) { return q.url === url; })) {
+      Q.urls.push({ url: url, addedAt: new Date().toISOString(), synced: false });
+      added++;
+    }
+  });
+
+  document.getElementById('urlInput').value = '';
+  save();
+  updatePill();
+
+  if (added > 0) {
+    showToast('ok', '&#10003; ' + added + ' link' + (added !== 1 ? 's' : '') + ' added');
+  } else {
+    showToast('info', 'Already in queue');
+  }
+}
+
+// ── Sync to GitHub ────────────────────────────────────────────────────────────
+async function syncToGitHub() {
+  if (!Q.ghToken || !Q.ghRepo) {
+    showToast('err', '&#9888; Set up GitHub in Settings first');
+    switchTab('settings');
+    return;
+  }
+
+  var btn = document.getElementById('syncBtn');
+  btn.textContent = 'SYNCING...';
+  btn.disabled = true;
+  btn.classList.add('syncing');
+
+  try {
+    var allUrls = Q.urls.map(function(q) { return q.url; });
+    var data = { urls: allUrls, updatedAt: new Date().toISOString(), count: allUrls.length };
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+
+    // Get SHA if file exists
+    var getRes = await fetch('https://api.github.com/repos/' + Q.ghRepo + '/contents/tiktok-queue.json', {
+      headers: { Authorization: 'Bearer ' + Q.ghToken, Accept: 'application/vnd.github+json', 'User-Agent': 'TikTokQueue' }
+    });
+    var sha = null;
+    if (getRes.status === 200) { sha = (await getRes.json()).sha; }
+
+    var payload = { message: 'TikTok queue ' + new Date().toISOString().slice(0, 10), content: content };
+    if (sha) payload.sha = sha;
+
+    var putRes = await fetch('https://api.github.com/repos/' + Q.ghRepo + '/contents/tiktok-queue.json', {
+      method: 'PUT',
+      headers: { Authorization: 'Bearer ' + Q.ghToken, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', 'User-Agent': 'TikTokQueue' },
+      body: JSON.stringify(payload)
+    });
+
+    if (putRes.ok) {
+      // Mark all as synced
+      Q.urls.forEach(function(q) { q.synced = true; });
+      save();
+      updatePill();
+      showToast('ok', '&#10003; ' + allUrls.length + ' link' + (allUrls.length !== 1 ? 's' : '') + ' synced — open ScriptBuilder');
+    } else {
+      var e = await putRes.json().catch(function() { return {}; });
+      showToast('err', '&#9888; ' + (e.message || 'GitHub error ' + putRes.status));
+    }
+  } catch(e) {
+    showToast('err', '&#9888; ' + e.message);
+  }
+
+  btn.innerHTML = '&#9650; SYNC TO SCRIPTBUILDER';
+  btn.disabled = false;
+  btn.classList.remove('syncing');
+}
+
+// ── Queue render ──────────────────────────────────────────────────────────────
+function renderQueue() {
+  var list = document.getElementById('queueList');
+  var empty = document.getElementById('queueEmpty');
+  var actions = document.getElementById('queueActions');
+
+  if (Q.urls.length === 0) {
+    empty.style.display = 'block';
+    list.innerHTML = '';
+    actions.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  actions.style.display = 'block';
+
+  list.innerHTML = Q.urls.map(function(item, i) {
+    var short = item.url.replace('https://', '').replace('www.', '');
+    if (short.length > 50) short = short.substring(0, 50) + '...';
+    return '<div class="url-item' + (item.synced ? ' synced' : '') + '">' +
+      '<div class="url-text">' + (item.synced ? '<span style="color:var(--green);margin-right:4px">&#10003;</span>' : '') + short + '</div>' +
+      '<button class="url-del" onclick="removeUrl(' + i + ')">&#10005;</button>' +
+      '</div>';
+  }).join('');
+}
+
+function removeUrl(i) {
+  Q.urls.splice(i, 1);
+  save();
+  updatePill();
+  renderQueue();
+}
+
+function clearSynced() {
+  Q.urls = Q.urls.filter(function(q) { return !q.synced; });
+  save();
+  updatePill();
+  renderQueue();
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function renderSettings() {
+  document.getElementById('ghToken').value = Q.ghToken || '';
+  document.getElementById('ghRepo').value = Q.ghRepo || '';
+  var badge = document.getElementById('connectedBadge');
+  badge.style.display = (Q.ghToken && Q.ghRepo) ? 'inline-flex' : 'none';
+}
+
+function saveSettings() {
+  var tok = document.getElementById('ghToken').value.trim().replace(/[^\x00-\x7F]/g, '');
+  var repo = document.getElementById('ghRepo').value.trim();
+  if (!tok || !repo) { showToast('err', '&#9888; Fill in both fields'); return; }
+  Q.ghToken = tok;
+  Q.ghRepo = repo;
+  save();
+  renderSettings();
+  showToast('ok', '&#10003; Saved — you\'re connected');
+  setTimeout(function() { switchTab('add'); }, 1200);
+}
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function updatePill() {
+  var pill = document.getElementById('queuePill');
+  var count = document.getElementById('queueCount');
+  var n = Q.urls.length;
+  count.textContent = n;
+  if (n > 0) pill.classList.add('vis'); else pill.classList.remove('vis');
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+load();
+updatePill();
+
+// If no credentials, nudge to settings
+if (!Q.ghToken || !Q.ghRepo) {
+  // Show a subtle indicator on the settings tab
+  document.getElementById('tab-settings').style.color = '#ff2d55';
+}
+</script>
+</body>
+</html>
