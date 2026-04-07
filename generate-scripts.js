@@ -1,294 +1,196 @@
-// ScriptBuilder — generate-scripts.js
-// Triggered manually via GitHub Actions workflow_dispatch
-// Calls Anthropic API, writes scripts.json to repo
+// ScriptBuilder generate-scripts.js
+// Reads pending-batch.json, generates 50 scripts, writes batch-N.json
 
-const https = require("https");
+var https = require('https');
 
-const PERSONA = `You are a world-class short-form video scriptwriter ghostwriting for a startup founder who validates business ideas.
+var GH_TOKEN = process.env.GITHUB_TOKEN;
+var REPO = process.env.GITHUB_REPOSITORY || 'commentdj/tweetdraft';
+var OWNER = REPO.split('/')[0];
+var REPONAME = REPO.split('/')[1];
+var ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
 
-VOICE & STYLE:
-- Direct, founder-native, honest. No fluff, no corporate speak.
-- Short punchy sentences. Rhetorical questions. Create tension then resolve.
-- Sound like a real person who has been in the trenches, not a polished presenter.
-- Ground everything in specifics and real examples.
-
-TONE VARIETY — generate exactly these quantities:
-- Challenging (12): Provocative angles, challenge assumptions, make the viewer uncomfortable then enlighten them
-- Informative (12): Educational, numbered lists, how-tos, specific and actionable
-- Exciting (8): High energy, big reveals, strong hooks, momentum throughout
-- Off-the-cuff (8): Casual, thinking out loud, raw and honest, imperfect on purpose
-- Story-driven (5): Mini narrative with a lesson, setup/conflict/resolution
-- Spiky-take (5): Contrarian opinion, hot take, debate-starting
-
-RULES:
-- No emojis
-- Never start with "I just"
-- No motivational fluff
-- Each script 60-200 words (30-90 seconds when spoken)
-- Sound like a real person, not performing for an audience
-- Vary the hooks — do not use the same opening style twice in a row
-
-HOOK LIBRARY — use these as inspiration, vary them across scripts:
-1. Nobody talks about this but...
-2. I made [result] in [timeframe] by doing one thing...
-3. Stop doing [X] if you want [Y]
-4. The reason you're not getting [result] is...
-5. I tried [X] for 30 days — here's what happened
-6. This is the biggest mistake I see founders making
-7. What I wish I knew before starting [X]
-8. The truth about [X] that nobody tells you
-9. How I went from [X] to [Y] — the real story
-10. Why [common advice] doesn't work (and what does)
-11. The counterintuitive way to [achieve result]
-12. If I had to start over, I'd do this first
-13. You're thinking about [X] completely wrong
-14. Every founder needs to hear this right now
-15. This one thing changed everything for me
-
-CONTENT DIRECTION:
-Core topics: startup validation, building with AI, founder mindset, idea testing, removing friction from business.
-Target audience: early-stage founders, aspiring entrepreneurs validating ideas.
-Avoid: generic hustle content, vague inspiration, anything that sounds like a course ad.`;
-
-function httpRequest(options, body) {
-  return new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let data = "";
-      res.on("data", (c) => (data += c));
-      res.on("end", () => resolve({ status: res.statusCode, body: data }));
-    });
-    req.on("error", reject);
-    if (body) req.write(body);
-    req.end();
-  });
-}
-
-const GH_TOKEN = process.env.GITHUB_TOKEN;
-const [OWNER, REPO] = (process.env.GITHUB_REPOSITORY || "/").split("/");
-
-async function ghGet(path) {
-  const res = await httpRequest({
-    hostname: "api.github.com",
-    path: `/repos/${OWNER}/${REPO}/contents/${path}`,
-    method: "GET",
+function ghRequest(method, path, body, cb) {
+  var bodyStr = body ? JSON.stringify(body) : null;
+  var opts = {
+    hostname: 'api.github.com',
+    path: '/repos/' + OWNER + '/' + REPONAME + '/contents/' + path,
+    method: method,
     headers: {
-      Authorization: `Bearer ${GH_TOKEN}`,
-      "User-Agent": "ScriptBuilder",
-      Accept: "application/vnd.github+json",
-    },
-  }, null);
-  if (res.status === 404) return null;
-  if (res.status !== 200) throw new Error(`ghGet ${path} failed: ${res.status}`);
-  return JSON.parse(res.body);
-}
-
-async function ghPut(path, content, sha, message) {
-  const encoded = Buffer.from(content).toString("base64");
-  const payload = { message, content: encoded };
-  if (sha) payload.sha = sha;
-  const body = JSON.stringify(payload);
-  const res = await httpRequest({
-    hostname: "api.github.com",
-    path: `/repos/${OWNER}/${REPO}/contents/${path}`,
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${GH_TOKEN}`,
-      "User-Agent": "ScriptBuilder",
-      "Content-Type": "application/json",
-      Accept: "application/vnd.github+json",
-      "Content-Length": Buffer.byteLength(body),
-    },
-  }, body);
-  if (res.status !== 200 && res.status !== 201) {
-    throw new Error(`ghPut ${path} failed: ${res.status} — ${res.body}`);
-  }
-  return JSON.parse(res.body);
-}
-
-function decodeFile(file) {
-  return Buffer.from(file.content.replace(/\n/g, ""), "base64").toString("utf8");
-}
-
-async function generateBatch(prompt, batchNum) {
-  console.log(`  Calling Anthropic API (batch ${batchNum})...`);
-  const reqBody = JSON.stringify({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 4000,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const res = await httpRequest({
-    hostname: "api.anthropic.com",
-    path: "/v1/messages",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "Content-Length": Buffer.byteLength(reqBody),
-    },
-  }, reqBody);
-
-  if (res.status !== 200) throw new Error(`Anthropic API error: ${res.status} — ${res.body}`);
-  const d = JSON.parse(res.body);
-  const text = d.content?.[0]?.text || "";
-  const clean = text.replace(/```json|```/g, "").trim();
-  const start = clean.indexOf("[");
-  const end = clean.lastIndexOf("]");
-  if (start === -1 || end === -1) throw new Error(`No JSON array in batch ${batchNum} response`);
-  return JSON.parse(clean.slice(start, end + 1));
-}
-
-async function generateYouTube() {
-  console.log("  Generating YouTube scripts...");
-  const prompt = `You are writing YouTube video scripts for a startup founder who validates business ideas.
-
-Generate 2 YouTube video outlines for 15-minute videos.
-
-For each provide:
-- title: SEO-optimised, under 70 chars, creates curiosity
-- description: 150 words, keyword-rich, includes [TIMESTAMPS] placeholder
-- script: Full structured outline with: Hook (first 30 seconds to grab attention), 4-5 main sections each with key talking points and specific examples, CTA outro
-
-The content should be meaty, specific, and based on real founder experience. Not generic.
-
-Topics to choose from: idea validation frameworks, AI tools for founders, why most startups fail at validation, how to find your first 10 customers, building in public, pricing your first product.
-
-Return ONLY a JSON array:
-[{"id":1,"type":"youtube_15min","title":"...","description":"...","script":"..."}]`;
-
-  const reqBody = JSON.stringify({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 3000,
-    messages: [{ role: "user", content: prompt }],
-  });
-  const res = await httpRequest({
-    hostname: "api.anthropic.com",
-    path: "/v1/messages",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "Content-Length": Buffer.byteLength(reqBody),
-    },
-  }, reqBody);
-  if (res.status !== 200) throw new Error(`YouTube API error: ${res.status}`);
-  const d = JSON.parse(res.body);
-  const text = d.content?.[0]?.text || "";
-  const clean = text.replace(/```json|```/g, "").trim();
-  const s = clean.indexOf("["), e = clean.lastIndexOf("]");
-  if (s === -1) return [];
-  return JSON.parse(clean.slice(s, e + 1));
-}
-
-async function generateSpitball() {
-  console.log("  Generating spitball guide...");
-  const prompt = `Create a 30-minute spitball session guide for a startup founder/creator.
-
-The founder validates business ideas and builds with AI. They want to record a casual, thinking-out-loud video where they work through a meaty topic.
-
-Provide:
-- title: Compelling, under 70 chars
-- description: 100 words for YouTube
-- script: Full guide including:
-  * Opening hook question to start with (30 seconds)
-  * 8-10 meaty discussion prompts — each meaty enough for 2-3 minutes of honest thinking out loud
-  * Key tensions or contradictions to explore
-  * Stories or examples to pull from
-  * Suggested ending/takeaway
-
-Make it genuinely interesting — not generic startup content.
-
-Return ONLY a JSON object:
-{"type":"spitball_30min","title":"...","description":"...","script":"..."}`;
-
-  const reqBody = JSON.stringify({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 2000,
-    messages: [{ role: "user", content: prompt }],
-  });
-  const res = await httpRequest({
-    hostname: "api.anthropic.com",
-    path: "/v1/messages",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "Content-Length": Buffer.byteLength(reqBody),
-    },
-  }, reqBody);
-  if (res.status !== 200) throw new Error(`Spitball API error: ${res.status}`);
-  const d = JSON.parse(res.body);
-  const text = d.content?.[0]?.text || "";
-  const clean = text.replace(/```json|```/g, "").trim();
-  const s = clean.indexOf("{"), e = clean.lastIndexOf("}");
-  if (s === -1) return null;
-  return JSON.parse(clean.slice(s, e + 1));
-}
-
-async function main() {
-  console.log("=== ScriptBuilder Generate ===");
-  console.log("Repo:", process.env.GITHUB_REPOSITORY);
-
-  // Extra ideas from workflow input
-  const extraIdeas = process.env.EXTRA_IDEAS || "";
-  const campaignHooks = process.env.CAMPAIGN_HOOKS || "";
-  const extraContext = (campaignHooks ? `\nCAMPAIGN HOOKS THIS WEEK:\n${campaignHooks}` : "") +
-                       (extraIdeas ? `\nADDITIONAL IDEAS:\n${extraIdeas}` : "");
-
-  // Generate short-form in 3 batches of ~17 to avoid timeouts
-  const batches = [
-    { tones: "- Challenging: 4 scripts\n- Informative: 4 scripts\n- Exciting: 3 scripts\n- Off-the-cuff: 3 scripts\n- Story-driven: 2 scripts\n- Spiky-take: 1 script", num: 1 },
-    { tones: "- Challenging: 4 scripts\n- Informative: 4 scripts\n- Exciting: 3 scripts\n- Off-the-cuff: 3 scripts\n- Story-driven: 2 scripts\n- Spiky-take: 1 script", num: 2 },
-    { tones: "- Challenging: 4 scripts\n- Informative: 4 scripts\n- Exciting: 2 scripts\n- Off-the-cuff: 2 scripts\n- Story-driven: 1 script\n- Spiky-take: 3 scripts", num: 3 },
-  ];
-
-  let allScripts = [];
-
-  for (const batch of batches) {
-    const prompt = PERSONA + extraContext +
-      `\n\nGenerate short-form video scripts for this batch.\n\nTONE MIX FOR THIS BATCH:\n${batch.tones}\n\nIMPORTANT: Make each script completely different topic and angle. No repetition.\n\nReturn ONLY a JSON array:\n[{"id":1,"title":"Video title under 60 chars","tone":"Challenging","hook":"Opening line of script","hookType":"challenge","script":"Full script text here...","description":"2 sentence posting description","wordCount":120,"estimatedSeconds":48}]`;
-
-    console.log(`\n[Batch ${batch.num}/3] Generating...`);
-    const scripts = await generateBatch(prompt, batch.num);
-    scripts.forEach((s, i) => { s.id = allScripts.length + i + 1; s.status = "pending"; });
-    allScripts = allScripts.concat(scripts);
-    console.log(`  Got ${scripts.length} scripts. Total: ${allScripts.length}`);
-
-    if (batch.num < 3) {
-      console.log("  Pausing 2s between batches...");
-      await new Promise(r => setTimeout(r, 2000));
+      'Authorization': 'Bearer ' + GH_TOKEN,
+      'User-Agent': 'ScriptBuilder',
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
     }
-  }
-
-  console.log(`\n[YouTube] Generating 2 YouTube scripts...`);
-  const youtube = await generateYouTube();
-  console.log(`  Got ${youtube.length} YouTube scripts`);
-
-  console.log(`\n[Spitball] Generating 30-min guide...`);
-  const spitball = await generateSpitball();
-  console.log(`  Spitball: ${spitball?.title || 'none'}`);
-
-  // Write scripts.json to repo
-  const output = {
-    generatedAt: new Date().toISOString(),
-    totalScripts: allScripts.length,
-    shortForm: allScripts,
-    youtube: youtube,
-    spitball: spitball,
   };
-
-  console.log("\nWriting scripts.json to repo...");
-  const existing = await ghGet("scripts.json").catch(() => null);
-  const sha = existing ? existing.sha : undefined;
-  await ghPut("scripts.json", JSON.stringify(output, null, 2), sha, `ScriptBuilder: generated ${allScripts.length} scripts at ${new Date().toISOString()}`);
-
-  console.log(`\n✓ Done. ${allScripts.length} short-form + ${youtube.length} YouTube + 1 spitball written to scripts.json`);
+  if (bodyStr) opts.headers['Content-Length'] = Buffer.byteLength(bodyStr);
+  var req = https.request(opts, function(res) {
+    var data = '';
+    res.on('data', function(c) { data += c; });
+    res.on('end', function() { cb(null, res.statusCode, data); });
+  });
+  req.on('error', cb);
+  if (bodyStr) req.write(bodyStr);
+  req.end();
 }
 
-main().catch(err => {
-  console.error("FATAL ERROR:", err.message);
-  process.exit(1);
-});
+function ghGet(path, cb) {
+  ghRequest('GET', path, null, function(err, status, data) {
+    if (err) return cb(err);
+    if (status === 404) return cb(null, null, null);
+    if (status !== 200) return cb(new Error('ghGet ' + path + ' failed: ' + status));
+    var file = JSON.parse(data);
+    var content = Buffer.from(file.content.replace(/\n/g, ''), 'base64').toString('utf8');
+    cb(null, JSON.parse(content), file.sha);
+  });
+}
+
+function ghPut(path, content, sha, message, cb) {
+  var encoded = Buffer.from(JSON.stringify(content, null, 2)).toString('base64');
+  var payload = { message: message, content: encoded };
+  if (sha) payload.sha = sha;
+  ghRequest('PUT', path, payload, function(err, status, data) {
+    if (err) return cb(err);
+    if (status !== 200 && status !== 201) return cb(new Error('ghPut failed: ' + status + ' ' + data));
+    cb(null);
+  });
+}
+
+function anthropicCall(prompt, maxTokens, cb) {
+  var body = JSON.stringify({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: maxTokens || 4000,
+    messages: [{ role: 'user', content: prompt }]
+  });
+  var opts = {
+    hostname: 'api.anthropic.com',
+    path: '/v1/messages',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': ANTHROPIC_KEY,
+      'anthropic-version': '2023-06-01',
+      'Content-Length': Buffer.byteLength(body)
+    }
+  };
+  var req = https.request(opts, function(res) {
+    var data = '';
+    res.on('data', function(c) { data += c; });
+    res.on('end', function() {
+      if (res.statusCode !== 200) return cb(new Error('Anthropic error ' + res.statusCode + ': ' + data));
+      var parsed = JSON.parse(data);
+      var text = (parsed.content || []).map(function(b) { return b.text || ''; }).join('');
+      var clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      var start = clean.indexOf('[');
+      var end = clean.lastIndexOf(']');
+      if (start === -1) { start = clean.indexOf('{'); end = clean.lastIndexOf('}'); }
+      if (start === -1 || end === -1) return cb(new Error('No JSON in response. Raw: ' + text.substring(0, 200)));
+      try {
+        cb(null, JSON.parse(clean.slice(start, end + 1)));
+      } catch(e) {
+        cb(new Error('JSON parse error: ' + e.message + ' Raw: ' + clean.substring(0, 200)));
+      }
+    });
+  });
+  req.on('error', cb);
+  req.write(body);
+  req.end();
+}
+
+function buildPrompt(batch, toneSpec, batchNum, totalBatches) {
+  var settings = batch.settings || {};
+  var voice = settings.toneOfVoice || 'Direct, founder-native, honest. No fluff. Short punchy sentences. Real examples.';
+  var themes = settings.generalThemes || 'Startup validation, building with AI, founder mindset, idea testing.';
+  var hooks = settings.hooks || '';
+  var exampleScripts = settings.exampleScripts || '';
+  var ideasThisWeek = batch.ideasThisWeek || '';
+  var newHooks = batch.newHooks || '';
+  var transcripts = batch.transcripts || '';
+
+  var p = 'You are a short-form video scriptwriter. Write in this exact voice:\n\n';
+  p += 'VOICE AND TONE:\n' + voice + '\n\n';
+  p += 'GENERAL THEMES:\n' + themes + '\n\n';
+  if (hooks) p += 'PROVEN HOOKS TO USE:\n' + hooks + '\n\n';
+  if (exampleScripts) p += 'EXAMPLE SCRIPTS (match this style):\n' + exampleScripts + '\n\n';
+  if (ideasThisWeek) p += 'IDEAS THIS WEEK:\n' + ideasThisWeek + '\n\n';
+  if (newHooks) p += 'NEW HOOKS TO TRY:\n' + newHooks + '\n\n';
+  if (transcripts) p += 'TIKTOK TRANSCRIPTS TO REWRITE IN MY VOICE (pick the best ideas, completely reword):\n' + transcripts + '\n\n';
+  p += 'GENERATE THIS BATCH (batch ' + batchNum + ' of ' + totalBatches + '):\n' + toneSpec + '\n\n';
+  p += 'RULES:\n';
+  p += '- No emojis\n';
+  p += '- Never start with I just\n';
+  p += '- No motivational fluff\n';
+  p += '- 60-200 words per script (30-90 seconds spoken)\n';
+  p += '- Every script must be a completely different topic and angle\n';
+  p += '- Sound like a real person not performing for an audience\n\n';
+  p += 'Return ONLY a valid JSON array. No explanation. No markdown:\n';
+  p += '[{"title":"Short video title under 60 chars","tone":"Challenging","hook":"Opening line","script":"Full script text","description":"2 sentence posting description","estimatedSeconds":45}]';
+  return p;
+}
+
+function main() {
+  console.log('ScriptBuilder starting...');
+  console.log('Repo:', REPO);
+  console.log('Anthropic key present:', !!ANTHROPIC_KEY);
+
+  if (!ANTHROPIC_KEY) { console.error('ERROR: ANTHROPIC_API_KEY secret not set'); process.exit(1); }
+
+  ghGet('pending-batch.json', function(err, batch, batchSha) {
+    if (err) { console.error('ERROR reading pending-batch.json:', err.message); process.exit(1); }
+    if (!batch) { console.error('ERROR: No pending-batch.json found in repo'); process.exit(1); }
+
+    console.log('Batch:', batch.batchNumber, '| Ideas:', !!(batch.ideasThisWeek), '| Transcripts:', !!(batch.transcripts));
+
+    // 3 batches: ~17 scripts each, total ~50
+    var batches = [
+      'Tone mix for this batch:\n- Challenging: 5 scripts\n- Informative: 4 scripts\n- Exciting: 3 scripts\n- Off-the-cuff: 3 scripts\n- Story-driven: 2 scripts',
+      'Tone mix for this batch:\n- Challenging: 5 scripts\n- Informative: 4 scripts\n- Exciting: 3 scripts\n- Off-the-cuff: 2 scripts\n- Story-driven: 2 scripts\n- Spiky: 1 script',
+      'Tone mix for this batch:\n- Challenging: 4 scripts\n- Informative: 4 scripts\n- Exciting: 2 scripts\n- Off-the-cuff: 3 scripts\n- Spiky: 4 scripts'
+    ];
+
+    var allScripts = [];
+    var idx = 0;
+
+    function runBatch() {
+      if (idx >= batches.length) return finish();
+      var batchNum = idx + 1;
+      console.log('Generating batch ' + batchNum + ' of ' + batches.length + '...');
+      var prompt = buildPrompt(batch, batches[idx], batchNum, batches.length);
+      anthropicCall(prompt, 4000, function(err, scripts) {
+        if (err) { console.error('ERROR in batch ' + batchNum + ':', err.message); process.exit(1); }
+        if (!Array.isArray(scripts)) { console.error('ERROR: Not an array in batch ' + batchNum); process.exit(1); }
+        scripts.forEach(function(s, i) {
+          s.id = allScripts.length + i + 1;
+          s.status = 'pending';
+          s.batchNum = batchNum;
+        });
+        allScripts = allScripts.concat(scripts);
+        console.log('Batch ' + batchNum + ' done: ' + scripts.length + ' scripts. Total: ' + allScripts.length);
+        idx++;
+        setTimeout(runBatch, 1500);
+      });
+    }
+
+    function finish() {
+      console.log('All batches done. Total scripts: ' + allScripts.length);
+      var result = {
+        batchNumber: batch.batchNumber,
+        generatedAt: new Date().toISOString(),
+        ideasThisWeek: batch.ideasThisWeek,
+        newHooks: batch.newHooks,
+        tiktokUrls: batch.tiktokUrls,
+        scripts: allScripts
+      };
+
+      var filename = 'batch-' + batch.batchNumber + '.json';
+      console.log('Writing', filename, '...');
+      ghPut(filename, result, null, 'ScriptBuilder: batch ' + batch.batchNumber + ' - ' + allScripts.length + ' scripts', function(err) {
+        if (err) { console.error('ERROR writing', filename, ':', err.message); process.exit(1); }
+        console.log('Done!', filename, 'written with', allScripts.length, 'scripts.');
+      });
+    }
+
+    runBatch();
+  });
+}
+
+main();
