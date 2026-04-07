@@ -1,0 +1,358 @@
+{
+  "batchNumber": 1,
+  "batchName": "Batch 1",
+  "generatedAt": "2026-04-07T16:00:00Z",
+  "ideasThisWeek": "How opportunity is everywhere and you need to start something. How sales is so important.",
+  "scripts": [
+    {
+      "id": 1, "tone": "Challenging", "estimatedSeconds": 38,
+      "title": "You're Waiting For The Right Time",
+      "hook": "There is no right time. There never was.",
+      "script": "There is no right time. There never was.\n\nThe market you think is saturated? Someone launched in it last week and is killing it.\n\nThe idea you think needs more research? Your competitor shipped it while you were still planning.\n\nOpportunity does not wait for you to feel ready. It moves. And if you are not moving with it, you are watching someone else take what could have been yours.\n\nStart the thing. Build it badly at first. Fix it as you go. But start.",
+      "description": "Stop waiting for perfect conditions. The market doesn't care about your timeline. This is a reality check every founder needs to hear."
+    },
+    {
+      "id": 2, "tone": "Informative", "estimatedSeconds": 52,
+      "title": "Sales Is Not What You Think It Is",
+      "hook": "Most founders think sales is about talking. It is not.",
+      "script": "Most founders think sales is about talking. It is not.\n\nSales is listening. It is finding out what someone is actually afraid of and showing them how you solve it.\n\nHere is what I learned the hard way:\n\nOne. The person who talks most in a sales call usually loses.\n\nTwo. Every objection is just a question they do not know how to ask.\n\nThree. Nobody buys features. They buy the feeling of their problem being gone.\n\nFour. Follow up is where most deals are actually won. Not the pitch.\n\nLearn to sell or learn to stay broke. There is no third option for founders.",
+      "description": "Sales isn't a personality trait — it's a skill. And most founders are getting it completely wrong. Here are the fundamentals nobody told you."
+    },
+    {
+      "id": 3, "tone": "Off-the-cuff", "estimatedSeconds": 44,
+      "title": "The Random Content Thing Is Real",
+      "hook": "Okay, this is going to sound weird but stay with me.",
+      "script": "Okay, this is going to sound weird but stay with me.\n\nWe are not in the social graph anymore. We are in the interest graph.\n\nMeaning if you post something about porcupines today and it gets a million views, nine of those people are looking for exactly what you sell. They just found you through porcupines.\n\nI know. It sounds mad.\n\nBut the algorithm does not care that your followers follow you for startup content. It cares about who is interested in what you just posted.\n\nPost everything you are genuinely curious about. Stop limiting yourself to one lane.\n\nRandom content might be your biggest business development tool right now.",
+      "description": "The algorithm changed. Your audience is no longer just your followers — it's everyone interested in what you post. This changes everything about content strategy."
+    },
+    {
+      "id": 4, "tone": "Challenging", "estimatedSeconds": 35,
+      "title": "Nobody Is Coming To Save Your Business",
+      "hook": "No investor. No partnership. No viral post.",
+      "script": "No investor. No partnership. No viral post.\n\nNobody is coming to save your business.\n\nThe people who are doing well right now are not waiting for a break. They went out and made the calls. They had the awkward conversations. They sold before the product was perfect.\n\nYou are sitting on an idea that could actually work. But ideas without action are just thoughts.\n\nThe world is not waiting for you. It is moving past you while you are still deciding.",
+      "description": "Hard truth for founders who are still waiting for something to happen. The only thing between you and results is action."
+    },
+    {
+      "id": 5, "tone": "Story-driven", "estimatedSeconds": 58,
+      "title": "I Lost The Deal Because I Talked Too Much",
+      "hook": "I talked myself out of a deal once. Here is exactly how it happened.",
+      "script": "I talked myself out of a deal once. Here is exactly how it happened.\n\nCustomer was ready to buy. I could feel it. Then I kept going. I added another feature. Another benefit. Another reason why.\n\nAnd they said they needed to think about it.\n\nThey never came back.\n\nThe best salespeople I have ever met know when to shut up. They ask the question. They wait. The silence feels uncomfortable. But they sit in it.\n\nBecause the person who talks first after the price is named usually concedes.\n\nI learned that lesson once. I have never forgotten it.",
+      "description": "The moment a founder learns to stop talking is the moment they start closing more deals. This is the story of when I finally understood that."
+    },
+    {
+      "id": 6, "tone": "Informative", "estimatedSeconds": 48,
+      "title": "5 Things That Kill Early Stage Startups",
+      "hook": "After talking to hundreds of early stage founders, the same five things kill them every time.",
+      "script": "After talking to hundreds of early stage founders, the same five things kill them every time.\n\nOne. Building before validating. You spent six months building something nobody confirmed they would pay for.\n\nTwo. Waiting too long to sell. Sales conversations start finding out if something works.\n\nThree. Solving the problem they described instead of the problem they have. These are different.\n\nFour. Hiring too early. Four people burning through runway on a product that has not found its market yet.\n\nFive. Giving up at month four when the results were going to come at month eight.\n\nNone of these are complicated. All of them are avoidable.",
+      "description": "The patterns that kill early startups are remarkably consistent. Here are the five most common — and none of them are about the market."
+    },
+    {
+      "id": 7, "tone": "Exciting", "estimatedSeconds": 40,
+      "title": "Opportunity Is Hiding In Plain Sight",
+      "hook": "The biggest opportunity of your life might be something you dismiss every single day.",
+      "script": "The biggest opportunity of your life might be something you dismiss every single day.\n\nEvery industry has something that everyone in it complains about but nobody has fixed. That complaint is a product waiting to be built.\n\nEvery workflow has something people do manually that software could automate in an afternoon. That friction is a business.\n\nYou do not need a completely new idea. You need to pay attention to what people are suffering through right in front of you.\n\nOpportunity is not hiding. It is screaming. You just stopped listening.",
+      "description": "The best business ideas are not revolutionary — they're obvious once you start paying attention. Here's how to see what's already there."
+    },
+    {
+      "id": 8, "tone": "Spiky-take", "estimatedSeconds": 36,
+      "title": "Validation Is Overrated",
+      "hook": "Everyone tells you to validate before building. I think that advice is half right.",
+      "script": "Everyone tells you to validate before building. I think that advice is half right.\n\nYou need to validate the problem. Not the solution.\n\nMost founders go validate whether people like their specific product. That is the wrong question.\n\nThe right question is: how much does this problem cost you right now? How are you solving it today? What would you pay for it to be gone?\n\nGet obsessed with the problem. Stay loose on the solution. Your first version will be wrong anyway.\n\nThe market does not care about your product. It cares about its own pain.",
+      "description": "Validation advice is everywhere but most founders are validating the wrong thing. Here's the distinction that actually matters."
+    },
+    {
+      "id": 9, "tone": "Off-the-cuff", "estimatedSeconds": 42,
+      "title": "I Tried Posting Random Content For 30 Days",
+      "hook": "I started posting about things completely outside my main topic. Here is what happened.",
+      "script": "I started posting about things completely outside my main topic. Here is what happened.\n\nSome of it flopped. Expected that.\n\nBut a few videos completely took off. And the people who found me through those random videos became some of my best followers because we had a genuine connection beyond the main content.\n\nThe algorithm does not judge your content by whether it fits your brand. It judges it by whether people engage with it.\n\nIf you only ever post in your lane, you are only ever talking to the people already following you.\n\nRandom content is reach. Your niche content is depth. You need both.",
+      "description": "30 days of posting outside my usual content taught me something unexpected about how the algorithm actually works."
+    },
+    {
+      "id": 10, "tone": "Challenging", "estimatedSeconds": 33,
+      "title": "You Have Not Run Out Of Opportunities",
+      "hook": "You have not run out of opportunities. You have run out of courage.",
+      "script": "You have not run out of opportunities. You have run out of courage.\n\nThe ideas are there. The market is there. The tools have never been cheaper or more accessible.\n\nWhat is missing is the willingness to be seen trying something and potentially failing publicly.\n\nThat fear is not protecting you. It is costing you.\n\nEvery day you wait, someone with half your insight and twice your courage is building the thing you thought of.",
+      "description": "Opportunity scarcity is a myth most founders tell themselves. The real blocker is something else entirely."
+    },
+    {
+      "id": 11, "tone": "Informative", "estimatedSeconds": 55,
+      "title": "How To Validate An Idea In 48 Hours",
+      "hook": "You do not need months to know if an idea works. You need 48 hours and a direct message.",
+      "script": "You do not need months to know if an idea works. You need 48 hours and a direct message.\n\nHere is the framework:\n\nDay one. Write a one-sentence description of the problem you solve. Message 20 people who have that problem. Ask if they have it. Do not mention your solution yet.\n\nDay two. For everyone who confirmed the problem, tell them what you are building. Ask if they would pay for it. Ask what they are doing right now instead.\n\nIf you get three people willing to pay before you build anything, you have something.\n\nIf nobody engages, the problem either does not exist or you have the wrong customer.\n\nFort-eight hours. That is all you need to not waste six months of your life.",
+      "description": "Rapid validation is a skill. This is the exact framework to know whether your idea is worth building before you write a single line of code."
+    },
+    {
+      "id": 12, "tone": "Off-the-cuff", "estimatedSeconds": 47,
+      "title": "Sales Felt Gross Until I Reframed It",
+      "hook": "I used to hate selling. Felt manipulative. Then someone changed how I thought about it.",
+      "script": "I used to hate selling. Felt manipulative. Then someone changed how I thought about it.\n\nThey said: if you genuinely believe your product helps people, not selling to them is actually the selfish choice.\n\nYou are letting them stay stuck with their problem because you are uncomfortable having a conversation.\n\nThat reframe changed everything for me.\n\nSelling is not convincing someone to do something against their interests. It is helping someone make a decision that is clearly in their interest.\n\nIf you do not believe that about what you are selling, you have a product problem. Not a sales problem.",
+      "description": "The mindset shift that turned me from someone who hated selling into someone who genuinely enjoys the process."
+    },
+    {
+      "id": 13, "tone": "Exciting", "estimatedSeconds": 43,
+      "title": "The Curiosity Content Play",
+      "hook": "What if the most powerful content you could post is something you know almost nothing about yet?",
+      "script": "What if the most powerful content you could post is something you know almost nothing about yet?\n\nCuriosity content. Documenting the learning. Not the expert explaining. The beginner exploring.\n\nPeople do not just follow expertise. They follow authenticity. The journey. The mistakes and corrections in real time.\n\nStart something you know nothing about. Post about it from day one. The audience you build around that journey could be larger than the one you built around your expertise.\n\nBecause everyone was once a beginner. But very few people document it.",
+      "description": "You do not need to be an expert to build an audience. Documenting the learning might be more powerful than showing the expertise."
+    },
+    {
+      "id": 14, "tone": "Challenging", "estimatedSeconds": 37,
+      "title": "Your Idea Is Not The Problem",
+      "hook": "Your idea is probably fine. Your execution is the problem.",
+      "script": "Your idea is probably fine. Your execution is the problem.\n\nFounders spend 80 percent of their time improving the idea. Customers, market fit, positioning. All of it stays theoretical.\n\nThe other 20 percent, the actual doing — the calls, the launches, the uncomfortable conversations — gets avoided.\n\nFlipped, you have a business. As it stands, you have a very developed concept.\n\nStop refining. Start building. Start selling. Refine from reality, not from your own assumptions.",
+      "description": "Most startup problems are not idea problems. They are execution problems. Here's why that matters."
+    },
+    {
+      "id": 15, "tone": "Informative", "estimatedSeconds": 50,
+      "title": "3 Sales Mistakes Founders Make Every Day",
+      "hook": "Three sales mistakes I see founders make every single day.",
+      "script": "Three sales mistakes I see founders make every single day.\n\nOne. Leading with the product instead of the problem. Nobody cares what you built. They care what problem it solves. Start there.\n\nTwo. Selling to everyone. If your product is for everyone, it is for no one. The narrower you go in the beginning, the faster you find product-market fit.\n\nThree. Giving up after one no. Most sales happen after the fifth follow-up. Most founders follow up once. Sometimes twice. Then they assume it is a no.\n\nFix these three things and your conversion rate will double. Probably more.",
+      "description": "Three specific, fixable mistakes that are costing founders real revenue right now. None of them require a sales background to fix."
+    },
+    {
+      "id": 16, "tone": "Story-driven", "estimatedSeconds": 60,
+      "title": "The Customer Who Changed My Business",
+      "hook": "One customer call changed the direction of my whole business. I almost did not take it.",
+      "script": "One customer call changed the direction of my whole business. I almost did not take it.\n\nShe was not my target customer. Wrong industry, wrong size company. I took the call anyway because I had the time.\n\nFifteen minutes in she described a problem I had not thought about solving. Forty-five minutes in, she had convinced me there was an entire market around it.\n\nI went back and looked. She was right.\n\nThe best market research is just conversations with real people. Not surveys. Not reports. Conversations.\n\nThat call was worth more than six months of me theorising about the market.",
+      "description": "The call that changed everything — and what it taught me about where the best business insights actually come from."
+    },
+    {
+      "id": 17, "tone": "Spiky-take", "estimatedSeconds": 38,
+      "title": "Most Startup Advice Is Backwards",
+      "hook": "Most startup advice tells you to build something people want. That is incomplete.",
+      "script": "Most startup advice tells you to build something people want. That is incomplete.\n\nBuild something people are already trying to buy with whatever imperfect solution they have right now.\n\nWant is passive. Actively trying to solve it is proof.\n\nIf someone built a spreadsheet to solve the problem, that is your signal. If they hired someone to do it manually, that is your signal. If they are paying for something that only partially works, that is your signal.\n\nFind the hacks. The workarounds. The duct tape solutions. That is your market.",
+      "description": "Want vs active workaround — the distinction that separates ideas that sound good from businesses that actually find traction."
+    },
+    {
+      "id": 18, "tone": "Off-the-cuff", "estimatedSeconds": 45,
+      "title": "Posting Random Stuff Changed My Reach",
+      "hook": "Something weird happened when I started posting outside my normal content.",
+      "script": "Something weird happened when I started posting outside my normal content.\n\nI posted something completely random. Not related to anything I normally talk about. Just something I found genuinely interesting that week.\n\nIt reached people I had never reached before. People who then looked at my profile. Saw what I actually do. And some of them became customers.\n\nThis is not an accident. This is how the algorithm works now. Interest-based not follower-based.\n\nYou are not limited to your existing audience. You are only limited by how willing you are to post genuinely and consistently.\n\nPost more things you actually care about. Even the weird stuff.",
+      "description": "What happened to my reach when I stopped caring about staying in my lane. The algorithm rewards authenticity more than consistency."
+    },
+    {
+      "id": 19, "tone": "Challenging", "estimatedSeconds": 34,
+      "title": "Stop Waiting For Permission",
+      "hook": "Nobody is going to give you permission to start your business.",
+      "script": "Nobody is going to give you permission to start your business.\n\nNot your family. Not your current employer. Not the market.\n\nYou are waiting for a signal that is never coming.\n\nThe successful founders did not wait until they were ready. They started when it was uncomfortable, when they did not have all the answers, when the timing was not perfect.\n\nThe timing is never perfect.\n\nStart anyway.",
+      "description": "Permission to start will never come. This is the mindset shift that separates founders who build from founders who plan forever."
+    },
+    {
+      "id": 20, "tone": "Informative", "estimatedSeconds": 53,
+      "title": "How To Get Your First 10 Customers",
+      "hook": "Your first 10 customers do not come from marketing. They come from conversations.",
+      "script": "Your first 10 customers do not come from marketing. They come from conversations.\n\nHere is the process:\n\nOne. List 50 people who have the problem you are solving. People you know or can get to.\n\nTwo. Have honest conversations about the problem. Not your solution. The problem.\n\nThree. When they confirm the problem exists and is painful, tell them what you are building. Ask if they want early access.\n\nFour. Charge them something. Even if it is less than you plan to charge. Payment is commitment. Free trials give you users not customers.\n\nFive. Use their feedback to build the second version.\n\nFirst 10 customers. Then figure out scale. Not before.",
+      "description": "The exact process for getting your first real paying customers when you have no marketing budget and no audience."
+    },
+    {
+      "id": 21, "tone": "Exciting", "estimatedSeconds": 41,
+      "title": "AI Is The Biggest Equaliser In Business History",
+      "hook": "AI has just given solo founders the capabilities of a 10 person team.",
+      "script": "AI has just given solo founders the capabilities of a 10 person team.\n\nMarketing copy. Customer research. Code. Data analysis. Financial modelling. Customer support.\n\nThings that used to require hiring are now things you can do yourself in an afternoon.\n\nThe barrier to starting a business has never been lower in human history.\n\nWhich means the excuse of not having resources has never been weaker.\n\nIf you are not experimenting with AI tools in your business right now, you are handing an advantage to every competitor who is.",
+      "description": "The capabilities available to solo founders today would have required a full team five years ago. Here's what that means for the barrier to entry."
+    },
+    {
+      "id": 22, "tone": "Off-the-cuff", "estimatedSeconds": 46,
+      "title": "The Sales Call That Humbled Me",
+      "hook": "I thought I knew how to sell. Then I watched someone else do it and realised I had been doing it wrong.",
+      "script": "I thought I knew how to sell. Then I watched someone else do it and realised I had been doing it wrong.\n\nThey barely talked. They asked three or four questions and then just waited.\n\nThe customer talked for 20 minutes straight about their problems. By the end they had basically sold themselves.\n\nI asked what their technique was afterward. They said: I am just genuinely curious about people's problems. I am not thinking about what to say next. I am just listening.\n\nGenuine curiosity is the most underrated sales skill. And you cannot fake it.",
+      "description": "Watching a master salesperson completely changed how I approach sales conversations. The lesson was not what I expected."
+    },
+    {
+      "id": 23, "tone": "Challenging", "estimatedSeconds": 36,
+      "title": "Your Market Research Is Worthless",
+      "hook": "Your market research is worthless if you have not spoken to a single customer.",
+      "script": "Your market research is worthless if you have not spoken to a single customer.\n\nReports. TAM calculations. Competitor analysis. None of it tells you whether anyone will pay you for your specific solution.\n\nI have seen founders with beautiful decks and terrible businesses.\n\nAnd I have seen founders with no deck and 50 paying customers who figured it out through conversations.\n\nGet off the slides. Get on the phone. Twenty conversations will teach you more than twenty research reports.",
+      "description": "Secondary research feels productive but it's a form of procrastination. Here's what actually tells you whether your business will work."
+    },
+    {
+      "id": 24, "tone": "Informative", "estimatedSeconds": 49,
+      "title": "4 Signs Your Idea Is Worth Pursuing",
+      "hook": "Four signs an idea is worth actually pursuing, not just thinking about.",
+      "script": "Four signs an idea is worth actually pursuing, not just thinking about.\n\nOne. People are already solving this problem badly. There are workarounds, spreadsheets, manual processes. That is your opening.\n\nTwo. When you describe the problem to someone who has it, they immediately say yes that is me. No blank looks.\n\nThree. The person with the problem would be embarrassed to still have it in a year. The pain compounds.\n\nFour. The market is large enough but not so crowded that being new puts you at a fatal disadvantage.\n\nIf you can tick three of those four, you have something worth starting.",
+      "description": "How to know when an idea deserves your time. Four specific, observable signals that separate viable opportunities from interesting thoughts."
+    },
+    {
+      "id": 25, "tone": "Story-driven", "estimatedSeconds": 56,
+      "title": "The Worst Pitch I Ever Heard",
+      "hook": "I sat through the worst pitch I have ever heard. And the founder had no idea.",
+      "script": "I sat through the worst pitch I have ever heard. And the founder had no idea.\n\nFifteen minutes of features. Every slide was about what the product did. Nothing about who had the problem, how bad it was, or why customers cared.\n\nAt the end I asked: why do people buy this?\n\nLong pause. Then: because it is better than what they are using now.\n\nThat is not a reason. That is a feature.\n\nThe best pitches I have seen start with a customer story. A specific person with a specific problem having a specific terrible moment. Then the solution.\n\nMake me care about the customer before you make me care about the product.",
+      "description": "The pitch mistake I see most often and the simple fix that changes everything. Start with the customer, not the product."
+    },
+    {
+      "id": 26, "tone": "Exciting", "estimatedSeconds": 39,
+      "title": "You Are Sitting On A Business Right Now",
+      "hook": "There is a very good chance you are sitting on a viable business and do not know it.",
+      "script": "There is a very good chance you are sitting on a viable business and do not know it.\n\nEvery skill you have developed. Every frustration you have experienced. Every process you have figured out that others have not. Every unfair advantage from your specific background and experience.\n\nAll of that is potential product.\n\nMost people dismiss their own knowledge because they assume if they know it, everyone knows it.\n\nThey do not.\n\nWhat is obvious to you is a mystery to someone else. And someone will pay to shortcut that gap.",
+      "description": "The opportunity you are looking for might already be sitting in your existing skills and experience. Here's how to see it."
+    },
+    {
+      "id": 27, "tone": "Spiky-take", "estimatedSeconds": 37,
+      "title": "Entrepreneurship Is Not For Everyone",
+      "hook": "Entrepreneurship is not for everyone. And that is okay.",
+      "script": "Entrepreneurship is not for everyone. And that is okay.\n\nThe narrative that everyone should start a business is dangerous. Some people are better builders inside companies. Some people do not want the uncertainty. That is not weakness.\n\nBut if you are watching this and feeling that pull. That feeling that you could build something. That you have spotted something others have missed.\n\nThat feeling is your signal.\n\nNot everyone gets it. The ones who do and ignore it usually spend the next decade wondering what would have happened if they had not.",
+      "description": "Not everyone should start a business. But some people get a specific signal that they should — and ignoring it has a cost."
+    },
+    {
+      "id": 28, "tone": "Off-the-cuff", "estimatedSeconds": 43,
+      "title": "The Monetisation Of Random Content",
+      "hook": "Gary Vee said something last week that I cannot stop thinking about.",
+      "script": "Gary Vee said something last week that I cannot stop thinking about.\n\nHe called it the monetisation of random content. The idea that your random video about porcupines reaches 3 million people, and nine of them need your core product.\n\nWe are not in the social graph anymore. We are in the interest graph.\n\nYour followers are not your audience anymore. Everyone interested in what you just posted is your audience.\n\nI think most creators are massively underestimating this. We are optimising for our existing audience instead of reaching entirely new people through genuine curiosity.\n\nPost the random stuff. The algorithm rewards authenticity more than consistency.",
+      "description": "Rethinking content strategy after a Gary Vee insight that I think most people are sleeping on. The interest graph changes everything."
+    },
+    {
+      "id": 29, "tone": "Challenging", "estimatedSeconds": 35,
+      "title": "Your Competitor Is Not The Problem",
+      "hook": "You keep blaming competitors. But your competitor is not why you are not growing.",
+      "script": "You keep blaming competitors. But your competitor is not why you are not growing.\n\nYou are losing because you have not spoken to enough customers. Or because your messaging is unclear. Or because you are not selling hard enough.\n\nCompetitors are evidence the market exists. They are good news.\n\nThe only situation where a competitor is actually a problem is if they are taking customers you should be winning. And that is a sales and positioning problem.\n\nStop watching competitors. Start watching customers.",
+      "description": "Competitor obsession is a productivity killer. The real reason most founders are not growing has nothing to do with the competition."
+    },
+    {
+      "id": 30, "tone": "Informative", "estimatedSeconds": 51,
+      "title": "The 3 Types Of Founder",
+      "hook": "In my experience, there are three types of founder. Only one of them builds a real business.",
+      "script": "In my experience, there are three types of founder. Only one of them builds a real business.\n\nThe Thinker. Has great ideas. Analyzes extensively. Rarely ships. Keeps refining. Usually stays stuck in the planning phase forever.\n\nThe Builder. Ships constantly. Moves fast. But does not talk to customers enough. Builds things people do not need then wonders why it does not grow.\n\nThe Seller. Uncomfortable with uncertainty but stays in motion. Talks to customers constantly. Builds what they confirm they want. Ships imperfect things and improves from real feedback.\n\nMost people start as thinkers or builders. The job is to become the seller.",
+      "description": "The three founder archetypes and why most people end up in the wrong one. Understanding which you are is the first step to changing it."
+    },
+    {
+      "id": 31, "tone": "Exciting", "estimatedSeconds": 40,
+      "title": "The Interest Graph Is Your Unfair Advantage",
+      "hook": "The biggest shift in social media right now is one most creators have not spotted.",
+      "script": "The biggest shift in social media right now is one most creators have not spotted.\n\nPlatforms used to distribute your content to your followers. Now they distribute your content to people interested in what you posted.\n\nThis is enormous.\n\nIt means your next client might find you through a video about something completely unrelated to your business. Your next 50,000 followers might come from posting about a random hobby.\n\nStop producing content only for your existing audience. Start posting everything you genuinely care about.\n\nThe algorithm will find the right people. Your job is just to be interesting and authentic.",
+      "description": "The shift from social graph to interest graph is the biggest content opportunity most creators are completely missing right now."
+    },
+    {
+      "id": 32, "tone": "Off-the-cuff", "estimatedSeconds": 44,
+      "title": "I Mispriced My Product For 6 Months",
+      "hook": "I underpriced my product for six months and did not realise it until one conversation.",
+      "script": "I underpriced my product for six months and did not realise it until one conversation.\n\nA customer mentioned in passing that they had budgeted twice what we were charging.\n\nI went back and looked. Every customer had paid immediately with no negotiation. That is usually a sign you are underpriced.\n\nPricing is not about what you think your product is worth. It is about what the customer thinks the problem costs them.\n\nI had been thinking about my price. I should have been thinking about their problem.\n\nDouble your prices and see who says no. You will be surprised how few people do.",
+      "description": "The conversation that showed me I had been leaving significant money on the table for months. Pricing is a customer problem, not a product problem."
+    },
+    {
+      "id": 33, "tone": "Challenging", "estimatedSeconds": 36,
+      "title": "The Market Does Not Owe You Success",
+      "hook": "Having a good product does not mean the market owes you success.",
+      "script": "Having a good product does not mean the market owes you success.\n\nYou still have to go find the customers. You still have to do the uncomfortable selling. You still have to handle rejection without it becoming identity.\n\nThe market is completely indifferent to how much effort you have put in. It only responds to value delivered and promises kept.\n\nStop expecting recognition for working hard. Start measuring results.\n\nHard work is the minimum. Not the differentiator.",
+      "description": "Effort is the price of entry, not the reason for reward. The market is completely indifferent to how hard you worked."
+    },
+    {
+      "id": 34, "tone": "Story-driven", "estimatedSeconds": 57,
+      "title": "The Idea I Was Too Scared To Pursue",
+      "hook": "I had an idea three years ago that I did not pursue because I did not think I was qualified.",
+      "script": "I had an idea three years ago that I did not pursue because I did not think I was qualified.\n\nSomeone else built it. I watched them build it. Watched them grow it. It is now doing well.\n\nWould I have done it better? Maybe not. Maybe I would have made different mistakes.\n\nBut I will never know because I told myself a story about not being qualified that was completely made up.\n\nQualification for starting a business is not a certificate. It is willingness to figure things out as you go, tolerance for discomfort, and genuine obsession with a problem.\n\nI had all three. I just did not trust them.",
+      "description": "The idea I watched someone else build because I convinced myself I was not qualified. What that experience actually taught me about permission."
+    },
+    {
+      "id": 35, "tone": "Informative", "estimatedSeconds": 48,
+      "title": "How To Price Your First Product",
+      "hook": "Pricing your first product is simpler than most people make it.",
+      "script": "Pricing your first product is simpler than most people make it.\n\nStep one. Ask potential customers what they are currently spending to solve this problem. Time and money both count.\n\nStep two. Price at ten to twenty percent of what the problem currently costs them. Not what you think it is worth.\n\nStep three. Raise prices every time you get three consecutive immediate yeses. Immediately means no hesitation.\n\nStep four. Your price ceiling is lower than you think and higher than you have set it. Test both directions.\n\nMost founders underprice out of fear. Price from value, not from anxiety.",
+      "description": "A simple, practical pricing framework for first-time founders who have no benchmarks and are tempted to underprice out of fear."
+    },
+    {
+      "id": 36, "tone": "Off-the-cuff", "estimatedSeconds": 45,
+      "title": "Why I Start With Sales Not Product",
+      "hook": "Every time I start something new I start with sales not product. Here is why.",
+      "script": "Every time I start something new I start with sales not product. Here is why.\n\nIf I cannot sell the idea before I build it, I definitely cannot sell it after I have spent months building it.\n\nSo I describe the thing I want to build as if it exists. I put it in front of the people who would buy it. I ask if they want it. I ask what they would pay.\n\nIf they say yes and back it with payment, I have a real signal. If they are lukewarm, I learn something before it costs me months.\n\nThe build is the easy part. Selling is the test. Do the hard part first.",
+      "description": "Why I always try to sell before building and what that process looks like in practice. The build is the easy part."
+    },
+    {
+      "id": 37, "tone": "Challenging", "estimatedSeconds": 34,
+      "title": "You Are Not Too Late",
+      "hook": "Every time in history people have said it is too late to start. They were always wrong.",
+      "script": "Every time in history people have said it is too late to start. They were always wrong.\n\nToo late for social media in 2012. Too late for ecommerce in 2015. Too late for content in 2018. Too late for AI in 2023.\n\nNobody was too late. Lots of people just convinced themselves they were and never started.\n\nThe market is not closed. There is always room for a better solution, a better positioned product, a better understood customer.\n\nYou are not too late. You are using timing as an excuse.",
+      "description": "The too late narrative is one of the most damaging things a founder can tell themselves. Here's the historical evidence for why it is always wrong."
+    },
+    {
+      "id": 38, "tone": "Exciting", "estimatedSeconds": 42,
+      "title": "Document Everything You Are Learning",
+      "hook": "The content with the most authentic reach is the stuff you are figuring out in real time.",
+      "script": "The content with the most authentic reach is the stuff you are figuring out in real time.\n\nNot the polished expertise. The messy learning.\n\nIf you just started validating an idea, document that. If you just had a call that completely changed your thinking, share that. If you tried something and it failed spectacularly, that is your best piece of content.\n\nPeople do not just want the answer. They want to see the process.\n\nYou do not need to be an expert. You need to be honest and moving forward.\n\nDocument the journey. The audience will follow.",
+      "description": "Why documenting your learning in real time beats showing expertise every time — and what that looks like in practice."
+    },
+    {
+      "id": 39, "tone": "Informative", "estimatedSeconds": 54,
+      "title": "The Founder's Sales Process",
+      "hook": "Here is the sales process that works when you are a founder with no sales team.",
+      "script": "Here is the sales process that works when you are a founder with no sales team.\n\nOne. Find the right person. Not the company. The specific human being who feels the pain most acutely.\n\nTwo. Get on a call. Text, email, LinkedIn. Whatever it takes. Just get the call.\n\nThree. Ask about the problem. Do not mention your product for the first half of the call.\n\nFour. When you understand their pain, connect it to what you have built. Specifically. Not generically.\n\nFive. Ask for the next step. Not for the sale. A pilot. A trial. A reference customer arrangement.\n\nSix. Follow up more than feels comfortable. Most yeses come on the fourth or fifth touch.\n\nThat is the whole thing. It does not require a CRM or a team. It requires showing up and repeating this.",
+      "description": "A practical step-by-step sales process for founders who are doing it alone with no tools and no team. Just the fundamentals."
+    },
+    {
+      "id": 40, "tone": "Off-the-cuff", "estimatedSeconds": 47,
+      "title": "The Week I Almost Gave Up",
+      "hook": "There was a week where I genuinely nearly stopped everything.",
+      "script": "There was a week where I genuinely nearly stopped everything.\n\nNothing was working. Nobody was responding. The product felt wrong. I had convinced myself I had missed the market entirely.\n\nI talked to three customers that week. Not to sell. Just to understand.\n\nAll three said variants of the same thing. That the problem I was solving was real and they had not found a good solution.\n\nI had almost quit at the exact moment I had the most important information confirming I should not quit.\n\nThe hardest period is usually right before the thing starts working. I nearly did not find that out.",
+      "description": "What almost made me stop — and the three conversations that happened at exactly the right moment to change my mind."
+    },
+    {
+      "id": 41, "tone": "Challenging", "estimatedSeconds": 35,
+      "title": "Stop Building Features Nobody Asked For",
+      "hook": "Your product roadmap is full of features nobody asked for.",
+      "script": "Your product roadmap is full of features nobody asked for.\n\nYou built them because they seemed logical. Because a competitor has them. Because it felt like it was missing.\n\nBut you did not ask a single customer whether they need them before you spent three weeks building.\n\nEvery feature you build that nobody asked for is technical debt and opportunity cost combined.\n\nCustomers should be driving your roadmap. Not your assumptions about what they want.",
+      "description": "The feature trap is one of the most common and expensive mistakes in product development. Here's how to get out of it."
+    },
+    {
+      "id": 42, "tone": "Story-driven", "estimatedSeconds": 58,
+      "title": "The Customer I Nearly Turned Away",
+      "hook": "I almost rejected a customer that turned out to be my most valuable one.",
+      "script": "I almost rejected a customer that turned out to be my most valuable one.\n\nThey did not fit my ideal customer profile. Wrong industry. Smaller than I was targeting. Came through a cold email I almost did not respond to.\n\nI took the call anyway.\n\nThey had a use case for my product I had never considered. It was better than the use case I had been building for.\n\nThat customer became a case study. That use case became a new line of business.\n\nNot every opportunity announces itself correctly. Some of the best ones look wrong until you look closer.",
+      "description": "The call I almost ignored that changed my product strategy completely. What it taught me about staying curious even with customers who look wrong."
+    },
+    {
+      "id": 43, "tone": "Informative", "estimatedSeconds": 50,
+      "title": "Why Founders Fail At Sales",
+      "hook": "Founders fail at sales for one specific reason. Everything else is a symptom.",
+      "script": "Founders fail at sales for one specific reason. Everything else is a symptom.\n\nThey are not talking to enough people.\n\nThe conversion rate will always feel low. One in ten calls converts. Maybe one in twenty cold outreaches gets a call.\n\nBut if you are only making five outreaches a week, even a perfect conversion rate gets you nowhere.\n\nVolume is the variable most founders underestimate.\n\nNot pitch quality. Not positioning. Not pricing. Volume.\n\nTalk to more people this week than you did last week. Do that every week. The numbers will work themselves out.",
+      "description": "Strip away all the complexity and there is one core reason most founders are not closing enough deals. Everything else is noise."
+    },
+    {
+      "id": 44, "tone": "Exciting", "estimatedSeconds": 41,
+      "title": "The Opportunity Window Is Open",
+      "hook": "The opportunity window for building something with AI is open right now and it will not stay open.",
+      "script": "The opportunity window for building something with AI is open right now and it will not stay open.\n\nThe tools are accessible. The market is confused. Customers know they need something but do not know exactly what.\n\nThat confusion is your opportunity.\n\nIn three years this market will be established. The players will be set. The prices will be compressed. The differentiation will be much harder.\n\nRight now it is the early days. The early days are uncomfortable and full of uncertainty.\n\nThey are also when the biggest positions get established.\n\nWhat are you building?",
+      "description": "The AI opportunity is time-sensitive in a way that most people are underestimating. Here's why the window matters and why it will close."
+    },
+    {
+      "id": 45, "tone": "Off-the-cuff", "estimatedSeconds": 46,
+      "title": "My Biggest Sales Lesson",
+      "hook": "The biggest lesson I learned about sales took me way too long to figure out.",
+      "script": "The biggest lesson I learned about sales took me way too long to figure out.\n\nEvery single objection is just a question in disguise.\n\nWhen someone says it is too expensive, they are asking: help me understand why this is worth it.\n\nWhen someone says they need to think about it, they are asking: is there a risk I have not named yet?\n\nWhen someone says they need to check with their team, they are asking: help me make the case internally.\n\nStop treating objections as rejection. Treat them as incomplete information.\n\nGet curious about what is underneath the objection. The answer to that question is usually the actual sale.",
+      "description": "The reframe that changed how I handle every sales objection. They are not roadblocks — they are incomplete questions."
+    },
+    {
+      "id": 46, "tone": "Challenging", "estimatedSeconds": 36,
+      "title": "Your Content Is Too Safe",
+      "hook": "Your content is too safe. That is why nobody is sharing it.",
+      "script": "Your content is too safe. That is why nobody is sharing it.\n\nYou are hedging every opinion. Qualifying every statement. Making sure nobody can disagree with you.\n\nSafe content does not travel. It does not make people feel anything. It does not get shared.\n\nThe posts that spread are the ones that make someone feel something strongly enough to send it to someone else.\n\nThat requires having an actual point of view and being willing to hold it even when someone disagrees.\n\nMost founders have more genuine opinions than they allow themselves to express. Use them.",
+      "description": "Why playing it safe in your content is actively hurting your reach and what the alternative actually looks like."
+    },
+    {
+      "id": 47, "tone": "Informative", "estimatedSeconds": 52,
+      "title": "The Content Types That Build Audiences",
+      "hook": "Four types of content that consistently build audiences for founders.",
+      "script": "Four types of content that consistently build audiences for founders.\n\nOne. The behind the scenes. Show the actual work. The messy version. Not the polished highlight.\n\nTwo. The unpopular opinion. Take a stance on something in your industry that most people are getting wrong.\n\nThree. The specific mistake. Not a general lesson. A specific thing you did wrong, when you did it, and exactly what it cost you.\n\nFour. The documented curiosity. Something you are learning about right now. Day one of the journey, not the expert summary.\n\nAll four work because they are authentic in a way most content is not.",
+      "description": "The four content formats that consistently work for founders building audiences — and why they work when generic content does not."
+    },
+    {
+      "id": 48, "tone": "Spiky-take", "estimatedSeconds": 38,
+      "title": "Product Market Fit Is Overused",
+      "hook": "Product market fit has become the most overused and least understood phrase in startups.",
+      "script": "Product market fit has become the most overused and least understood phrase in startups.\n\nFounders say they are looking for product market fit as if it is something that arrives as a distinct moment.\n\nIt is not. It is a direction, not a destination.\n\nYou move toward it through customer conversations, iteration, and honest feedback. You know you are getting closer when customers start referring other customers without you asking.\n\nStop using it as a concept and start using it as a measurement. How quickly are customers returning? How often are they referring?\n\nThose numbers tell you more than any definition will.",
+      "description": "Product market fit has become a concept founders hide behind instead of a measurement they use. Here's what it actually looks like in practice."
+    },
+    {
+      "id": 49, "tone": "Off-the-cuff", "estimatedSeconds": 44,
+      "title": "The Random Posting Experiment",
+      "hook": "I am going to try something. I am going to post one completely random thing every week.",
+      "script": "I am going to try something. I am going to post one completely random thing every week.\n\nNot related to founders. Not related to startups. Just something I am genuinely curious about or found interesting.\n\nThe theory is simple. We are in the interest graph now. The algorithm finds people interested in what you post. Not just the people who already follow you.\n\nIf I post about something random and it reaches people who have never heard of me, some of them will find what I do interesting.\n\nI will report back on what happens. This might be a terrible idea. Or it might be the most interesting thing I do this year.",
+      "description": "Starting a content experiment based on the interest graph theory. Going to post outside my lane and document what happens."
+    },
+    {
+      "id": 50, "tone": "Challenging", "estimatedSeconds": 37,
+      "title": "Start Now",
+      "hook": "Not next month. Not when the timing is right. Now.",
+      "script": "Not next month. Not when the timing is right. Now.\n\nThe idea you have been sitting on for six months is not getting better with more thought. It is getting more comfortable as something you talk about instead of something you do.\n\nOpportunity does not have a loyalty programme. It does not reward people who thought about it the longest.\n\nIt rewards the people who showed up first. Who moved. Who made the mistakes and corrected from them.\n\nYou already know enough to start. You do not know enough to know you will succeed. Nobody does.\n\nStart anyway.",
+      "description": "The permission you have been waiting for to start the thing. It was never going to come from anywhere else."
+    }
+  ]
+}
