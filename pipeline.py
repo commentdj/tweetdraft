@@ -204,20 +204,19 @@ except Exception as e:
 
 # ── Zernio connection test ────────────────────────────────────────────────────
 log("Checking Zernio connection...")
+_ZB = "https://zernio.com/api/v1"
+_ZH = {"Authorization": f"Bearer {ZERNIO_TOKEN}", "Content-Type": "application/json"}
 try:
-    r = requests.get(
-        "https://api.zernio.com/v1/accounts",
-        headers={"Authorization": f"Bearer {ZERNIO_TOKEN}"},
-        timeout=10
-    )
+    r = requests.get(f"{_ZB}/accounts", headers=_ZH, timeout=10)
     if r.status_code == 200:
-        accounts = r.json()
-        names = [a.get("name","?") for a in (accounts if isinstance(accounts, list) else accounts.get("data",[]))]
-        log_ok(f"Zernio connected — accounts: {', '.join(names[:5])}")
+        data = r.json()
+        accs = data if isinstance(data, list) else data.get("accounts", data.get("data", []))
+        names = [f"{a.get('name','?')} ({a.get('platform','?')})" for a in accs[:5]]
+        log_ok(f"Zernio connected — {len(accs)} account(s): {', '.join(names)}")
     else:
-        log_warn(f"Zernio returned {r.status_code}: {r.text[:150]}")
+        log_warn(f"Zernio returned {r.status_code} — scheduling skipped, processing continues")
 except Exception as e:
-    log_warn(f"Zernio check failed: {e}")
+    log_warn(f"Zernio check failed: {e} — scheduling skipped, processing continues")
 
 # ── GitHub connection test ────────────────────────────────────────────────────
 log("Checking GitHub connection...")
