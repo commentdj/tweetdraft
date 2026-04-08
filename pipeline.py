@@ -580,25 +580,51 @@ def add_title_card(inp, out, title):
         shutil.copy(inp, out)
 
 def add_captions(inp, out, whisper_result):
-    srt = inp.with_suffix(".srt")
+    """Burn subtitles into video using SRT file. Windows-compatible approach."""
+    srt = inp.parent / (inp.stem + "_subs.srt")
+    font = get_windows_font()
+
+    # Write SRT
     lines = []
     idx = 1
-    for seg in whisper_result.get("segments",[]):
-        if not seg["text"].strip(): continue
-        def t(s):
+    for seg in whisper_result.get("segments", []):
+        text = seg.get("text","").strip()
+        if not text:
+            continue
+        def fmt_t(s):
             h=int(s//3600);m=int((s%3600)//60);sc=int(s%60);ms=int((s%1)*1000)
             return f"{h:02d}:{m:02d}:{sc:02d},{ms:03d}"
-        lines.append(f"{idx}\n{t(seg['start'])} --> {t(seg['end'])}\n{seg['text'].strip()}\n")
+        lines.append(f"{idx}\n{fmt_t(seg['start'])} --> {fmt_t(seg['end'])}\n{text}\n")
         idx += 1
-    srt.write_text("\n".join(lines), encoding="utf-8")
-    cmd = ["ffmpeg","-y","-i",str(inp),
-           "-vf",f"subtitles={str(srt)}:force_style='FontSize=20,PrimaryColour=&Hffffff,OutlineColour=&H000000,Outline=2,Alignment=2'",
-           "-c:a","copy",str(out)]
-    r = subprocess.run(cmd, capture_output=True)
-    if r.returncode != 0:
-        log_warn("Captions failed — using without")
+
+    if not lines:
+        log_warn("No subtitle segments — skipping captions")
         shutil.copy(inp, out)
-    if srt.exists(): srt.unlink()
+        return
+
+    srt.write_text("\n".join(lines), encoding="utf-8")
+
+    # Build subtitle filter — Windows needs forward slashes and escaped colons
+    srt_path_escaped = str(srt).replace("\\", "/").replace("\", "/").replace(":", "\\:")
+
+    style = "FontSize=18,PrimaryColour=&H00ffffff,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=40"
+    if font:
+        font_name = Path(font).stem  # e.g. "arialbd"
+        style += f",FontName={font_name}"
+
+    vf = f"subtitles='{srt_path_escaped}':force_style='{style}'"
+
+    cmd = ["ffmpeg","-y","-i",str(inp),"-vf",vf,"-c:a","copy",str(out)]
+    r = subprocess.run(cmd, capture_output=True)
+
+    if r.returncode != 0:
+        err = r.stderr[-300:].decode("utf-8","ignore") if r.stderr else ""
+        log_warn(f"Captions failed: {err[-150:]} — using without captions")
+        shutil.copy(inp, out)
+
+    if srt.exists():
+        try: srt.unlink()
+        except: pass
 
 ZERNIO_BASE = "https://zernio.com/api/v1"
 ZERNIO_HEADERS = {"Authorization": f"Bearer {ZERNIO_TOKEN}", "Content-Type": "application/json"}
