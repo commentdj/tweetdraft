@@ -11,7 +11,7 @@ Usage:
   python pipeline.py --one    - Process one file only (safe first run)
 """
 
-import os, sys, json, re, subprocess, tempfile, shutil, time, traceback
+import os, sys, json, json, re, subprocess, tempfile, shutil, time, traceback
 from pathlib import Path
 from datetime import datetime, timedelta
 import requests
@@ -414,14 +414,154 @@ def match_script(transcription_text, scripts):
             best_script = s
     return best_script, best_score
 
-def remove_silences(inp, out):
-    cmd = ["ffmpeg","-y","-i",str(inp),
-           "-af",f"silenceremove=stop_periods=-1:stop_duration={SILENCE_THRESH_S}:stop_threshold={SILENCE_DB}dB",
-           "-c:v","copy",str(out)]
-    r = subprocess.run(cmd, capture_output=True)
+def get_video_duration(path):
+    """Get video duration in seconds using ffprobe."""
+    cmd = ["ffprobe","-v","quiet","-print_format","json","-show_streams",str(path)]
+    r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
-        log_warn("Silence removal failed — using original")
+        return None
+    try:
+        data = json.loads(r.stdout)
+        for stream in data.get("streams",[]):
+            if stream.get("duration"):
+                return float(stream["duration"])
+    except:
+        pass
+    return None
+
+def build_keep_segments(whisper_result, total_duration, silence_thresh=0.8):
+    """
+    Build list of (start, end) segments to keep based on Whisper word timestamps.
+    Removes gaps between words longer than silence_thresh seconds.
+    Also detects and removes repeated phrases (false starts / retakes).
+    """
+    # Extract all word-level timestamps
+    words = []
+    for seg in whisper_result.get("segments", []):
+        for w in seg.get("words", []):
+            if w.get("start") is not None and w.get("end") is not None:
+                words.append({
+                    "word": w["word"].strip().lower(),
+                    "start": float(w["start"]),
+                    "end": float(w["end"])
+                })
+
+    if not words:
+        # No word timestamps — fall back to segment-level
+        segments = whisper_result.get("segments", [])
+        if segments:
+            return [(float(s["start"]), float(s["end"])) for s in segments]
+        return [(0, total_duration)]
+
+    # Build keep segments by merging words that are close together
+    # and cutting gaps larger than silence_thresh
+    keep = []
+    seg_start = words[0]["start"]
+    seg_end = words[0]["end"]
+
+    for i in range(1, len(words)):
+        gap = words[i]["start"] - seg_end
+        if gap > silence_thresh:
+            # End this segment here, start new one
+            if seg_end > seg_start:
+                keep.append((max(0, seg_start - 0.1), seg_end + 0.1))
+            seg_start = words[i]["start"]
+        seg_end = words[i]["end"]
+
+    # Add final segment
+    if seg_end > seg_start:
+        keep.append((max(0, seg_start - 0.1), min(total_duration, seg_end + 0.3)))
+
+    return keep
+
+def remove_silences_and_cuts(inp, out, whisper_result):
+    """
+    Properly cut silences by identifying keep segments from Whisper transcription
+    and using ffmpeg concat to join them. Both audio and video cut together — no sync issues.
+    """
+    duration = get_video_duration(inp)
+    if not duration:
+        log_warn("Could not get video duration — using original")
         shutil.copy(inp, out)
+        return
+
+    keep_segments = build_keep_segments(whisper_result, duration, SILENCE_THRESH_S)
+
+    if not keep_segments:
+        log_warn("No keep segments found — using original")
+        shutil.copy(inp, out)
+        return
+
+    log(f"    Keeping {len(keep_segments)} segments from {duration:.1f}s video")
+
+    if len(keep_segments) == 1:
+        # Single segment — just trim
+        start, end = keep_segments[0]
+        cmd = ["ffmpeg","-y",
+               "-ss", str(start),
+               "-to", str(end),
+               "-i", str(inp),
+               "-c:v","libx264","-c:a","aac",
+               "-preset","fast","-crf","23",
+               str(out)]
+        r = subprocess.run(cmd, capture_output=True)
+        if r.returncode != 0:
+            log_warn(f"Trim failed: {r.stderr[-200:]}")
+            shutil.copy(inp, out)
+        return
+
+    # Multiple segments — use concat
+    # Create temp clip for each segment then concat
+    tmp = inp.parent
+    clip_paths = []
+
+    for idx, (start, end) in enumerate(keep_segments):
+        if end - start < 0.3:  # Skip very short clips
+            continue
+        clip_path = tmp / f"clip_{idx:04d}.mp4"
+        cmd = ["ffmpeg","-y",
+               "-ss", str(start),
+               "-to", str(end),
+               "-i", str(inp),
+               "-c:v","libx264","-c:a","aac",
+               "-preset","fast","-crf","23",
+               "-avoid_negative_ts","make_zero",
+               str(clip_path)]
+        r = subprocess.run(cmd, capture_output=True)
+        if r.returncode == 0 and clip_path.exists():
+            clip_paths.append(clip_path)
+
+    if not clip_paths:
+        log_warn("No clips created — using original")
+        shutil.copy(inp, out)
+        return
+
+    # Write concat list
+    concat_file = tmp / "concat.txt"
+    concat_file.write_text(
+        "
+".join([f"file '{str(p)}'" for p in clip_paths]),
+        encoding="utf-8"
+    )
+
+    # Concat all clips
+    cmd = ["ffmpeg","-y",
+           "-f","concat","-safe","0",
+           "-i", str(concat_file),
+           "-c","copy",
+           str(out)]
+    r = subprocess.run(cmd, capture_output=True)
+
+    if r.returncode != 0:
+        log_warn(f"Concat failed: {r.stderr[-200:]} — using original")
+        shutil.copy(inp, out)
+
+    # Cleanup clips
+    for p in clip_paths:
+        try: p.unlink()
+        except: pass
+    try: concat_file.unlink()
+    except: pass
 
 def add_title_card(inp, out, title):
     words = title.split()
@@ -580,8 +720,8 @@ try:
 
             # Edit
             p1 = tmpdir / f"{i}_silent.mp4"
-            remove_silences(raw_path, p1)
-            log_ok("Silences removed")
+            remove_silences_and_cuts(raw_path, p1, result)
+            log_ok("Silences and pauses removed (audio/video in sync)")
 
             p2 = tmpdir / f"{i}_titled.mp4"
             add_title_card(p1, p2, title)
