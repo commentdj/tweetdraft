@@ -365,13 +365,23 @@ for batch_num in range(1, 51):
         effective_status = approval_status if approval_status else script_status
 
         if effective_status == "recorded":
-            s["status"] = "recorded"  # Sync it back
+            s["status"] = "recorded"
             s["_batch"] = batch_num
             s["_idx"] = idx
             all_scripts.append(s)
             log(f"  Found recorded script: '{s.get('title','?')}' (batch {batch_num}, idx {idx})")
+        elif s.get("status") is None:
+            s["status"] = "pending"  # Fix None statuses
 
 log(f"Found {len(all_scripts)} recorded scripts across {len(batch_data)} batches")
+if len(all_scripts) == 0:
+    # Show what statuses exist to help debug
+    all_statuses = {}
+    for bn, bd in batch_data.items():
+        for s in bd.get("scripts",[]):
+            st = str(s.get("status","None"))
+            all_statuses[st] = all_statuses.get(st,0) + 1
+    log(f"  Script statuses found: {all_statuses}")
 
 if not all_scripts:
     log_warn("No scripts marked as 'recorded' in ScriptBuilder")
