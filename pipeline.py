@@ -538,11 +538,10 @@ def remove_silences_and_cuts(inp, out, whisper_result):
 
     # Write concat list
     concat_file = tmp / "concat.txt"
-    concat_file.write_text(
-        "
-".join([f"file '{str(p)}'" for p in clip_paths]),
-        encoding="utf-8"
-    )
+    lines_txt = []
+    for p in clip_paths:
+        lines_txt.append("file '" + str(p).replace("\\", "/") + "'")
+    concat_file.write_text("\n".join(lines_txt), encoding="utf-8")
 
     # Concat all clips
     cmd = ["ffmpeg","-y",
@@ -605,7 +604,7 @@ def add_captions(inp, out, whisper_result):
     srt.write_text("\n".join(lines), encoding="utf-8")
 
     # Build subtitle filter — Windows needs forward slashes and escaped colons
-    srt_path_escaped = str(srt).replace("\\", "/").replace("\", "/").replace(":", "\\:")
+    srt_path_escaped = str(srt).replace("\\", "/").replace(":", "\\:")
 
     style = "FontSize=18,PrimaryColour=&H00ffffff,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=40"
     if font:
