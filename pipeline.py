@@ -20,8 +20,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # ── Args ──────────────────────────────────────────────────────────────────────
-TEST_MODE = "--test" in sys.argv
-ONE_ONLY  = "--one"  in sys.argv
+TEST_MODE   = "--test"      in sys.argv
+ONE_ONLY    = "--one"       in sys.argv
+REPROCESS   = "--reprocess" in sys.argv  # Clear processed log for a specific file
 
 # ── Load config ───────────────────────────────────────────────────────────────
 BASE = Path(__file__).parent
@@ -289,6 +290,24 @@ if PROCESSED_LOG.exists():
         processed_log = json.loads(PROCESSED_LOG.read_text())
     except:
         processed_log = {}
+
+# ── Reprocess mode: clear all or specific files from processed log ─────────────
+if REPROCESS:
+    if processed_log:
+        log(f"Current processed log has {len(processed_log)} file(s):")
+        for fid, info in processed_log.items():
+            log(f"  - {info.get('file_name','?')} (processed {info.get('processed_at','?')[:10]})")
+        answer = input("\nClear ALL processed files and reprocess everything? (y/n): ").strip().lower()
+        if answer == 'y':
+            processed_log = {}
+            PROCESSED_LOG.write_text(json.dumps({}))
+            log("Cleared all processed files — all videos will be reprocessed")
+        else:
+            log("No changes made. Exiting reprocess mode.")
+            sys.exit(0)
+    else:
+        log("No processed files found — nothing to clear")
+        sys.exit(0)
 
 # ── Scan Raw Footage folder ───────────────────────────────────────────────────
 log("Scanning Raw Footage folder...")
