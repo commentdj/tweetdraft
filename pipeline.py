@@ -572,20 +572,52 @@ def remove_silences_and_cuts(inp, out, whisper_result):
     try: concat_file.unlink()
     except: pass
 
+def get_windows_font():
+    """Find a usable font file on Windows."""
+    candidates = [
+        "C:/Windows/Fonts/arialbd.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/calibrib.ttf",
+        "C:/Windows/Fonts/calibri.ttf",
+        "C:/Windows/Fonts/verdana.ttf",
+        "C:/Windows/Fonts/tahoma.ttf",
+    ]
+    for f in candidates:
+        if Path(f).exists():
+            return f
+    return None
+
 def add_title_card(inp, out, title):
-    words = title.split()
-    if len(words) > 5:
-        mid = len(words)//2
-        text = " ".join(words[:mid]) + "\\n" + " ".join(words[mid:])
+    font = get_windows_font()
+    safe = title.replace("'","").replace('"',"").replace(":","").replace(",","").replace("\\","").strip()
+    if not safe:
+        shutil.copy(inp, out)
+        return
+    words = safe.split()
+    if font:
+        fp = font.replace("\\", "/")
+        if len(words) > 5:
+            mid = len(words) // 2
+            t1 = " ".join(words[:mid])
+            t2 = " ".join(words[mid:])
+            vf = (f"drawtext=fontfile=\'{fp}\':text=\'{t1}\':fontsize={TITLE_FONT_SIZE}:"
+                  f"fontcolor=white:borderw=3:bordercolor=black:"
+                  f"x=(w-text_w)/2:y=(h/2-text_h-10):enable=\'between(t,0,{TITLE_SECS})\',"
+                  f"drawtext=fontfile=\'{fp}\':text=\'{t2}\':fontsize={TITLE_FONT_SIZE}:"
+                  f"fontcolor=white:borderw=3:bordercolor=black:"
+                  f"x=(w-text_w)/2:y=(h/2+10):enable=\'between(t,0,{TITLE_SECS})\'")
+        else:
+            vf = (f"drawtext=fontfile=\'{fp}\':text=\'{safe}\':fontsize={TITLE_FONT_SIZE}:"
+                  f"fontcolor=white:borderw=3:bordercolor=black:"
+                  f"x=(w-text_w)/2:y=(h-text_h)/2:enable=\'between(t,0,{TITLE_SECS})\'")
     else:
-        text = title
-    safe = text.replace("'","\\'").replace(":","\\:").replace(",","\\,")
-    cmd = ["ffmpeg","-y","-i",str(inp),
-           "-vf",f"drawtext=text='{safe}':fontsize={TITLE_FONT_SIZE}:fontcolor=white:borderw=3:bordercolor=black:x=(w-text_w)/2:y=(h-text_h)/2:enable='between(t,0,{TITLE_SECS})'",
-           "-c:a","copy",str(out)]
+        vf = (f"drawtext=text=\'{safe}\':fontsize={TITLE_FONT_SIZE}:"
+              f"fontcolor=white:borderw=3:bordercolor=black:"
+              f"x=(w-text_w)/2:y=(h-text_h)/2:enable=\'between(t,0,{TITLE_SECS})\'")
+    cmd = ["ffmpeg", "-y", "-i", str(inp), "-vf", vf, "-c:a", "copy", str(out)]
     r = subprocess.run(cmd, capture_output=True)
     if r.returncode != 0:
-        log_warn("Title card failed — using without")
+        log_warn(f"Title card failed — using without")
         shutil.copy(inp, out)
 
 def add_captions(inp, out, whisper_result):
@@ -614,7 +646,7 @@ def add_captions(inp, out, whisper_result):
     srt.write_text("\n".join(lines), encoding="utf-8")
 
     # Build subtitle filter — Windows needs forward slashes and escaped colons
-    srt_path_escaped = str(srt).replace("\\", "/").replace(":", "\\:")
+    srt_path_escaped = str(srt).replace("\\", "/").replace(":", "\\\\:")
 
     style = "FontSize=18,PrimaryColour=&H00ffffff,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=40"
     if font:
