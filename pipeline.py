@@ -499,177 +499,99 @@ def get_video_duration(path):
     return None
 
 def normalise_text(text):
-    """Lowercase, strip punctuation for comparison."""
+    """Lowercase, strip punctuation."""
     import re
     return re.sub(r"[^a-z0-9 ]", "", text.lower()).strip()
 
 
-def align_transcript_to_script(whisper_words, script_text):
+def find_repeated_phrases(tw, min_len=3, max_look_ahead=25):
     """
-    Align transcript to script. Find the last/best complete take.
-    Remove everything before it.
+    Find words in transcript that are false starts / repeated takes.
+
+    Core algorithm:
+    For every position i in the transcript, check if the N words starting at i
+    also appear starting at some position j > i (within max_look_ahead words).
+    If so, and the version at j is LONGER (more complete), remove words at i.
+
+    This catches zero-gap restarts like:
+      "the idea you think the idea you think needs more research"
+       ^^^^^^^^^^^^^^^^^^^ <- remove these 4 words
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <- keep
+
+    Returns set of word indices to REMOVE.
     """
-    if not whisper_words or not script_text:
-        return set()
+    remove = set()
+    n = len(tw)
 
-    tw = [normalise_text(w["word"]) for w in whisper_words]
-    sw = normalise_text(script_text).split()
+    # Try phrase lengths from longest to shortest so we catch the full false start
+    for phrase_len in range(min(12, n), min_len - 1, -1):
+        for i in range(n - phrase_len):
+            if i in remove:
+                continue  # Already marked, skip
 
-    if not tw or not sw:
-        return set()
+            phrase = tw[i:i + phrase_len]
 
-    if DEBUG_MODE:
-        log("  [DEBUG] Script words: " + " ".join(sw[:20]) + ("..." if len(sw)>20 else ""))
-        log("  [DEBUG] Transcript words (" + str(len(tw)) + " total):")
-        for i, (w, ww) in enumerate(zip(tw, whisper_words)):
-            log(f"    [{i:3d}] {w:15s} {ww['start']:.2f}s - {ww['end']:.2f}s")
+            # Look for same phrase starting later (within max_look_ahead words)
+            for j in range(i + 1, min(i + max_look_ahead, n - phrase_len + 1)):
+                if tw[j:j + phrase_len] == phrase:
+                    # Found same phrase at j — j is the retry of i
+                    # Check if j version is longer (more complete take)
+                    # Count how far j extends matching content
+                    j_extends = 0
+                    while (j + phrase_len + j_extends < n and
+                           i + phrase_len + j_extends < n and
+                           tw[j + phrase_len + j_extends] == tw[i + phrase_len + j_extends]):
+                        j_extends += 1
 
-    # ?? Step 1: Find where each script word appears in the transcript ??????????
-    # Build a map: script_word_index -> list of transcript_word_indices where it appears
-    from collections import defaultdict
-    script_word_positions = defaultdict(list)
-    for ti, tw_word in enumerate(tw):
-        for si, sw_word in enumerate(sw):
-            if tw_word == sw_word:
-                script_word_positions[si].append(ti)
+                    # j is more complete if it extends further or i is cut short
+                    i_end = i + phrase_len
+                    j_end = j + phrase_len + j_extends
 
-    # ?? Step 2: Find the BEST (latest) alignment of the script in the transcript ?
-    # Use a sliding window: for each position in the transcript, score how well
-    # it aligns with the start of the script. The best late alignment wins.
-    
-    best_start_ti = None  # transcript index where the final clean take begins
-    best_score = 0
-    
-    # Try each possible starting position in the transcript
-    # Working backwards (latest possible start wins for equal scores)
-    for start_ti in range(len(tw) - 1, -1, -1):
-        # Score: how many of the first N script words match from this position
-        score = 0
-        ti = start_ti
-        for si in range(min(len(sw), len(tw) - start_ti)):
-            if ti < len(tw) and tw[ti] == sw[si]:
-                score += 1
-            ti += 1
-        
-        # Require matching at least 40% of script words OR 5 words minimum
-        min_match = max(5, int(len(sw) * 0.35))
-        if score >= min_match and score >= best_score:
-            best_score = score
-            best_start_ti = start_ti
+                    # Remove i version if j is longer or equal
+                    if j_end >= i_end:
+                        for idx in range(i, i + phrase_len):
+                            remove.add(idx)
+                        break  # Done with this i
 
-    if best_start_ti is None:
-        # No good alignment found - fall back to keeping everything
-        log("    Script alignment: no match found, keeping all words")
-        return set()
-
-    log(f"    Script alignment: final take starts at word {best_start_ti} "
-        f"(matched {best_score}/{len(sw)} script words)")
-    if DEBUG_MODE:
-        log(f"  [DEBUG] best_start_ti={best_start_ti}, best_score={best_score}, min_match={max(5,int(len(sw)*0.35))}")
-        log(f"  [DEBUG] Words from best_start_ti: {tw[best_start_ti:best_start_ti+10]}")
-
-    # ?? Step 3: Remove everything before the final clean take ?????????????????
-    # But be smart: don't remove words that aren't part of any attempt at the script
-    # (e.g. intro words, "okay let's go" type phrases before the script starts)
-    
-    # Find the earliest point that's clearly attempting the script
-    # by looking for the first occurrence of the opening script words
-    first_script_attempt = None
-    first_3_script = sw[:3] if len(sw) >= 3 else sw
-    
-    for ti in range(len(tw)):
-        if tw[ti] == first_3_script[0]:
-            # Check if next words match
-            match = sum(1 for i, w in enumerate(first_3_script) 
-                       if ti + i < len(tw) and tw[ti + i] == w)
-            if match >= min(2, len(first_3_script)):
-                first_script_attempt = ti
-                break
-
-    if first_script_attempt is None:
-        first_script_attempt = 0
-
-    # Remove: from first_script_attempt up to best_start_ti
-    remove_indices = set(range(first_script_attempt, best_start_ti))
-    
-    if remove_indices:
-        removed_words = [tw[i] for i in sorted(remove_indices)[:10]]
-        log(f"    Removing {len(remove_indices)} false start words: "
-            f"'{' '.join(removed_words)}...'")
-
-    return remove_indices
+    return remove
 
 
 def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, script_text=None):
     """
-    Build (start, end) time segments to keep.
-    1. Aligns transcript to script to remove false starts
-    2. Removes silences longer than silence_thresh
+    1. Extract Whisper word timestamps
+    2. Find and remove repeated phrases / false starts
+    3. Remove silences > silence_thresh
+    4. Return list of (start, end) time segments to keep
     """
-    # Extract word-level timestamps from Whisper
+    # Extract words
     words = []
     for seg in whisper_result.get("segments", []):
         for w in seg.get("words", []):
-            start = w.get("start")
-            end = w.get("end")
+            s = w.get("start")
+            e = w.get("end")
             word = w.get("word", "").strip()
-            if start is not None and end is not None and word:
-                words.append({
-                    "word": word,
-                    "start": float(start),
-                    "end": float(end)
-                })
+            if s is not None and e is not None and word:
+                words.append({"word": word, "start": float(s), "end": float(e)})
 
     if not words:
-        # No word timestamps - fall back to segment level
         segs = whisper_result.get("segments", [])
         return [(float(s["start"]), float(s["end"])) for s in segs] if segs else [(0, total_duration)]
 
-    log(f"    Whisper returned {len(words)} words with timestamps")
-    if DEBUG_MODE:
-        log("  [DEBUG] First 30 words with timestamps:")
-        for i, w in enumerate(words[:30]):
-            gap = words[i]["start"] - words[i-1]["end"] if i > 0 else 0
-            gap_str = f" [GAP {gap:.2f}s]" if gap > 0.3 else ""
-            log(f"    [{i:3d}] {normalise_text(w['word']):15s} {w['start']:.2f}s-{w['end']:.2f}s{gap_str}")
+    log(f"    Whisper: {len(words)} words")
 
-    # Get false start indices from script alignment
-    remove_indices = set()
-    if script_text:
-        remove_indices = align_transcript_to_script(words, script_text)
-    
-    # Also run chunk-based false start detection as a second pass
-    # This catches repeats WITHIN the final take
-    chunks = []
-    cw = [0]
-    for i in range(1, len(words)):
-        if words[i]["start"] - words[i-1]["end"] >= 0.4:
-            chunks.append(cw[:])
-            cw = [i]
-        else:
-            cw.append(i)
-    if cw:
-        chunks.append(cw)
-    
-    # Only apply chunk detection to words NOT already removed
-    for i in range(len(chunks)):
-        if any(idx in remove_indices for idx in chunks[i]):
-            continue
-        a = [normalise_text(words[j]["word"]) for j in chunks[i]]
-        for j in range(i + 1, min(i + 8, len(chunks))):  # Only look ahead 8 chunks
-            if any(idx in remove_indices for idx in chunks[j]):
-                continue
-            b = [normalise_text(words[k]["word"]) for k in chunks[j]]
-            if min(len(a), len(b)) < 2:
-                continue
-            matches = sum(1 for x, y in zip(a, b) if x == y)
-            if matches / len(a) >= 0.70 and len(b) > len(a):
-                for idx in chunks[i]:
-                    remove_indices.add(idx)
-                log(f"    Chunk false start removed: '{' '.join(a[:5])}'")
-                break
+    # Normalised word list for matching
+    tw = [normalise_text(w["word"]) for w in words]
 
-    # Build keep segments from non-removed words
+    # Find repeated phrases to remove
+    remove_indices = find_repeated_phrases(tw, min_len=3, max_look_ahead=30)
+
+    if remove_indices:
+        removed_words = [words[i]["word"] for i in sorted(remove_indices)]
+        log(f"    Removed {len(remove_indices)} false start words: {' '.join(removed_words[:15])}")
+    else:
+        log("    No repeated phrases detected")
+
+    # Build keep list from remaining words
     keep_words = [w for i, w in enumerate(words) if i not in remove_indices]
     if not keep_words:
         keep_words = words
@@ -690,8 +612,9 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
     if seg_end > seg_start + 0.1:
         keep.append((max(0.0, seg_start - 0.05), min(total_duration, seg_end + 0.15)))
 
-    log(f"    Final: {len(keep)} segments to keep from {total_duration:.1f}s video")
+    log(f"    Keeping {len(keep)} segments from {total_duration:.1f}s")
     return keep
+
 
 def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
     """
