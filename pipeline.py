@@ -590,23 +590,63 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
 
     log(f"    Whisper: {len(words)} words detected")
 
+    # Find false starts
     remove_indices = find_false_starts(words, script_text=script_text)
+
+    # Also remove suspiciously long words immediately before/after false starts
+    # These are Whisper artefacts where it merges a hidden false start into
+    # a single word with abnormal duration (e.g. "you" lasting 2 seconds)
+    avg_dur = sum(w["end"] - w["start"] for w in words) / max(len(words), 1)
+    extra_remove = set()
+    for idx in list(remove_indices):
+        # Check word immediately before the false start
+        if idx > 0 and (idx - 1) not in remove_indices:
+            w = words[idx - 1]
+            dur = w["end"] - w["start"]
+            if dur > max(1.0, avg_dur * 3):
+                extra_remove.add(idx - 1)
+                log(f"    Long-word artefact removed: '{w['word']}' "
+                    f"({dur:.2f}s at {w['start']:.1f}s)")
+        # Check word immediately after the false start
+        if idx + 1 < len(words) and (idx + 1) not in remove_indices:
+            w = words[idx + 1]
+            dur = w["end"] - w["start"]
+            if dur > max(1.0, avg_dur * 3):
+                extra_remove.add(idx + 1)
+                log(f"    Long-word artefact removed: '{w['word']}' "
+                    f"({dur:.2f}s at {w['start']:.1f}s)")
+
+    remove_indices = remove_indices | extra_remove
 
     keep_words = [w for i, w in enumerate(words) if i not in remove_indices]
     if not keep_words:
         keep_words = words
 
-    # Merge into time segments, cutting silences
+    # Build segments, cutting silences
+    # After a gap caused by false start removal, start segment AFTER the word
+    # starts (not before) to avoid pre-speech noise in Whisper timestamps
     keep = []
     seg_start = keep_words[0]["start"]
     seg_end = keep_words[0]["end"]
+    prev_was_gap = False
 
     for i in range(1, len(keep_words)):
         gap = keep_words[i]["start"] - seg_end
         if gap > silence_thresh:
             if seg_end > seg_start + 0.1:
-                keep.append((max(0.0, seg_start - 0.05), seg_end + 0.08))
-            seg_start = keep_words[i]["start"]
+                # End current segment with small tail
+                keep.append((max(0.0, seg_start - 0.05), seg_end + 0.06))
+            # Start new segment - if gap was large (false start removed),
+            # start slightly INTO the word to skip any leading noise
+            word_dur = keep_words[i]["end"] - keep_words[i]["start"]
+            if gap > 1.5:
+                # Large gap - likely false start removed, trim start aggressively
+                seg_start = keep_words[i]["start"] + min(0.15, word_dur * 0.3)
+            else:
+                seg_start = max(0.0, keep_words[i]["start"] - 0.03)
+            prev_was_gap = True
+        else:
+            prev_was_gap = False
         seg_end = keep_words[i]["end"]
 
     if seg_end > seg_start + 0.1:
