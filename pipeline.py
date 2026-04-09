@@ -458,13 +458,119 @@ def get_video_duration(path):
         pass
     return None
 
-def build_keep_segments(whisper_result, total_duration, silence_thresh=0.8):
+def normalise_text(text):
+    """Strip punctuation and lowercase for comparison."""
+    import re
+    return re.sub(r"[^a-z0-9 ]", "", text.lower()).strip()
+
+def find_false_starts(words, script_text=None, min_phrase_len=4, similarity_thresh=0.75):
+    """
+    Identify word indices that are false starts / retakes and should be removed.
+
+    Strategy:
+    1. Split words into speech chunks (separated by silences)
+    2. For each chunk, look forward — if a later chunk starts with the same words,
+       the earlier chunk is a false start. Remove the earlier one.
+    3. If script_text provided, also find chunks that are partial attempts
+       at script lines (< 60% complete) followed by a fuller attempt.
+
+    Returns a set of word indices to REMOVE.
+    """
+    if not words:
+        return set()
+
+    # Group words into chunks separated by pauses > 0.4s
+    chunks = []
+    chunk_words = [0]
+    for i in range(1, len(words)):
+        gap = words[i]["start"] - words[i-1]["end"]
+        if gap > 0.4:
+            chunks.append(chunk_words)
+            chunk_words = [i]
+        else:
+            chunk_words.append(i)
+    if chunk_words:
+        chunks.append(chunk_words)
+
+    remove_indices = set()
+
+    # Strategy 1: Repeated phrase detection
+    # If chunk A starts with the same N words as chunk B (where B comes after A),
+    # chunk A is a false start — remove it
+    for i in range(len(chunks)):
+        chunk_a = chunks[i]
+        a_words = [normalise_text(words[j]["word"]) for j in chunk_a]
+        a_text = " ".join(a_words)
+
+        for j in range(i+1, len(chunks)):
+            chunk_b = chunks[j]
+            b_words = [normalise_text(words[k]["word"]) for k in chunk_b]
+            b_text = " ".join(b_words)
+
+            # Check if A is a prefix of B (false start)
+            overlap_len = min(len(a_words), len(b_words), min_phrase_len)
+            if overlap_len < min_phrase_len:
+                continue
+
+            # Compare first N words
+            a_prefix = " ".join(a_words[:overlap_len])
+            b_prefix = " ".join(b_words[:overlap_len])
+
+            if a_prefix == b_prefix:
+                # A starts same as B — A is a false start
+                # Only remove A if B is longer/more complete than A
+                if len(b_words) >= len(a_words) * 0.8:
+                    for idx in chunk_a:
+                        remove_indices.add(idx)
+                    break  # A is dealt with, move to next chunk
+
+            # Also check fuzzy similarity for near-identical restarts
+            # Count matching words at start
+            matches = sum(1 for x, y in zip(a_words, b_words) if x == y)
+            match_ratio = matches / max(len(a_words), 1)
+            if match_ratio >= similarity_thresh and len(a_words) < len(b_words):
+                for idx in chunk_a:
+                    remove_indices.add(idx)
+                break
+
+    # Strategy 2: Cross-reference with script if provided
+    if script_text:
+        script_words = normalise_text(script_text).split()
+        script_text_n = " ".join(script_words)
+
+        for chunk in chunks:
+            if any(idx in remove_indices for idx in chunk):
+                continue  # Already marked for removal
+
+            c_words = [normalise_text(words[j]["word"]) for j in chunk]
+            c_text = " ".join(c_words)
+
+            if len(c_words) < min_phrase_len:
+                continue
+
+            # Check if this chunk appears in the script
+            if c_text not in script_text_n and len(c_words) < 6:
+                # Short chunk not in script — likely a fragment
+                # Only remove if a later chunk covers the same content better
+                for later_chunk in chunks[chunks.index(chunk)+1:]:
+                    lc_words = [normalise_text(words[j]["word"]) for j in later_chunk]
+                    lc_text = " ".join(lc_words)
+                    # Later chunk starts with same words as this chunk
+                    if lc_text.startswith(c_text):
+                        for idx in chunk:
+                            remove_indices.add(idx)
+                        break
+
+    return remove_indices
+
+
+def build_keep_segments(whisper_result, total_duration, silence_thresh=0.8, script_text=None):
     """
     Build list of (start, end) segments to keep based on Whisper word timestamps.
-    Removes gaps between words longer than silence_thresh seconds.
-    Also detects and removes repeated phrases (false starts / retakes).
+    1. Removes silences longer than silence_thresh
+    2. Detects and removes false starts and repeated takes
+    3. Cross-references with script_text if provided
     """
-    # Extract all word-level timestamps
     words = []
     for seg in whisper_result.get("segments", []):
         for w in seg.get("words", []):
@@ -476,34 +582,41 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.8):
                 })
 
     if not words:
-        # No word timestamps — fall back to segment-level
         segments = whisper_result.get("segments", [])
         if segments:
             return [(float(s["start"]), float(s["end"])) for s in segments]
         return [(0, total_duration)]
 
-    # Build keep segments by merging words that are close together
-    # and cutting gaps larger than silence_thresh
+    # Find false starts / retakes to remove
+    remove_indices = find_false_starts(words, script_text=script_text)
+    if remove_indices:
+        log(f"    Removing {len(remove_indices)} words from false starts/retakes")
+
+    # Build keep segments from remaining words
+    keep_words = [w for i, w in enumerate(words) if i not in remove_indices]
+
+    if not keep_words:
+        keep_words = words  # Fallback — keep everything
+
+    # Merge into segments separated by silence_thresh
     keep = []
-    seg_start = words[0]["start"]
-    seg_end = words[0]["end"]
+    seg_start = keep_words[0]["start"]
+    seg_end = keep_words[0]["end"]
 
-    for i in range(1, len(words)):
-        gap = words[i]["start"] - seg_end
+    for i in range(1, len(keep_words)):
+        gap = keep_words[i]["start"] - seg_end
         if gap > silence_thresh:
-            # End this segment here, start new one
             if seg_end > seg_start:
-                keep.append((max(0, seg_start - 0.1), seg_end + 0.1))
-            seg_start = words[i]["start"]
-        seg_end = words[i]["end"]
+                keep.append((max(0, seg_start - 0.05), seg_end + 0.05))
+            seg_start = keep_words[i]["start"]
+        seg_end = keep_words[i]["end"]
 
-    # Add final segment
     if seg_end > seg_start:
-        keep.append((max(0, seg_start - 0.1), min(total_duration, seg_end + 0.3)))
+        keep.append((max(0, seg_start - 0.05), min(total_duration, seg_end + 0.2)))
 
     return keep
 
-def remove_silences_and_cuts(inp, out, whisper_result):
+def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
     """
     Properly cut silences by identifying keep segments from Whisper transcription
     and using ffmpeg concat to join them. Both audio and video cut together — no sync issues.
@@ -514,7 +627,7 @@ def remove_silences_and_cuts(inp, out, whisper_result):
         shutil.copy(inp, out)
         return
 
-    keep_segments = build_keep_segments(whisper_result, duration, SILENCE_THRESH_S)
+    keep_segments = build_keep_segments(whisper_result, duration, SILENCE_THRESH_S, script_text=script_text)
 
     if not keep_segments:
         log_warn("No keep segments found — using original")
@@ -806,7 +919,8 @@ try:
 
             # Edit
             p1 = tmpdir / f"{i}_silent.mp4"
-            remove_silences_and_cuts(raw_path, p1, result)
+            script_text = matched_script.get("script", "")
+            remove_silences_and_cuts(raw_path, p1, result, script_text=script_text)
             log_ok("Silences and pauses removed (audio/video in sync)")
 
             p2 = tmpdir / f"{i}_titled.mp4"
