@@ -463,29 +463,27 @@ def normalise_text(text):
     import re
     return re.sub(r"[^a-z0-9 ]", "", text.lower()).strip()
 
-def find_false_starts(words, script_text=None, min_phrase_len=4, similarity_thresh=0.75):
+def find_false_starts(words, script_text=None, min_phrase_len=2, similarity_thresh=0.70):
     """
-    Identify word indices that are false starts / retakes and should be removed.
-
-    Strategy:
-    1. Split words into speech chunks (separated by silences)
-    2. For each chunk, look forward — if a later chunk starts with the same words,
-       the earlier chunk is a false start. Remove the earlier one.
-    3. If script_text provided, also find chunks that are partial attempts
-       at script lines (< 60% complete) followed by a fuller attempt.
-
-    Returns a set of word indices to REMOVE.
+    Detect false starts and repeated takes.
+    
+    Example: 
+      "The idea"  <- false start (remove)
+      "The idea you think"  <- false start (remove)  
+      "The idea you think needs more research"  <- keep (longest/last complete take)
+    
+    Returns set of word indices to REMOVE.
     """
     if not words:
         return set()
 
-    # Group words into chunks separated by pauses > 0.4s
+    # Group words into chunks separated by pauses >= 0.35s
     chunks = []
     chunk_words = [0]
     for i in range(1, len(words)):
         gap = words[i]["start"] - words[i-1]["end"]
-        if gap > 0.4:
-            chunks.append(chunk_words)
+        if gap >= 0.35:
+            chunks.append(chunk_words[:])
             chunk_words = [i]
         else:
             chunk_words.append(i)
@@ -493,72 +491,73 @@ def find_false_starts(words, script_text=None, min_phrase_len=4, similarity_thre
         chunks.append(chunk_words)
 
     remove_indices = set()
+    n = len(chunks)
 
-    # Strategy 1: Repeated phrase detection
-    # If chunk A starts with the same N words as chunk B (where B comes after A),
-    # chunk A is a false start — remove it
-    for i in range(len(chunks)):
+    for i in range(n):
+        if any(idx in remove_indices for idx in chunks[i]):
+            continue  # Already marked, skip
+
         chunk_a = chunks[i]
         a_words = [normalise_text(words[j]["word"]) for j in chunk_a]
-        a_text = " ".join(a_words)
+        if not a_words:
+            continue
 
-        for j in range(i+1, len(chunks)):
+        # Look at all later chunks to see if any starts the same way
+        for j in range(i + 1, n):
             chunk_b = chunks[j]
             b_words = [normalise_text(words[k]["word"]) for k in chunk_b]
-            b_text = " ".join(b_words)
-
-            # Check if A is a prefix of B (false start)
-            overlap_len = min(len(a_words), len(b_words), min_phrase_len)
-            if overlap_len < min_phrase_len:
+            if not b_words:
                 continue
 
-            # Compare first N words
-            a_prefix = " ".join(a_words[:overlap_len])
-            b_prefix = " ".join(b_words[:overlap_len])
+            # How many words does A share with the START of B?
+            compare_len = min(len(a_words), len(b_words))
+            if compare_len < min_phrase_len:
+                continue
 
-            if a_prefix == b_prefix:
-                # A starts same as B — A is a false start
-                # Only remove A if B is longer/more complete than A
-                if len(b_words) >= len(a_words) * 0.8:
-                    for idx in chunk_a:
-                        remove_indices.add(idx)
-                    break  # A is dealt with, move to next chunk
+            matching = sum(1 for x, y in zip(a_words, b_words) if x == y)
+            # A is a false start of B if:
+            # 1. A's words match the beginning of B at high rate, AND
+            # 2. B is longer (more complete) than A
+            match_ratio = matching / len(a_words)
 
-            # Also check fuzzy similarity for near-identical restarts
-            # Count matching words at start
-            matches = sum(1 for x, y in zip(a_words, b_words) if x == y)
-            match_ratio = matches / max(len(a_words), 1)
-            if match_ratio >= similarity_thresh and len(a_words) < len(b_words):
+            if match_ratio >= similarity_thresh and len(b_words) > len(a_words):
+                # A is a partial/false start of B — remove A
                 for idx in chunk_a:
                     remove_indices.add(idx)
+                log(f"    False start removed: '{' '.join(a_words[:6])}...' (superseded by longer take)")
                 break
 
-    # Strategy 2: Cross-reference with script if provided
+            # Also catch near-identical full repeats (same length, same words)
+            # e.g. presenter says the same line twice perfectly
+            if len(a_words) >= 6 and len(b_words) >= 6:
+                full_match = sum(1 for x, y in zip(a_words, b_words) if x == y)
+                full_ratio = full_match / max(len(a_words), len(b_words))
+                if full_ratio >= 0.80:
+                    # Nearly identical take — keep the later one (B), remove earlier (A)
+                    for idx in chunk_a:
+                        remove_indices.add(idx)
+                    log(f"    Duplicate take removed: '{' '.join(a_words[:6])}...'")
+                    break
+
+    # Cross-reference with script: remove chunks that are short AND
+    # start the same way as a later chunk AND don't form a complete script sentence
     if script_text:
-        script_words = normalise_text(script_text).split()
-        script_text_n = " ".join(script_words)
-
-        for chunk in chunks:
+        script_n = normalise_text(script_text)
+        for i, chunk in enumerate(chunks):
             if any(idx in remove_indices for idx in chunk):
-                continue  # Already marked for removal
-
+                continue
             c_words = [normalise_text(words[j]["word"]) for j in chunk]
             c_text = " ".join(c_words)
-
-            if len(c_words) < min_phrase_len:
-                continue
-
-            # Check if this chunk appears in the script
-            if c_text not in script_text_n and len(c_words) < 6:
-                # Short chunk not in script — likely a fragment
-                # Only remove if a later chunk covers the same content better
-                for later_chunk in chunks[chunks.index(chunk)+1:]:
-                    lc_words = [normalise_text(words[j]["word"]) for j in later_chunk]
-                    lc_text = " ".join(lc_words)
-                    # Later chunk starts with same words as this chunk
-                    if lc_text.startswith(c_text):
+            # If chunk is short and not a complete phrase in the script
+            if len(c_words) <= 8 and c_text not in script_n:
+                # Check if a later chunk starts with the same words
+                for later in chunks[i+1:]:
+                    lw = [normalise_text(words[k]["word"]) for k in later]
+                    lt = " ".join(lw)
+                    if len(c_words) >= 2 and lt.startswith(c_text):
                         for idx in chunk:
                             remove_indices.add(idx)
+                        log(f"    Script fragment removed: '{c_text}'")
                         break
 
     return remove_indices
