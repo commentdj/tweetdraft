@@ -291,23 +291,60 @@ if PROCESSED_LOG.exists():
     except:
         processed_log = {}
 
-# ── Reprocess mode: clear all or specific files from processed log ─────────────
+# ── Reprocess mode ────────────────────────────────────────────────────────────
 if REPROCESS:
+    log("REPROCESS MODE — resetting everything and reprocessing now")
+    log("")
+
+    # 1. Clear the processed files log
     if processed_log:
-        log(f"Current processed log has {len(processed_log)} file(s):")
+        log(f"Clearing processed log ({len(processed_log)} file(s))...")
         for fid, info in processed_log.items():
-            log(f"  - {info.get('file_name','?')} (processed {info.get('processed_at','?')[:10]})")
-        answer = input("\nClear ALL processed files and reprocess everything? (y/n): ").strip().lower()
-        if answer == 'y':
-            processed_log = {}
-            PROCESSED_LOG.write_text(json.dumps({}))
-            log("Cleared all processed files — all videos will be reprocessed")
-        else:
-            log("No changes made. Exiting reprocess mode.")
-            sys.exit(0)
-    else:
-        log("No processed files found — nothing to clear")
-        sys.exit(0)
+            log(f"  - {info.get('file_name','?')}")
+    processed_log = {}
+    PROCESSED_LOG.write_text(json.dumps({}))
+    log_ok("Processed log cleared")
+
+    # 2. Reset 'scheduled' scripts back to 'recorded' in GitHub
+    # so the pipeline can match them again
+    log("Resetting script statuses in GitHub...")
+    try:
+        import base64 as _b64
+        for batch_num in range(1, 51):
+            r = requests.get(
+                f"https://api.github.com/repos/{GH_REPO}/contents/batch-{batch_num}.json",
+                headers=GH_HEADERS, timeout=10
+            )
+            if r.status_code == 404:
+                break
+            if r.status_code != 200:
+                continue
+            d = r.json()
+            content = json.loads(_b64.b64decode(d["content"].replace("\n","")).decode())
+            sha = d["sha"]
+            changed = False
+            for s in content.get("scripts", []):
+                if s.get("status") == "scheduled":
+                    s["status"] = "recorded"
+                    s.pop("scheduledAt", None)
+                    s.pop("driveLink", None)
+                    changed = True
+            if changed:
+                encoded = _b64.b64encode(json.dumps(content, indent=2).encode()).decode()
+                requests.put(
+                    f"https://api.github.com/repos/{GH_REPO}/contents/batch-{batch_num}.json",
+                    headers=GH_HEADERS,
+                    json={"message": "VideoAgent: reset scheduled -> recorded for reprocess", "content": encoded, "sha": sha},
+                    timeout=15
+                )
+                log_ok(f"batch-{batch_num}.json: reset scheduled scripts to recorded")
+    except Exception as e:
+        log_warn(f"Could not reset script statuses: {e}")
+
+    log("")
+    log("Reset complete — continuing to process videos now...")
+    log("")
+    # Do NOT exit — fall through to normal processing
 
 # ── Scan Raw Footage folder ───────────────────────────────────────────────────
 log("Scanning Raw Footage folder...")
