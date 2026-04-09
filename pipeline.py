@@ -504,66 +504,77 @@ def normalise_text(text):
     return re.sub(r"[^a-z0-9 ]", "", text.lower()).strip()
 
 
-def find_repeated_phrases(tw, min_len=3, max_look_ahead=25):
+def find_false_starts(words, script_text=None, min_len=3, max_look_ahead=30):
     """
-    Find words in transcript that are false starts / repeated takes.
+    Detect false starts using N-gram repetition detection.
 
-    Core algorithm:
-    For every position i in the transcript, check if the N words starting at i
-    also appear starting at some position j > i (within max_look_ahead words).
-    If so, and the version at j is LONGER (more complete), remove words at i.
+    Scans the transcript for repeated phrases. When the same N words appear
+    at position i and again at position j > i, and the version at j extends
+    further into the transcript (i.e. it is a more complete take), the earlier
+    version at i is marked for removal.
 
-    This catches zero-gap restarts like:
-      "the idea you think the idea you think needs more research"
-       ^^^^^^^^^^^^^^^^^^^ <- remove these 4 words
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ <- keep
+    Works regardless of silence gaps - catches zero-gap restarts.
 
-    Returns set of word indices to REMOVE.
+    Example:
+      "the idea you think | the idea you think needs more research"
+       ^^^^^^^^^^^^^^^^^^^ removed (4 words, shorter)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ kept (7 words, longer)
+
+    Uses the script (if provided) to confirm removed phrases are actually
+    script content - avoids removing legitimate repetitions like "you you".
     """
-    remove = set()
+    tw = [normalise_text(w["word"]) for w in words]
+    sw = set(normalise_text(script_text).split()) if script_text else None
     n = len(tw)
+    remove = set()
 
-    # Try phrase lengths from longest to shortest so we catch the full false start
-    for phrase_len in range(min(12, n), min_len - 1, -1):
+    # Try longer phrases first so we catch the full false start block
+    for phrase_len in range(min(12, n - 1), min_len - 1, -1):
         for i in range(n - phrase_len):
             if i in remove:
-                continue  # Already marked, skip
+                continue
 
             phrase = tw[i:i + phrase_len]
 
-            # Look for same phrase starting later (within max_look_ahead words)
+            # Only consider phrases that contain script words (avoids filler)
+            if sw is not None:
+                script_words_in_phrase = sum(1 for w in phrase if w in sw)
+                if script_words_in_phrase < max(2, phrase_len // 2):
+                    continue
+
             for j in range(i + 1, min(i + max_look_ahead, n - phrase_len + 1)):
-                if tw[j:j + phrase_len] == phrase:
-                    # Found same phrase at j — j is the retry of i
-                    # Check if j version is longer (more complete take)
-                    # Count how far j extends matching content
-                    j_extends = 0
-                    while (j + phrase_len + j_extends < n and
-                           i + phrase_len + j_extends < n and
-                           tw[j + phrase_len + j_extends] == tw[i + phrase_len + j_extends]):
-                        j_extends += 1
+                if any(idx in remove for idx in range(j, j + phrase_len)):
+                    continue
+                if tw[j:j + phrase_len] != phrase:
+                    continue
 
-                    # j is more complete if it extends further or i is cut short
-                    i_end = i + phrase_len
-                    j_end = j + phrase_len + j_extends
+                # Same phrase at j - count how much further j extends
+                j_ext = 0
+                while (j + phrase_len + j_ext < n and
+                       i + phrase_len + j_ext < n and
+                       tw[j + phrase_len + j_ext] == tw[i + phrase_len + j_ext]):
+                    j_ext += 1
 
-                    # Remove i version if j is longer or equal
-                    if j_end >= i_end:
-                        for idx in range(i, i + phrase_len):
-                            remove.add(idx)
-                        break  # Done with this i
+                # j is more complete if it extends further
+                if j + phrase_len + j_ext >= i + phrase_len:
+                    for idx in range(i, i + phrase_len):
+                        remove.add(idx)
+                    log(f"    False start: '{' '.join(tw[i:i+phrase_len])}' "
+                        f"at t={words[i]['start']:.1f}s removed "
+                        f"(complete take at t={words[j]['start']:.1f}s)")
+                    break
+
+    if not remove:
+        log("    No false starts detected")
 
     return remove
 
 
 def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, script_text=None):
     """
-    1. Extract Whisper word timestamps
-    2. Find and remove repeated phrases / false starts
-    3. Remove silences > silence_thresh
-    4. Return list of (start, end) time segments to keep
+    Extract Whisper words, remove false starts, cut silences.
+    Returns list of (start, end) time segments to keep.
     """
-    # Extract words
     words = []
     for seg in whisper_result.get("segments", []):
         for w in seg.get("words", []):
@@ -577,21 +588,10 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
         segs = whisper_result.get("segments", [])
         return [(float(s["start"]), float(s["end"])) for s in segs] if segs else [(0, total_duration)]
 
-    log(f"    Whisper: {len(words)} words")
+    log(f"    Whisper: {len(words)} words detected")
 
-    # Normalised word list for matching
-    tw = [normalise_text(w["word"]) for w in words]
+    remove_indices = find_false_starts(words, script_text=script_text)
 
-    # Find repeated phrases to remove
-    remove_indices = find_repeated_phrases(tw, min_len=3, max_look_ahead=30)
-
-    if remove_indices:
-        removed_words = [words[i]["word"] for i in sorted(remove_indices)]
-        log(f"    Removed {len(remove_indices)} false start words: {' '.join(removed_words[:15])}")
-    else:
-        log("    No repeated phrases detected")
-
-    # Build keep list from remaining words
     keep_words = [w for i, w in enumerate(words) if i not in remove_indices]
     if not keep_words:
         keep_words = words
@@ -612,7 +612,7 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
     if seg_end > seg_start + 0.1:
         keep.append((max(0.0, seg_start - 0.05), min(total_duration, seg_end + 0.15)))
 
-    log(f"    Keeping {len(keep)} segments from {total_duration:.1f}s")
+    log(f"    Keeping {len(keep)} segments from {total_duration:.1f}s video")
     return keep
 
 
