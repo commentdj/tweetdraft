@@ -12,11 +12,9 @@
       "hook": "There is no right time. There never was.",
       "script": "There is no right time. There never was.\n\nThe market you think is saturated? Someone launched in it last week and is killing it.\n\nThe idea you think needs more research? Your competitor shipped it while you were still planning.\n\nOpportunity does not wait for you to feel ready. It moves. And if you are not moving with it, you are watching someone else take what could have been yours.\n\nStart the thing. Build it badly at first. Fix it as you go. But start.",
       "description": "Stop waiting for perfect conditions. The market doesn't care about your timeline. This is a reality check every founder needs to hear.",
-      "status": "scheduled",
+      "status": "recorded",
       "_batch": 1,
-      "_idx": 0,
-      "scheduledAt": "2026-04-09T09:00:00+00:00",
-      "driveLink": "https://drive.google.com/file/d/1ODJ5MZU_6_IlEvir34sF20i9s7vYjm5F/view?usp=drivesdk"
+      "_idx": 0
     },
     {
       "id": 2,
@@ -26,11 +24,9 @@
       "hook": "Most founders think sales is about talking. It is not.",
       "script": "Most founders think sales is about talking. It is not.\n\nSales is listening. It is finding out what someone is actually afraid of and showing them how you solve it.\n\nHere is what I learned the hard way:\n\nOne. The person who talks most in a sales call usually loses.\n\nTwo. Every objection is just a question they do not know how to ask.\n\nThree. Nobody buys features. They buy the feeling of their problem being gone.\n\nFour. Follow up is where most deals are actually won. Not the pitch.\n\nLearn to sell or learn to stay broke. There is no third option for founders.",
       "description": "Sales isn't a personality trait \u2014 it's a skill. And most founders are getting it completely wrong. Here are the fundamentals nobody told you.",
-      "status": "scheduled",
+      "status": "pending",
       "_batch": 1,
-      "_idx": 1,
-      "scheduledAt": "2026-04-09T09:00:00+00:00",
-      "driveLink": "https://drive.google.com/file/d/1JF-n-k_h346fpiY_7vhuq11bYjOT_FEg/view?usp=drivesdk"
+      "_idx": 1
     },
     {
       "id": 3,
@@ -42,7 +38,7 @@
       "description": "The algorithm changed. Your audience is no longer just your followers \u2014 it's everyone interested in what you post. This changes everything about content strategy.",
       "tiktokUrl": "https://www.tiktok.com/@garyvee/video/7581943479002025271",
       "tiktokInspired": true,
-      "status": "recorded"
+      "status": "pending"
     },
     {
       "id": 4,
