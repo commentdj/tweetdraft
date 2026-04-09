@@ -919,7 +919,7 @@ try:
 
             # Edit
             p1 = tmpdir / f"{i}_silent.mp4"
-            script_text = matched_script.get("script", "")
+            script_text = matched.get("script", "")
             remove_silences_and_cuts(raw_path, p1, result, script_text=script_text)
             log_ok("Silences and pauses removed (audio/video in sync)")
 
