@@ -69,15 +69,17 @@ log_lines = []
 def log(msg, level="INFO"):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{ts}] [{level}] {msg}"
-    print(line)
+    try:
+        print(line)
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        print(line.encode("ascii", "replace").decode("ascii"))
     log_lines.append(line)
-    # Append to log file
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(line + "\n")
 
-def log_ok(msg):  log(f"✓ {msg}", "OK")
-def log_err(msg): log(f"✗ {msg}", "ERROR")
-def log_warn(msg):log(f"! {msg}", "WARN")
+def log_ok(msg):   log(f"OK  {msg}", "OK")
+def log_err(msg):  log(f"ERR {msg}", "ERROR")
+def log_warn(msg): log(f"!   {msg}", "WARN")
 
 # ── Email reporting ───────────────────────────────────────────────────────────
 def send_report(subject, body, is_error=False):
@@ -100,11 +102,11 @@ def send_report(subject, body, is_error=False):
 # ── Startup ───────────────────────────────────────────────────────────────────
 log("=" * 55)
 if TEST_MODE:
-    log("VideoAgent — TEST MODE (no changes will be made)")
+    log("VideoAgent - TEST MODE (no changes will be made)")
 elif ONE_ONLY:
-    log("VideoAgent — ONE FILE MODE")
+    log("VideoAgent - ONE FILE MODE")
 else:
-    log("VideoAgent — Normal Run")
+    log("VideoAgent - Normal Run")
 log("=" * 55)
 
 # ── Check config values ───────────────────────────────────────────────────────
@@ -124,7 +126,7 @@ for ok, name in checks:
     if ok:
         log_ok(name)
     else:
-        log_err(f"{name} not configured — edit config.json")
+        log_err(f"{name} not configured -- edit config.json")
         config_ok = False
 
 if not config_ok:
@@ -140,7 +142,7 @@ def check_cmd(cmd, name):
         log_ok(name)
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
-        log_err(f"{name} not found — check installation")
+        log_err(f"{name} not found -- check installation")
         return False
 
 deps_ok = True
@@ -150,7 +152,7 @@ try:
     import whisper
     log_ok("Whisper")
 except ImportError:
-    log_err("Whisper not installed — run: pip install openai-whisper")
+    log_err("Whisper not installed -- run: pip install openai-whisper")
     deps_ok = False
 
 try:
@@ -161,14 +163,14 @@ try:
     from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
     log_ok("Google API libraries")
 except ImportError:
-    log_err("Google API missing — run: pip install google-auth google-auth-oauthlib google-api-python-client")
+    log_err("Google API missing -- run: pip install google-auth google-auth-oauthlib google-api-python-client")
     deps_ok = False
 
 try:
     from fuzzywuzzy import fuzz
     log_ok("FuzzyWuzzy")
 except ImportError:
-    log_err("FuzzyWuzzy missing — run: pip install fuzzywuzzy python-levenshtein")
+    log_err("FuzzyWuzzy missing -- run: pip install fuzzywuzzy python-levenshtein")
     deps_ok = False
 
 if not deps_ok:
@@ -214,11 +216,11 @@ try:
         data = r.json()
         accs = data if isinstance(data, list) else data.get("accounts", data.get("data", []))
         names = [f"{a.get('name','?')} ({a.get('platform','?')})" for a in accs[:5]]
-        log_ok(f"Zernio connected — {len(accs)} account(s): {', '.join(names)}")
+        log_ok(f"Zernio connected -- {len(accs)} account(s): {', '.join(names)}")
     else:
-        log_warn(f"Zernio returned {r.status_code} — scheduling skipped, processing continues")
+        log_warn(f"Zernio returned {r.status_code} -- scheduling skipped, processing continues")
 except Exception as e:
-    log_warn(f"Zernio check failed: {e} — scheduling skipped, processing continues")
+    log_warn(f"Zernio check failed: {e} -- scheduling skipped, processing continues")
 
 # ── GitHub connection test ────────────────────────────────────────────────────
 log("Checking GitHub connection...")
@@ -230,7 +232,7 @@ GH_HEADERS = {
 try:
     r = requests.get(f"https://api.github.com/repos/{GH_REPO}", headers=GH_HEADERS, timeout=10)
     if r.status_code == 200:
-        log_ok(f"GitHub connected — repo: {GH_REPO}")
+        log_ok(f"GitHub connected -- repo: {GH_REPO}")
     else:
         log_warn(f"GitHub returned {r.status_code}")
 except Exception as e:
@@ -239,7 +241,7 @@ except Exception as e:
 # ── TEST MODE EXIT ────────────────────────────────────────────────────────────
 if TEST_MODE:
     log("")
-    log("TEST MODE COMPLETE — all connections checked")
+    log("TEST MODE COMPLETE -- all connections checked")
     log("Run without --test to process real videos")
     log("")
 
@@ -294,7 +296,7 @@ if PROCESSED_LOG.exists():
 
 # ── Reprocess mode ────────────────────────────────────────────────────────────
 if REPROCESS:
-    log("REPROCESS MODE — resetting everything and reprocessing now")
+    log("REPROCESS MODE -- resetting everything and reprocessing now")
     log("")
 
     # 1. Clear the processed files log
@@ -343,9 +345,9 @@ if REPROCESS:
         log_warn(f"Could not reset script statuses: {e}")
 
     log("")
-    log("Reset complete — continuing to process videos now...")
+    log("Reset complete -- continuing to process videos now...")
     log("")
-    # Do NOT exit — fall through to normal processing
+    # Do NOT exit -- fall through to normal processing
 
 # ── Scan Raw Footage folder ───────────────────────────────────────────────────
 log("Scanning Raw Footage folder...")
@@ -363,7 +365,7 @@ if not raw_files:
     sys.exit(0)
 
 if ONE_ONLY:
-    log("ONE FILE MODE — processing first file only")
+    log("ONE FILE MODE -- processing first file only")
     raw_files = raw_files[:1]
 
 # ── Load scripts from GitHub ──────────────────────────────────────────────────
@@ -409,7 +411,7 @@ for batch_num in range(1, 51):
     batch_data[batch_num] = data
     batch_shas[batch_num] = sha
 
-    # Also load approvals file — ScriptBuilder saves recorded status here
+    # Also load approvals file -- ScriptBuilder saves recorded status here
     approvals_data, _ = gh_get_file(f"approvals-batch-{batch_num}.json")
     approval_statuses = {}
     if approvals_data and approvals_data.get("approvals"):
@@ -694,25 +696,25 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
 def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
     """
     Properly cut silences by identifying keep segments from Whisper transcription
-    and using ffmpeg concat to join them. Both audio and video cut together — no sync issues.
+    and using ffmpeg concat to join them. Both audio and video cut together -- no sync issues.
     """
     duration = get_video_duration(inp)
     if not duration:
-        log_warn("Could not get video duration — using original")
+        log_warn("Could not get video duration -- using original")
         shutil.copy(inp, out)
         return
 
     keep_segments = build_keep_segments(whisper_result, duration, SILENCE_THRESH_S, script_text=script_text)
 
     if not keep_segments:
-        log_warn("No keep segments found — using original")
+        log_warn("No keep segments found -- using original")
         shutil.copy(inp, out)
         return
 
     log(f"    Keeping {len(keep_segments)} segments from {duration:.1f}s video")
 
     if len(keep_segments) == 1:
-        # Single segment — just trim
+        # Single segment -- just trim
         start, end = keep_segments[0]
         cmd = ["ffmpeg","-y",
                "-ss", str(start),
@@ -727,7 +729,7 @@ def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
             shutil.copy(inp, out)
         return
 
-    # Multiple segments — use concat
+    # Multiple segments -- use concat
     # Create temp clip for each segment then concat
     tmp = inp.parent
     clip_paths = []
@@ -749,7 +751,7 @@ def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
             clip_paths.append(clip_path)
 
     if not clip_paths:
-        log_warn("No clips created — using original")
+        log_warn("No clips created -- using original")
         shutil.copy(inp, out)
         return
 
@@ -769,7 +771,7 @@ def remove_silences_and_cuts(inp, out, whisper_result, script_text=None):
     r = subprocess.run(cmd, capture_output=True)
 
     if r.returncode != 0:
-        log_warn(f"Concat failed: {r.stderr[-200:]} — using original")
+        log_warn(f"Concat failed: {r.stderr[-200:]} -- using original")
         shutil.copy(inp, out)
 
     # Cleanup clips
@@ -824,7 +826,7 @@ def add_title_card(inp, out, title):
     cmd = ["ffmpeg", "-y", "-i", str(inp), "-vf", vf, "-c:a", "copy", str(out)]
     r = subprocess.run(cmd, capture_output=True)
     if r.returncode != 0:
-        log_warn(f"Title card failed — using without")
+        log_warn(f"Title card failed -- using without")
         shutil.copy(inp, out)
 
 def add_captions(inp, out, whisper_result):
@@ -846,13 +848,13 @@ def add_captions(inp, out, whisper_result):
         idx += 1
 
     if not lines:
-        log_warn("No subtitle segments — skipping captions")
+        log_warn("No subtitle segments -- skipping captions")
         shutil.copy(inp, out)
         return
 
     srt.write_text("\n".join(lines), encoding="utf-8")
 
-    # Build subtitle filter — Windows needs forward slashes and escaped colons
+    # Build subtitle filter -- Windows needs forward slashes and escaped colons
     srt_path_escaped = str(srt).replace("\\", "/").replace(":", "\\\\:")
 
     style = "FontSize=18,PrimaryColour=&H00ffffff,OutlineColour=&H00000000,Outline=2,Shadow=1,Alignment=2,MarginV=40"
@@ -867,7 +869,7 @@ def add_captions(inp, out, whisper_result):
 
     if r.returncode != 0:
         err = r.stderr[-300:].decode("utf-8","ignore") if r.stderr else ""
-        log_warn(f"Captions failed: {err[-150:]} — using without captions")
+        log_warn(f"Captions failed: {err[-150:]} -- using without captions")
         shutil.copy(inp, out)
 
     if srt.exists():
@@ -983,10 +985,10 @@ try:
                 continue
 
             matched, score = match_script(text, available)
-            log(f"Matched: '{matched.get('title','')}' — confidence {score}%")
+            log(f"Matched: '{matched.get('title','')}' -- confidence {score}%")
 
             if score < 35:
-                log_warn(f"Low confidence ({score}%) — check output carefully")
+                log_warn(f"Low confidence ({score}%) -- check output carefully")
 
             used_scripts.add(id(matched))
             title = matched.get("title", fname.replace(".mp4",""))
@@ -1045,7 +1047,7 @@ try:
 
         except Exception as e:
             err = traceback.format_exc()
-            log_err(f"Failed: {fname} — {e}")
+            log_err(f"Failed: {fname} -- {e}")
             log(err, "DEBUG")
             failed.append({"file": fname, "reason": str(e), "detail": err})
             continue
@@ -1073,12 +1075,12 @@ log("")
 
 summary_lines = []
 for p in processed:
-    line = f"✓ {p['title']} | {p['scheduled_at']} | match {p['score']}%"
+    line = f"OK {p['title']} | {p['scheduled_at']} | match {p['score']}%"
     log(line)
     summary_lines.append(line)
 
 for f in failed:
-    line = f"✗ {f['file']} — {f['reason']}"
+    line = f"FAIL {f['file']} -- {f['reason']}"
     log(line, "ERROR")
     summary_lines.append(line)
 
