@@ -22,7 +22,8 @@ from email.mime.multipart import MIMEMultipart
 # ── Args ──────────────────────────────────────────────────────────────────────
 TEST_MODE   = "--test"      in sys.argv
 ONE_ONLY    = "--one"       in sys.argv
-REPROCESS   = "--reprocess" in sys.argv  # Clear processed log for a specific file
+REPROCESS   = "--reprocess" in sys.argv
+DEBUG_MODE  = "--debug"     in sys.argv  # Show full transcript and alignment detail
 
 # ── Load config ───────────────────────────────────────────────────────────────
 BASE = Path(__file__).parent
@@ -503,27 +504,23 @@ def normalise_text(text):
 
 def align_transcript_to_script(whisper_words, script_text):
     """
-    World-class editing approach: align transcript words to script words.
-    
-    Finds the LAST and BEST occurrence of each script phrase in the transcript.
-    Everything before the final clean take of each phrase gets removed.
-    
-    This catches:
-    - "The idea" (stop) -> removed
-    - "The idea you think" (stop) -> removed  
-    - "The idea you think needs more research" -> KEPT (last/complete take)
-    
-    Returns set of word indices (into whisper_words) to REMOVE.
+    Align transcript to script. Find the last/best complete take.
+    Remove everything before it.
     """
     if not whisper_words or not script_text:
         return set()
 
-    # Normalise everything
-    tw = [normalise_text(w["word"]) for w in whisper_words]  # transcript words
-    sw = normalise_text(script_text).split()                  # script words
+    tw = [normalise_text(w["word"]) for w in whisper_words]
+    sw = normalise_text(script_text).split()
 
     if not tw or not sw:
         return set()
+
+    if DEBUG_MODE:
+        log("  [DEBUG] Script words: " + " ".join(sw[:20]) + ("..." if len(sw)>20 else ""))
+        log("  [DEBUG] Transcript words (" + str(len(tw)) + " total):")
+        for i, (w, ww) in enumerate(zip(tw, whisper_words)):
+            log(f"    [{i:3d}] {w:15s} {ww['start']:.2f}s - {ww['end']:.2f}s")
 
     # ── Step 1: Find where each script word appears in the transcript ──────────
     # Build a map: script_word_index -> list of transcript_word_indices where it appears
@@ -565,6 +562,9 @@ def align_transcript_to_script(whisper_words, script_text):
 
     log(f"    Script alignment: final take starts at word {best_start_ti} "
         f"(matched {best_score}/{len(sw)} script words)")
+    if DEBUG_MODE:
+        log(f"  [DEBUG] best_start_ti={best_start_ti}, best_score={best_score}, min_match={max(5,int(len(sw)*0.35))}")
+        log(f"  [DEBUG] Words from best_start_ti: {tw[best_start_ti:best_start_ti+10]}")
 
     # ── Step 3: Remove everything before the final clean take ─────────────────
     # But be smart: don't remove words that aren't part of any attempt at the script
@@ -624,6 +624,12 @@ def build_keep_segments(whisper_result, total_duration, silence_thresh=0.5, scri
         return [(float(s["start"]), float(s["end"])) for s in segs] if segs else [(0, total_duration)]
 
     log(f"    Whisper returned {len(words)} words with timestamps")
+    if DEBUG_MODE:
+        log("  [DEBUG] First 30 words with timestamps:")
+        for i, w in enumerate(words[:30]):
+            gap = words[i]["start"] - words[i-1]["end"] if i > 0 else 0
+            gap_str = f" [GAP {gap:.2f}s]" if gap > 0.3 else ""
+            log(f"    [{i:3d}] {normalise_text(w['word']):15s} {w['start']:.2f}s-{w['end']:.2f}s{gap_str}")
 
     # Get false start indices from script alignment
     remove_indices = set()
