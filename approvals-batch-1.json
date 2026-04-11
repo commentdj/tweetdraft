@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:38:34.025Z",
+  "savedAt": "2026-04-11T15:38:36.704Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -27,7 +27,7 @@
     "22": "queued",
     "23": "pending",
     "24": "pending",
-    "25": "pending",
+    "25": "queued",
     "26": "pending",
     "27": "pending",
     "28": "pending",
@@ -142,6 +142,15 @@
       "hook": "Your market research is worthless if you have not spoken to a single customer.",
       "tone": "Challenging",
       "script": "Your market research is worthless if you have not spoken to a single customer.\n\nReports. TAM calculations. Competitor analysis. None of it tells you whether anyone will pay you for your specific solution.\n\nI have seen founders with beautiful decks and terrible businesses.\n\nAnd I have seen founders with no deck and 50 paying customers who figured it out through conversations.\n\nGet off the slides. Get on the phone. Twenty conversations will teach you more than twenty research reports.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 25,
+      "batch": 1,
+      "title": "You Are Sitting On A Business Right Now",
+      "hook": "There is a very good chance you are sitting on a viable business and do not know it.",
+      "tone": "Exciting",
+      "script": "There is a very good chance you are sitting on a viable business and do not know it.\n\nEvery skill you have developed. Every frustration you have experienced. Every process you have figured out that others have not. Every unfair advantage from your specific background and experience.\n\nAll of that is potential money making business.\n\nMost people dismiss their own knowledge because they assume if they know it, everyone knows it.\n\nWhat is obvious to you is a mystery to someone else. And someone will pay to shortcut that gap.",
       "tiktokUrl": ""
     }
   ],
