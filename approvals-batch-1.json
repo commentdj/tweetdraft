@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:34:57.768Z",
+  "savedAt": "2026-04-11T15:35:00.816Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -16,7 +16,7 @@
     "11": "pending",
     "12": "queued",
     "13": "pending",
-    "14": "pending",
+    "14": "queued",
     "15": "pending",
     "16": "pending",
     "17": "pending",
@@ -116,6 +116,15 @@
       "tone": "Exciting",
       "script": "Some of the most powerful content you can post is something you know almost nothing about.\n\nCuriosity content. Documenting the learning. Not the expert explaining. Be the beginner exploring.\n\nPeople do not just follow expertise. They follow authenticity. They follow the journey. The mistakes and corrections in real time.\n\nStart something you know nothing about but are interested in. Post about it from day one. The audience you build around that journey could be larger than the one you built around your expertise.\n\nBecause everyone was once a beginner. But people are embarrassed to fail or be seen as incompetent.  So very few people document it.  \n\nLike Austin Butler said, \"Embarrassment is an underexplored emotion, go out there and make a fool of yourself\"",
       "tiktokUrl": "https://www.tiktok.com/@garyvee/video/7581943479002025271"
+    },
+    {
+      "si": 14,
+      "batch": 1,
+      "title": "3 Sales Mistakes Founders Make Every Day",
+      "hook": "Three sales mistakes I see founders make every single day.",
+      "tone": "Informative",
+      "script": "Three sales mistakes I see founders make every single day.\n\nOne. Leading with the product instead of the problem. Nobody cares what you built. They care what problem it solves. Start there.\n\nTwo. Selling to everyone. If your product is for everyone, it is for no one. The narrower you go in the beginning, the faster you find product-market fit.\n\nThree. Giving up after one no. Most sales happen after the fifth follow-up. Most founders follow up once. Sometimes twice. Then they assume it is a no.\n\nFix these three things and you'll see a uplift in your conversion rate.",
+      "tiktokUrl": ""
     }
   ],
   "bank": [
