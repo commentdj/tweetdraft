@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:35:43.261Z",
+  "savedAt": "2026-04-11T15:37:30.967Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -24,7 +24,7 @@
     "19": "pending",
     "20": "pending",
     "21": "pending",
-    "22": "pending",
+    "22": "queued",
     "23": "pending",
     "24": "pending",
     "25": "pending",
@@ -133,6 +133,15 @@
       "hook": "Nobody is going to give you permission to start your business.",
       "tone": "Challenging",
       "script": "Nobody is going to give you permission to start your business.\n\nNot your family. Not your current employer. Not the market.\n\nYou are waiting for a signal that is never coming.\n\nThe successful founders did not wait until they were ready. They started when it was uncomfortable, when they did not have all the answers, when the timing was not perfect.\n\nThe timing is never perfect.\n\nStart anyway.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 22,
+      "batch": 1,
+      "title": "Your Market Research Is Worthless",
+      "hook": "Your market research is worthless if you have not spoken to a single customer.",
+      "tone": "Challenging",
+      "script": "Your market research is worthless if you have not spoken to a single customer.\n\nReports. TAM calculations. Competitor analysis. None of it tells you whether anyone will pay you for your specific solution.\n\nI have seen founders with beautiful decks and terrible businesses.\n\nAnd I have seen founders with no deck and 50 paying customers who figured it out through conversations.\n\nGet off the slides. Get on the phone. Twenty conversations will teach you more than twenty research reports.",
       "tiktokUrl": ""
     }
   ],
