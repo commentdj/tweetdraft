@@ -1,13 +1,13 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T14:59:55.082Z",
+  "savedAt": "2026-04-11T15:20:06.998Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
     "2": "pending",
     "3": "queued",
     "4": "pending",
-    "5": "pending",
+    "5": "banked",
     "6": "pending",
     "7": "pending",
     "8": "pending",
@@ -73,5 +73,15 @@
       "tiktokUrl": ""
     }
   ],
-  "bank": []
+  "bank": [
+    {
+      "si": 5,
+      "batch": 1,
+      "title": "5 Things That Kill Early Stage Startups",
+      "hook": "After talking to hundreds of early stage founders, the same five things kill them every time.",
+      "tone": "Informative",
+      "script": "After talking to hundreds of early stage founders, the same five things kill them every time.\n\nOne. Building before validating. You spent six months building something nobody confirmed they would pay for.\n\nTwo. Waiting too long to sell. Sales conversations start finding out if something works.\n\nThree. Solving the problem they described instead of the problem they have. These are different.\n\nFour. Hiring too early. Four people burning through runway on a product that has not found its market yet.\n\nFive. Giving up at month four when the results were going to come at month eight.\n\nNone of these are complicated. All of them are avoidable.",
+      "tiktokUrl": ""
+    }
+  ]
 }
