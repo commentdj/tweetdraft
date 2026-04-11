@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:40:30.590Z",
+  "savedAt": "2026-04-11T15:40:33.299Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -31,7 +31,7 @@
     "26": "pending",
     "27": "pending",
     "28": "pending",
-    "29": "pending",
+    "29": "queued",
     "30": "pending",
     "31": "pending",
     "32": "pending",
@@ -151,6 +151,15 @@
       "hook": "There is a very good chance you are sitting on a viable business and do not know it.",
       "tone": "Exciting",
       "script": "There is a very good chance you are sitting on a viable business and do not know it.\n\nEvery skill you have developed. Every frustration you have experienced. Every process you have figured out that others have not. Every unfair advantage from your specific background and experience.\n\nAll of that is potential money making business.\n\nMost people dismiss their own knowledge because they assume if they know it, everyone knows it.\n\nWhat is obvious to you is a mystery to someone else. And someone will pay to shortcut that gap.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 29,
+      "batch": 1,
+      "title": "The 3 Types Of Founder",
+      "hook": "In my experience, there are three types of founder. Only one of them builds a real business.",
+      "tone": "Informative",
+      "script": "In my experience, there are three types of founder. If they are a solo founder, only one of them builds a real business.\n\nThe Thinker. Has great ideas. Analyzes extensively. Rarely ships. Keeps refining. Usually stays stuck in the planning phase forever.\n\nThe Builder. Ships constantly. Moves fast. But does not talk to customers enough. Builds things people do not need then wonders why it does not grow.\n\nThe Seller. Uncomfortable with uncertainty but stays in motion. Talks to customers constantly. Builds what they confirm they want. Ships imperfect things and improves from real feedback.\n\nMost people start as thinkers or builders. The job is to become the seller.  You can be all 3, but at least 60% of you needs to be the Seller.   Thats the whole game.",
       "tiktokUrl": ""
     }
   ],
