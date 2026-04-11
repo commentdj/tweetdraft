@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:22:30.422Z",
+  "savedAt": "2026-04-11T15:22:33.204Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -8,7 +8,7 @@
     "3": "queued",
     "4": "pending",
     "5": "banked",
-    "6": "pending",
+    "6": "queued",
     "7": "pending",
     "8": "pending",
     "9": "pending",
@@ -70,6 +70,15 @@
       "hook": "No investor. No partnership. No viral post.",
       "tone": "Challenging",
       "script": "No investor. No partnership. No viral post.\n\nNobody is coming to save your business.\n\nThe people who are doing well right now are not waiting for a break. They went out and made the calls. They had the awkward conversations. They sold before the product was perfect.\n\nYou are sitting on an idea that could actually work. But ideas without action are just thoughts.\n\nThe world is not waiting for you. It is moving past you while you are still deciding.\n\nThere is opportunity everywhere.  This is your sign to take action. ",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 6,
+      "batch": 1,
+      "title": "Opportunity Is Hiding In Plain Sight",
+      "hook": "The biggest opportunity of your life might be something you dismiss every single day.",
+      "tone": "Exciting",
+      "script": "Start paying attention to what people complain about. \n\nThe biggest opportunity of your life might be something you dismiss every single day.\n\nEvery industry has something that everyone in it complains about but nobody has fixed. That complaint is a product waiting to be built.\n\nEvery workflow has something people do manually that you could build a demo of in an afternoon. That friction is a business.  \n\nYou do not need a completely new idea. You need to pay attention to what people are suffering through right in front of you.  If they are suffering through it, you can pretty much guarantee others are too.\n\nOpportunity is not hiding, it's everywhere.  \n\n",
       "tiktokUrl": ""
     }
   ],
