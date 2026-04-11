@@ -1,11 +1,11 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T14:59:51.900Z",
+  "savedAt": "2026-04-11T14:59:55.082Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
     "2": "pending",
-    "3": "pending",
+    "3": "queued",
     "4": "pending",
     "5": "pending",
     "6": "pending",
@@ -61,6 +61,15 @@
       "hook": "Most founders think sales is about talking. It is not.",
       "tone": "Informative",
       "script": "Sales is not talking. It's about listening. It is finding out what someone is afraid of, what their problem is and showing them you're the solution.\n\nHere is what I've learned;\n\nOne. The person who talks most in a sales call usually loses.\n\nTwo. Every objection is just a question they do not know how to ask.\n\nThree. People don't buy features.  They buy the version of themselves where the problem doesn't exist.\n\nFour. Follow up is where most deals are actually won. Not the pitch.\n\nLearn to sell or learn to stay broke. There is opportunity everywhere.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 3,
+      "batch": 1,
+      "title": "Nobody Is Coming To Save Your Business",
+      "hook": "No investor. No partnership. No viral post.",
+      "tone": "Challenging",
+      "script": "No investor. No partnership. No viral post.\n\nNobody is coming to save your business.\n\nThe people who are doing well right now are not waiting for a break. They went out and made the calls. They had the awkward conversations. They sold before the product was perfect.\n\nYou are sitting on an idea that could actually work. But ideas without action are just thoughts.\n\nThe world is not waiting for you. It is moving past you while you are still deciding.\n\nThere is opportunity everywhere.  This is your sign to take action. ",
       "tiktokUrl": ""
     }
   ],
