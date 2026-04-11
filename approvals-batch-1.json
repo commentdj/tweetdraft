@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:35:00.816Z",
+  "savedAt": "2026-04-11T15:35:43.261Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -20,7 +20,7 @@
     "15": "pending",
     "16": "pending",
     "17": "pending",
-    "18": "pending",
+    "18": "queued",
     "19": "pending",
     "20": "pending",
     "21": "pending",
@@ -124,6 +124,15 @@
       "hook": "Three sales mistakes I see founders make every single day.",
       "tone": "Informative",
       "script": "Three sales mistakes I see founders make every single day.\n\nOne. Leading with the product instead of the problem. Nobody cares what you built. They care what problem it solves. Start there.\n\nTwo. Selling to everyone. If your product is for everyone, it is for no one. The narrower you go in the beginning, the faster you find product-market fit.\n\nThree. Giving up after one no. Most sales happen after the fifth follow-up. Most founders follow up once. Sometimes twice. Then they assume it is a no.\n\nFix these three things and you'll see a uplift in your conversion rate.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 18,
+      "batch": 1,
+      "title": "Stop Waiting For Permission",
+      "hook": "Nobody is going to give you permission to start your business.",
+      "tone": "Challenging",
+      "script": "Nobody is going to give you permission to start your business.\n\nNot your family. Not your current employer. Not the market.\n\nYou are waiting for a signal that is never coming.\n\nThe successful founders did not wait until they were ready. They started when it was uncomfortable, when they did not have all the answers, when the timing was not perfect.\n\nThe timing is never perfect.\n\nStart anyway.",
       "tiktokUrl": ""
     }
   ],
