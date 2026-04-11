@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:30:15.159Z",
+  "savedAt": "2026-04-11T15:30:17.302Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -12,7 +12,7 @@
     "7": "queued",
     "8": "pending",
     "9": "queued",
-    "10": "pending",
+    "10": "queued",
     "11": "pending",
     "12": "pending",
     "13": "pending",
@@ -97,6 +97,15 @@
       "hook": "You have not run out of opportunities. You have run out of courage.",
       "tone": "Challenging",
       "script": "You have not run out of opportunities. You have run out of courage.  You've been beaten down by repeated failures. \n\nBut the ideas are there. The market is there. The tools have never been cheaper or more accessible.\n\nBut you need to keep going.  \n\nWhat is missing is the willingness to be seen trying something and potentially failing publicly.\n\nEvery day you wait, someone with half your insight and twice your courage is building the thing you thought of.",
+      "tiktokUrl": ""
+    },
+    {
+      "si": 10,
+      "batch": 1,
+      "title": "How To Validate An Idea In 48 Hours",
+      "hook": "You do not need months to know if an idea works. You need 48 hours and a direct message.",
+      "tone": "Informative",
+      "script": "Don't waste 6 months of you life obsessing over something nobody wants.  You do not need months to know if an idea works. You need 48 hours and a direct message.\n\nHere is the framework:\n\nDay one. Write a one-sentence description of the problem you solve. Message 20 people who have that problem. Ask if they have it. Do not mention your solution yet.\n\nDay two. For everyone who confirmed the problem, tell them what you are building. Ask if they would pay for it. Ask what they are doing right now instead.\n\nIf you get three people willing to pay before you build anything, you have something.\n\nIf nobody engages, the problem either does not exist or you have the wrong customer.\n\nFort-eight hours. That is all you need to not waste six months of your life.",
       "tiktokUrl": ""
     }
   ],
