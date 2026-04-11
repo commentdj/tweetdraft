@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:30:17.302Z",
+  "savedAt": "2026-04-11T15:33:03.053Z",
   "approvals": {
     "0": "recorded",
     "1": "queued",
@@ -107,6 +107,15 @@
       "tone": "Informative",
       "script": "Don't waste 6 months of you life obsessing over something nobody wants.  You do not need months to know if an idea works. You need 48 hours and a direct message.\n\nHere is the framework:\n\nDay one. Write a one-sentence description of the problem you solve. Message 20 people who have that problem. Ask if they have it. Do not mention your solution yet.\n\nDay two. For everyone who confirmed the problem, tell them what you are building. Ask if they would pay for it. Ask what they are doing right now instead.\n\nIf you get three people willing to pay before you build anything, you have something.\n\nIf nobody engages, the problem either does not exist or you have the wrong customer.\n\nFort-eight hours. That is all you need to not waste six months of your life.",
       "tiktokUrl": ""
+    },
+    {
+      "si": 12,
+      "batch": 1,
+      "title": "The Curiosity Content Play",
+      "hook": "What if the most powerful content you could post is something you know almost nothing about yet?",
+      "tone": "Exciting",
+      "script": "Some of the most powerful content you can post is something you know almost nothing about.\n\nCuriosity content. Documenting the learning. Not the expert explaining. Be the beginner exploring.\n\nPeople do not just follow expertise. They follow authenticity. They follow the journey. The mistakes and corrections in real time.\n\nStart something you know nothing about but are interested in. Post about it from day one. The audience you build around that journey could be larger than the one you built around your expertise.\n\nBecause everyone was once a beginner. But people are embarrassed to fail or be seen as incompetent.  So very few people document it.  \n\nLike Austin Butler said, \"Embarrassment is an underexplored emotion, go out there and make a fool of yourself\"",
+      "tiktokUrl": "https://www.tiktok.com/@garyvee/video/7581943479002025271"
     }
   ],
   "bank": [
