@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-12T10:00:45.274Z",
+  "savedAt": "2026-04-12T10:01:00.647Z",
   "approvals": {
     "0": "recorded",
     "1": "pending",
@@ -12,7 +12,7 @@
     "7": "pending",
     "8": "pending",
     "9": "pending",
-    "10": "queued",
+    "10": "pending",
     "11": "pending",
     "12": "queued",
     "13": "pending",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 10,
-      "batch": 1,
-      "title": "How To Validate An Idea In 48 Hours",
-      "hook": "You do not need months to know if an idea works. You need 48 hours and a direct message.",
-      "tone": "Informative",
-      "script": "Don't waste 6 months of you life obsessing over something nobody wants.  You do not need months to know if an idea works. You need 48 hours and a direct message.\n\nHere is the framework:\n\nDay one. Write a one-sentence description of the problem you solve. Message 20 people who have that problem. Ask if they have it. Do not mention your solution yet.\n\nDay two. For everyone who confirmed the problem, tell them what you are building. Ask if they would pay for it. Ask what they are doing right now instead.\n\nIf you get three people willing to pay before you build anything, you have something.\n\nIf nobody engages, the problem either does not exist or you have the wrong customer.\n\nFort-eight hours. That is all you need to not waste six months of your life.",
-      "tiktokUrl": ""
-    },
     {
       "si": 12,
       "batch": 1,
