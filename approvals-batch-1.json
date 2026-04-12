@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-12T09:59:32.158Z",
+  "savedAt": "2026-04-12T10:00:45.274Z",
   "approvals": {
     "0": "recorded",
     "1": "pending",
@@ -11,7 +11,7 @@
     "6": "pending",
     "7": "pending",
     "8": "pending",
-    "9": "queued",
+    "9": "pending",
     "10": "queued",
     "11": "pending",
     "12": "queued",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 9,
-      "batch": 1,
-      "title": "You Have Not Run Out Of Opportunities",
-      "hook": "You have not run out of opportunities. You have run out of courage.",
-      "tone": "Challenging",
-      "script": "You have not run out of opportunities. You have run out of courage.  You've been beaten down by repeated failures. \n\nBut the ideas are there. The market is there. The tools have never been cheaper or more accessible.\n\nBut you need to keep going.  \n\nWhat is missing is the willingness to be seen trying something and potentially failing publicly.\n\nEvery day you wait, someone with half your insight and twice your courage is building the thing you thought of.",
-      "tiktokUrl": ""
-    },
     {
       "si": 10,
       "batch": 1,
