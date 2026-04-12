@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-12T09:58:42.777Z",
+  "savedAt": "2026-04-12T09:59:07.010Z",
   "approvals": {
     "0": "recorded",
     "1": "pending",
@@ -8,7 +8,7 @@
     "3": "pending",
     "4": "pending",
     "5": "pending",
-    "6": "queued",
+    "6": "pending",
     "7": "queued",
     "8": "pending",
     "9": "queued",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 6,
-      "batch": 1,
-      "title": "Opportunity Is Hiding In Plain Sight",
-      "hook": "The biggest opportunity of your life might be something you dismiss every single day.",
-      "tone": "Exciting",
-      "script": "Start paying attention to what people complain about. \n\nThe biggest opportunity of your life might be something you dismiss every single day.\n\nEvery industry has something that everyone in it complains about but nobody has fixed. That complaint is a product waiting to be built.\n\nEvery workflow has something people do manually that you could build a demo of in an afternoon. That friction is a business.  \n\nYou do not need a completely new idea. You need to pay attention to what people are suffering through right in front of you.  If they are suffering through it, you can pretty much guarantee others are too.\n\nOpportunity is not hiding, it's everywhere.  \n\n",
-      "tiktokUrl": ""
-    },
     {
       "si": 7,
       "batch": 1,
