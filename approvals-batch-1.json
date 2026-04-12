@@ -1,9 +1,9 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-11T15:40:33.299Z",
+  "savedAt": "2026-04-12T08:31:16.044Z",
   "approvals": {
     "0": "recorded",
-    "1": "queued",
+    "1": "pending",
     "2": "pending",
     "3": "queued",
     "4": "pending",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 1,
-      "batch": 1,
-      "title": "Sales Is Not What You Think It Is",
-      "hook": "Most founders think sales is about talking. It is not.",
-      "tone": "Informative",
-      "script": "Sales is not talking. It's about listening. It is finding out what someone is afraid of, what their problem is and showing them you're the solution.\n\nHere is what I've learned;\n\nOne. The person who talks most in a sales call usually loses.\n\nTwo. Every objection is just a question they do not know how to ask.\n\nThree. People don't buy features.  They buy the version of themselves where the problem doesn't exist.\n\nFour. Follow up is where most deals are actually won. Not the pitch.\n\nLearn to sell or learn to stay broke. There is opportunity everywhere.",
-      "tiktokUrl": ""
-    },
     {
       "si": 3,
       "batch": 1,
