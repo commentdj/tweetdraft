@@ -1,11 +1,11 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-12T08:31:16.044Z",
+  "savedAt": "2026-04-12T09:58:16.108Z",
   "approvals": {
     "0": "recorded",
     "1": "pending",
     "2": "pending",
-    "3": "queued",
+    "3": "pending",
     "4": "pending",
     "5": "banked",
     "6": "queued",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 3,
-      "batch": 1,
-      "title": "Nobody Is Coming To Save Your Business",
-      "hook": "No investor. No partnership. No viral post.",
-      "tone": "Challenging",
-      "script": "No investor. No partnership. No viral post.\n\nNobody is coming to save your business.\n\nThe people who are doing well right now are not waiting for a break. They went out and made the calls. They had the awkward conversations. They sold before the product was perfect.\n\nYou are sitting on an idea that could actually work. But ideas without action are just thoughts.\n\nThe world is not waiting for you. It is moving past you while you are still deciding.\n\nThere is opportunity everywhere.  This is your sign to take action. ",
-      "tiktokUrl": ""
-    },
     {
       "si": 6,
       "batch": 1,
