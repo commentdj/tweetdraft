@@ -1,6 +1,6 @@
 {
   "batchNum": 1,
-  "savedAt": "2026-04-12T09:59:07.010Z",
+  "savedAt": "2026-04-12T09:59:32.158Z",
   "approvals": {
     "0": "recorded",
     "1": "pending",
@@ -9,7 +9,7 @@
     "4": "pending",
     "5": "pending",
     "6": "pending",
-    "7": "queued",
+    "7": "pending",
     "8": "pending",
     "9": "queued",
     "10": "queued",
@@ -54,15 +54,6 @@
     "49": "pending"
   },
   "queue": [
-    {
-      "si": 7,
-      "batch": 1,
-      "title": "Validation Is Overrated",
-      "hook": "Everyone tells you to validate before building. I think that advice is half right.",
-      "tone": "Spiky-take",
-      "script": "Validate before building. That advice is half right.\n\nYou need to validate the problem. Not the solution.  Be 100% sure there's a problem before you explore what a solution could look like. \n\nMost founders go validate whether people LIKE their specific product. That is the wrong question.\n\nThe right question is: how much does this problem cost you right now? How are you solving it today? What would you pay for it to be gone?\n\nGet obsessed with the problem. Stay loose on the solution. Your first version will be wrong anyway.  \n\nThe market does not care about you or your product. It cares about its own pain. ",
-      "tiktokUrl": ""
-    },
     {
       "si": 9,
       "batch": 1,
